@@ -1,32 +1,32 @@
 'use strict';
 $(document).ready(function() {
     // [ bar-chart ] start
-    var bar = document.getElementById("chart-bar-1").getContext('2d');
-    var data1 = {
-        labels: [0, 1, 2, 3],
-        datasets: [{
-            label: "Data 1",
-            data: [25, 45, 74, 85],
-            borderColor: '#19BCBF',
-            backgroundColor: '#19BCBF',
-            hoverborderColor:'#19BCBF',
-            hoverBackgroundColor: '#19BCBF',
-        }, {
-            label: "Data 2",
-            data: [30, 52, 65, 65],
-            borderColor: '#463699',
-            backgroundColor: '#463699',
-            hoverborderColor:'#463699',
-            hoverBackgroundColor: '#463699',
-        }]
-    };
-    var myBarChart = new Chart(bar, {
-        type: 'bar',
-        data: data1,
-        options: {
-            barValueSpacing: 20
-        }
-    });
+    // var bar = document.getElementById("chart-bar-1").getContext('2d');
+    // var data1 = {
+    //     labels: [0, 1, 2, 3,4,5,6,7,8,9,10,11],
+    //     datasets: [{
+    //         label: "Data 1",
+    //         data: [25, 45, 74, 85,55,66,77,88,99,21,22,23],
+    //         borderColor: '#19BCBF',
+    //         backgroundColor: '#19BCBF',
+    //         hoverborderColor:'#19BCBF',
+    //         hoverBackgroundColor: '#19BCBF',
+    //     }, {
+    //         label: "Data 2",
+    //         data: [30, 52, 65, 65,88,77,88,99,76,44,22,11],
+    //         borderColor: '#463699',
+    //         backgroundColor: '#463699',
+    //         hoverborderColor:'#463699',
+    //         hoverBackgroundColor: '#463699',
+    //     }]
+    // };
+    // var myBarChart = new Chart(bar, {
+    //     type: 'bar',
+    //     data: data1,
+    //     options: {
+    //         barValueSpacing: 20
+    //     }
+    // });
     // [ bar-chart ] end
 
     // [ bar-stacked-chart ] start

@@ -2,29 +2,7 @@
 $(document).ready(function() {
     setTimeout(function() {
         // [ area-Chart ] Start
-        google.charts.load('current', {
-            'packages': ['corechart']
-        });
-        google.charts.setOnLoadCallback(drawChart);
 
-        function drawChart() {
-            var data = google.visualization.arrayToDataTable([
-                ['Year', 'Sales', 'Expenses'],
-                ['2013', 1000, 400],
-                ['2014', 1170, 460],
-                ['2015', 660, 1120],
-                ['2016', 1030, 540]
-            ]);
-            var options = {
-                vAxis: {
-                    minValue: 0
-                },
-                colors: ['#463699', '#19BCBF']
-            };
-            var chart = new google.visualization.AreaChart(document.getElementById('chart-google-area'));
-            chart.draw(data, options);
-        }
-        // [ area-Chart ] end
 
         // [ stacking-area-chart ] start
         google.charts.load('current', {

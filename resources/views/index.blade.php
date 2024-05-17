@@ -11,12 +11,13 @@
                         <div class="row align-items-center">
                             <div class="col-md-12">
                                 <div class="page-header-title">
-                                    <h5 class="m-b-10">Sales</h5>
+                                    <h5 class="m-b-10">Dashboard</h5>
                                 </div>
                                 <ul class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="index.html"><i
+                                    <li class="breadcrumb-item"><a href="/"><i
                                                 class="feather icon-home"></i></a></li>
-                                    <li class="breadcrumb-item"><a href="#!">Sales Dashboard</a></li>
+                                    <li class="breadcrumb-item"><a href="#!">Dashboard</a></li>
+
                                 </ul>
                             </div>
                         </div>
@@ -25,681 +26,470 @@
                 <!-- [ breadcrumb ] end -->
                 <!-- [ Main Content ] start -->
                 <div class="row">
-                    <!-- support-section start -->
-                    <div class="col-xl-4 col-md-6">
-                        <div class="card support-bar">
-                            <div class="card-body pb-0">
-                                <h2 class="m-0">350</h2>
-                                <span class="text-c-purple">Support Requests</span>
-                                <p class="mb-3 mt-3">Total number of support requests that come in.</p>
+                    <!-- table card-1 start -->
+                    <div class="col-md-4 col-xl-4">
+                        <div class="card bg-c-blue order-card">
+                            <div class="card-body">
+                                <h6 class="m-b-20">Orders Received Today</h6>
+                                <h2 class="text-start"><span>486</span><i
+                                        class="feather icon-shopping-cart float-end"></i></h2>
+                                <p class="m-b-0 text-end">Completed Orders
+                                </p>
                             </div>
-                            <div id="support-chart" style="height:100px;width:100%;"></div>
-                            <div class="card-footer bg-purple text-white">
-                                <div class="row text-center">
+                        </div>
+                    </div>
+                    <!-- table card-1 end -->
+                    <!-- table card-2 start -->
+                    <div class="col-md-4 col-xl-4">
+                        <div class="card bg-c-green order-card">
+                            <div class="card-body">
+                                <h6 class="m-b-20">Total Sales</h6>
+                                <h2 class="text-start"><span>1641</span><i
+                                        class="feather icon-shopping-cart float-end"></i></h2>
+                                <p class="m-b-0 text-end">Today</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- table card-2 end -->
+                    <!-- Widget primary-success card start -->
+                    <div class="col-md-4 col-xl-4">
+                        <div class="card bg-c-blue order-card">
+                            <div class="card-body">
+                                <h6 class="m-b-20">Review Rating</h6>
+                                <h2 class="text-start"><span>1641</span><i
+                                        class="feather icon-star-on float-end"></i></h2>
+                                <p class="m-b-0 text-end">This Month</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-6 col-md-6">
+                        <div class="card prod-p-card bg-c-red">
+                            <div class="card-body">
+                                <div class="row align-items-center m-b-25">
                                     <div class="col">
-                                        <h4 class="m-0 text-white">10</h4>
-                                        <span>Open</span>
+                                        <h6 class="m-b-5 text-white">Total Order This Month</h6>
+                                        <h3 class="m-b-0 text-white">1,783</h3>
                                     </div>
+                                    <div class="col-auto">
+                                        <i class="fas fa-money-bill-alt text-c-red f-18"></i>
+                                    </div>
+                                </div>
+                                <p class="m-b-0 text-white"><span
+                                        class="label label-danger m-r-10">+11%</span>From Previous Month</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-md-6">
+                        <div class="card prod-p-card bg-c-yellow">
+                            <div class="card-body">
+                                <div class="row align-items-center m-b-25">
                                     <div class="col">
-                                        <h4 class="m-0 text-white">5</h4>
-                                        <span>Running</span>
+                                        <h6 class="m-b-5 text-white">Total Users Membership</h6>
+                                        <h3 class="m-b-0 text-white">6,784</h3>
                                     </div>
-                                    <div class="col">
-                                        <h4 class="m-0 text-white">3</h4>
-                                        <span>Solved</span>
+                                    <div class="col-auto">
+                                        <i class="fas fa-tags text-c-yellow f-18"></i>
                                     </div>
+                                </div>
+                                <p class="m-b-0 text-white"><span
+                                        class="label  m-r-10"></span></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-sm-12 col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5>Rekomendasi Menu</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table id="order-table" class="table table-striped table-bordered nowrap">
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Position</th>
+                                                <th>Office</th>
+                                                <th>Age</th>
+                                                <th>Start date</th>
+                                                <th>Salary</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Quinn Flynn</td>
+                                                <td>System Architect</td>
+                                                <td>Edinburgh</td>
+                                                <td>61</td>
+                                                <td>2011/04/25</td>
+                                                <td>$320,800</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Garrett Winters</td>
+                                                <td>Accountant</td>
+                                                <td>Tokyo</td>
+                                                <td>63</td>
+                                                <td>2011/07/25</td>
+                                                <td>$170,750</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Ashton Cox</td>
+                                                <td>Junior Technical Author</td>
+                                                <td>San Francisco</td>
+                                                <td>66</td>
+                                                <td>2009/01/12</td>
+                                                <td>$86,000</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Cedric Kelly</td>
+                                                <td>Senior Javascript Developer</td>
+                                                <td>Edinburgh</td>
+                                                <td>22</td>
+                                                <td>2012/03/29</td>
+                                                <td>$433,060</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Airi Satou</td>
+                                                <td>Accountant</td>
+                                                <td>Tokyo</td>
+                                                <td>33</td>
+                                                <td>2008/11/28</td>
+                                                <td>$162,700</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Brielle Williamson</td>
+                                                <td>Integration Specialist</td>
+                                                <td>New York</td>
+                                                <td>61</td>
+                                                <td>2012/12/02</td>
+                                                <td>$372,000</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Herrod Chandler</td>
+                                                <td>Sales Assistant</td>
+                                                <td>San Francisco</td>
+                                                <td>59</td>
+                                                <td>2012/08/06</td>
+                                                <td>$137,500</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Rhona Davidson</td>
+                                                <td>Integration Specialist</td>
+                                                <td>Tokyo</td>
+                                                <td>55</td>
+                                                <td>2010/10/14</td>
+                                                <td>$327,900</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Colleen Hurst</td>
+                                                <td>Javascript Developer</td>
+                                                <td>San Francisco</td>
+                                                <td>39</td>
+                                                <td>2009/09/15</td>
+                                                <td>$205,500</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Sonya Frost</td>
+                                                <td>Software Engineer</td>
+                                                <td>Edinburgh</td>
+                                                <td>23</td>
+                                                <td>2008/12/13</td>
+                                                <td>$103,600</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Jena Gaines</td>
+                                                <td>Office Manager</td>
+                                                <td>London</td>
+                                                <td>30</td>
+                                                <td>2008/12/19</td>
+                                                <td>$90,560</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Quinn Flynn</td>
+                                                <td>Support Lead</td>
+                                                <td>Edinburgh</td>
+                                                <td>22</td>
+                                                <td>2013/03/03</td>
+                                                <td>$342,000</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Charde Marshall</td>
+                                                <td>Regional Director</td>
+                                                <td>San Francisco</td>
+                                                <td>36</td>
+                                                <td>2008/10/16</td>
+                                                <td>$470,600</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Haley Kennedy</td>
+                                                <td>Senior Marketing Designer</td>
+                                                <td>London</td>
+                                                <td>43</td>
+                                                <td>2012/12/18</td>
+                                                <td>$313,500</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Tatyana Fitzpatrick</td>
+                                                <td>Regional Director</td>
+                                                <td>London</td>
+                                                <td>19</td>
+                                                <td>2010/03/17</td>
+                                                <td>$385,750</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Michael Silva</td>
+                                                <td>Marketing Designer</td>
+                                                <td>London</td>
+                                                <td>66</td>
+                                                <td>2012/11/27</td>
+                                                <td>$198,500</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Paul Byrd</td>
+                                                <td>Chief Financial Officer (CFO)</td>
+                                                <td>New York</td>
+                                                <td>64</td>
+                                                <td>2010/06/09</td>
+                                                <td>$725,000</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Gloria Little</td>
+                                                <td>Systems Administrator</td>
+                                                <td>New York</td>
+                                                <td>59</td>
+                                                <td>2009/04/10</td>
+                                                <td>$237,500</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Bradley Greer</td>
+                                                <td>Software Engineer</td>
+                                                <td>London</td>
+                                                <td>41</td>
+                                                <td>2012/10/13</td>
+                                                <td>$132,000</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Dai Rios</td>
+                                                <td>Personnel Lead</td>
+                                                <td>Edinburgh</td>
+                                                <td>35</td>
+                                                <td>2012/09/26</td>
+                                                <td>$217,500</td>
+                                            </tr>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Position</th>
+                                                <th>Office</th>
+                                                <th>Age</th>
+                                                <th>Start date</th>
+                                                <th>Salary</th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!-- support-section end -->
-                    <!-- support1-section start -->
-                    <div class="col-xl-4 col-md-6">
-                        <div class="card support-bar">
-                            <div class="card-body pb-0">
-                                <h2 class="m-0">30<small>min</small></h2>
-                                <span class="text-c-blue">Agent Response</span>
-                                <p class="mb-3 mt-3">Total number ticket solve by the agent.</p>
-                            </div>
-                            <div id="support-chart1" style="height:100px;width:100%;"></div>
-                            <div class="card-footer bg-primary text-white">
-                                <div class="row text-center">
-                                    <div class="col">
-                                        <h4 class="m-0 text-white">5</h4>
-                                        <span>pending</span>
-                                    </div>
-                                    <div class="col">
-                                        <h4 class="m-0 text-white">75+</h4>
-                                        <span>Satisfied clients</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- support1-section end -->
-                    <!-- support2-section start -->
-                    <div class="col-xl-4 col-md-12">
-                        <div class="card support-bar">
-                            <div class="card-body pb-0">
-                                <h2 class="m-0">800</h2>
-                                <span class="text-c-green">Support Resolved</span>
-                                <p class="mb-3 mt-3">Total number of support requests that come in.</p>
-                            </div>
-                            <div id="support-chart2" style="height:100px;width:100%;"></div>
-                            <div class="card-footer bg-success text-white">
-                                <div class="row text-center">
-                                    <div class="col">
-                                        <h4 class="m-0 text-white">80</h4>
-                                        <span>Starred</span>
-                                    </div>
-                                    <div class="col">
-                                        <h4 class="m-0 text-white">3</h4>
-                                        <span>Reopen</span>
-                                    </div>
-                                    <div class="col">
-                                        <h4 class="m-0 text-white">14+</h4>
-                                        <span>Reassigned</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- support2-section end -->
-                    <!-- site-section start -->
-                    <div class="col-md-6">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="card bg-primary earning-date">
-                                    <div class="card-header borderless">
-                                        <h5 class="text-white">Earnings</h5>
-                                    </div>
-                                    <div class="card-block">
-                                        <div class="bd-example bd-example-tabs">
-                                            <div class="tab-content" id="tabContent-pills">
-                                                <div class="tab-pane fade active show" id="earnings-mon"
-                                                    role="tabpanel" aria-labelledby="pills-earnings-mon">
-                                                    <h2 class="text-white mb-3 f-w-300">359,234<i
-                                                            class="feather icon-arrow-up"></i></h2>
-                                                    <span class="text-white mb-4 d-block">TOTAL EARNINGS</span>
-                                                </div>
-                                                <div class="tab-pane fade" id="earnings-tue" role="tabpanel"
-                                                    aria-labelledby="pills-earnings-tue">
-                                                    <h2 class="text-white mb-3 f-w-300">222,586<i
-                                                            class="feather icon-arrow-down"></i></h2>
-                                                    <span class="text-white mb-4 d-block">TOTAL EARNINGS</span>
-                                                </div>
-                                                <div class="tab-pane fade" id="earnings-wed" role="tabpanel"
-                                                    aria-labelledby="pills-earnings-wed">
-                                                    <h2 class="text-white mb-3 f-w-300">859,745<i
-                                                            class="feather icon-arrow-up"></i></h2>
-                                                    <span class="text-white mb-4 d-block">TOTAL EARNINGS</span>
-                                                </div>
-                                                <div class="tab-pane fade" id="earnings-thu" role="tabpanel"
-                                                    aria-labelledby="pills-earnings-thu">
-                                                    <h2 class="text-white mb-3 f-w-300">785,684<i
-                                                            class="feather icon-arrow-up"></i></h2>
-                                                    <span class="text-white mb-4 d-block">TOTAL EARNINGS</span>
-                                                </div>
-                                                <div class="tab-pane fade" id="earnings-fri" role="tabpanel"
-                                                    aria-labelledby="pills-earnings-fri">
-                                                    <h2 class="text-white mb-3 f-w-300">123,486<i
-                                                            class="feather icon-arrow-down"></i></h2>
-                                                    <span class="text-white mb-4 d-block">TOTAL EARNINGS</span>
-                                                </div>
-                                                <div class="tab-pane fade" id="earnings-sat" role="tabpanel"
-                                                    aria-labelledby="pills-earnings-sat">
-                                                    <h2 class="text-white mb-3 f-w-300">762,963<i
-                                                            class="feather icon-arrow-up"></i></h2>
-                                                    <span class="text-white mb-4 d-block">TOTAL EARNINGS</span>
-                                                </div>
-                                                <div class="tab-pane fade" id="earnings-sun" role="tabpanel"
-                                                    aria-labelledby="pills-earnings-sun">
-                                                    <h2 class="text-white mb-3 f-w-300">984,632<i
-                                                            class="feather icon-arrow-down"></i></h2>
-                                                    <span class="text-white mb-4 d-block">TOTAL EARNINGS</span>
-                                                </div>
-                                            </div>
-                                            <ul class="nav nav-pills align-items-center" id="pills-tab"
-                                                role="tablist">
-                                                <li class="nav-item">
-                                                    <a class="nav-link active show" id="pills-earnings-mon"
-                                                        data-bs-toggle="pill" href="#earnings-mon" role="tab"
-                                                        aria-controls="earnings-mon"
-                                                        aria-selected="false">Mon</a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a class="nav-link" id="pills-earnings-tue"
-                                                        data-bs-toggle="pill" href="#earnings-tue" role="tab"
-                                                        aria-controls="earnings-tue"
-                                                        aria-selected="false">Tue</a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a class="nav-link" id="pills-earnings-wed"
-                                                        data-bs-toggle="pill" href="#earnings-wed" role="tab"
-                                                        aria-controls="earnings-wed"
-                                                        aria-selected="false">Wed</a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a class="nav-link" id="pills-earnings-thu"
-                                                        data-bs-toggle="pill" href="#earnings-thu" role="tab"
-                                                        aria-controls="earnings-thu"
-                                                        aria-selected="false">Thu</a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a class="nav-link" id="pills-earnings-fri"
-                                                        data-bs-toggle="pill" href="#earnings-fri" role="tab"
-                                                        aria-controls="earnings-fri"
-                                                        aria-selected="false">Fri</a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a class="nav-link " id="pills-earnings-sat"
-                                                        data-bs-toggle="pill" href="#earnings-sat" role="tab"
-                                                        aria-controls="earnings-sat"
-                                                        aria-selected="true">Sat</a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a class="nav-link" id="pills-earnings-sun"
-                                                        data-bs-toggle="pill" href="#earnings-sun" role="tab"
-                                                        aria-controls="earnings-sun"
-                                                        aria-selected="false">Sun</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <div class="row d-flex align-items-center">
-                                            <div class="col-auto">
-                                                <h6>Active customer <span class="d-block">on site</span></h6>
-                                                <h2 class="m-0">2.86</h2>
-                                                <span class="text-c-green">+85.9%</span>
-                                            </div>
-                                            <div class="col">
-                                                <div id="site-chart" style="height:150px"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- site-section end -->
-                    <!-- visit-section start -->
+
                     <div class="col-xl-6 col-md-6">
                         <div class="card">
                             <div class="card-header">
-                                <h5>Total customer by Location</h5>
+                                <h5>List Promo</h5>
                             </div>
                             <div class="card-body">
-                                <div id="am-map-chart" style="height:300px;width:100%;"></div>
-                                <div class="row mb-2 mt-3">
-                                    <div class="col">
-                                        <p class="m-0"><i class="fas fa-circle text-c-blue f-10 m-r-10"></i>USA
-                                        </p>
-                                    </div>
-                                    <div class="col">
-                                        <p class="m-0">8.2 k</p>
-                                    </div>
-                                    <div class="col">
-                                        <p class="text-c-blue m-0"><i class="feather icon-arrow-up"></i>8%</p>
-                                    </div>
-                                </div>
-                                <div class="row mb-2">
-                                    <div class="col">
-                                        <p class="m-0"><i class="fas fa-circle text-c-red f-10 m-r-10"></i>India
-                                        </p>
-                                    </div>
-                                    <div class="col">
-                                        <p class="m-0">7.2 k</p>
-                                    </div>
-                                    <div class="col">
-                                        <p class="text-c-red m-0"><i class="feather icon-arrow-up"></i>5%</p>
-                                    </div>
-                                </div>
-                                <div class="row mb-2">
-                                    <div class="col">
-                                        <p class="m-0"><i
-                                                class="fas fa-circle text-c-green f-10 m-r-10"></i>China</p>
-                                    </div>
-                                    <div class="col">
-                                        <p class="m-0">9.2 k</p>
-                                    </div>
-                                    <div class="col">
-                                        <p class="text-c-green m-0"><i class="feather icon-arrow-up"></i>6%</p>
-                                    </div>
-                                </div>
-                                <div class="row mb-2">
-                                    <div class="col">
-                                        <p class="m-0"><i
-                                                class="fas fa-circle text-c-yellow f-10 m-r-10"></i>Brazil</p>
-                                    </div>
-                                    <div class="col">
-                                        <p class="m-0">3.2 k</p>
-                                    </div>
-                                    <div class="col">
-                                        <p class="text-c-yellow m-0"><i class="feather icon-arrow-up"></i>4%</p>
-                                    </div>
-                                </div>
-                                <div class="row mb-2">
-                                    <div class="col">
-                                        <p class="m-0"><i
-                                                class="fas fa-circle text-c-purple f-10 m-r-10"></i>Other</p>
-                                    </div>
-                                    <div class="col">
-                                        <p class="m-0">4.2 k</p>
-                                    </div>
-                                    <div class="col">
-                                        <p class="text-c-purple m-0"><i class="feather icon-arrow-up"></i>3%</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- visit-section end -->
-                    <!-- sessions-section start -->
-                    <div class="col-xl-12">
-                        <div class="card table-card">
-                            <div class="card-header">
-                                <h5>Sale report</h5>
-                            </div>
-                            <div class="card-body px-0 py-0">
-                                <div class="table-responsive">
-                                    <div class="session-scroll" style="height:354px;position:relative;">
-                                        <table class="table table-hover m-b-0">
-                                            <thead>
-                                                <tr>
-                                                    <th><span>CAMPAIGN DATE</span></th>
-                                                    <th><span>CLICK <a class="help" data-bs-toggle="popover"
-                                                                title="Popover title"
-                                                                data-bs-content="And here's some amazing content. It's very engaging. Right?"><i
-                                                                    class="feather icon-help-circle f-16"></i></a></span>
-                                                    </th>
-                                                    <th><span>COST <a class="help" data-bs-toggle="popover"
-                                                                title="Popover title"
-                                                                data-bs-content="And here's some amazing content. It's very engaging. Right?"><i
-                                                                    class="feather icon-help-circle f-16"></i></a></span>
-                                                    </th>
-                                                    <th><span>CTR <a class="help" data-bs-toggle="popover"
-                                                                title="Popover title"
-                                                                data-bs-content="And here's some amazing content. It's very engaging. Right?"><i
-                                                                    class="feather icon-help-circle f-16"></i></a></span>
-                                                    </th>
-                                                    <th><span>ARPU <a class="help" data-bs-toggle="popover"
-                                                                title="Popover title"
-                                                                data-bs-content="And here's some amazing content. It's very engaging. Right?"><i
-                                                                    class="feather icon-help-circle f-16"></i></a></span>
-                                                    </th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>Entire</td>
-                                                    <td>1300</td>
-                                                    <td>1025</td>
-                                                    <td>14005</td>
-                                                    <td>95,3%</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>8-11-2016</td>
-                                                    <td>786
-                                                        <div class="progress mt-1" style="height:4px;">
-                                                            <div class="progress-bar bg-danger rounded"
-                                                                role="progressbar" style="width: 60%;"
-                                                                aria-valuenow="60" aria-valuemin="0"
-                                                                aria-valuemax="100"></div>
-                                                        </div>
-                                                    </td>
-                                                    <td>485
-                                                        <div class="progress mt-1" style="height:4px;">
-                                                            <div class="progress-bar bg-primary rounded"
-                                                                role="progressbar" style="width: 50%;"
-                                                                aria-valuenow="50" aria-valuemin="0"
-                                                                aria-valuemax="100"></div>
-                                                        </div>
-                                                    </td>
-                                                    <td>769
-                                                        <div class="progress mt-1" style="height:4px;">
-                                                            <div class="progress-bar bg-warning rounded"
-                                                                role="progressbar" style="width: 70%;"
-                                                                aria-valuenow="70" aria-valuemin="0"
-                                                                aria-valuemax="100"></div>
-                                                        </div>
-                                                    </td>
-                                                    <td>45,3%
-                                                        <div class="progress mt-1" style="height:4px;">
-                                                            <div class="progress-bar bg-success rounded"
-                                                                role="progressbar" style="width: 60%;"
-                                                                aria-valuenow="60" aria-valuemin="0"
-                                                                aria-valuemax="100"></div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>15-10-2016</td>
-                                                    <td>786
-                                                        <div class="progress mt-1" style="height:4px;">
-                                                            <div class="progress-bar bg-danger rounded"
-                                                                role="progressbar" style="width: 65%;"
-                                                                aria-valuenow="65" aria-valuemin="0"
-                                                                aria-valuemax="100"></div>
-                                                        </div>
-                                                    </td>
-                                                    <td>523
-                                                        <div class="progress mt-1" style="height:4px;">
-                                                            <div class="progress-bar bg-primary rounded"
-                                                                role="progressbar" style="width: 80%;"
-                                                                aria-valuenow="80" aria-valuemin="0"
-                                                                aria-valuemax="100"></div>
-                                                        </div>
-                                                    </td>
-                                                    <td>736
-                                                        <div class="progress mt-1" style="height:4px;">
-                                                            <div class="progress-bar bg-warning rounded"
-                                                                role="progressbar" style="width: 80%;"
-                                                                aria-valuenow="80" aria-valuemin="0"
-                                                                aria-valuemax="100"></div>
-                                                        </div>
-                                                    </td>
-                                                    <td>78,3%
-                                                        <div class="progress mt-1" style="height:4px;">
-                                                            <div class="progress-bar bg-success rounded"
-                                                                role="progressbar" style="width: 70%;"
-                                                                aria-valuenow="70" aria-valuemin="0"
-                                                                aria-valuemax="100"></div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>8-8-2017</td>
-                                                    <td>624
-                                                        <div class="progress mt-1" style="height:4px;">
-                                                            <div class="progress-bar bg-danger rounded"
-                                                                role="progressbar" style="width: 45%;"
-                                                                aria-valuenow="45" aria-valuemin="0"
-                                                                aria-valuemax="100"></div>
-                                                        </div>
-                                                    </td>
-                                                    <td>436
-                                                        <div class="progress mt-1" style="height:4px;">
-                                                            <div class="progress-bar bg-primary rounded"
-                                                                role="progressbar" style="width: 55%;"
-                                                                aria-valuenow="55" aria-valuemin="0"
-                                                                aria-valuemax="100"></div>
-                                                        </div>
-                                                    </td>
-                                                    <td>756
-                                                        <div class="progress mt-1" style="height:4px;">
-                                                            <div class="progress-bar bg-warning rounded"
-                                                                role="progressbar" style="width: 95%;"
-                                                                aria-valuenow="95" aria-valuemin="0"
-                                                                aria-valuemax="100"></div>
-                                                        </div>
-                                                    </td>
-                                                    <td>78,3%
-                                                        <div class="progress mt-1" style="height:4px;">
-                                                            <div class="progress-bar bg-success rounded"
-                                                                role="progressbar" style="width: 38%;"
-                                                                aria-valuenow="38" aria-valuemin="0"
-                                                                aria-valuemax="100"></div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>11-12-2017</td>
-                                                    <td>423
-                                                        <div class="progress mt-1" style="height:4px;">
-                                                            <div class="progress-bar bg-danger rounded"
-                                                                role="progressbar" style="width: 54%;"
-                                                                aria-valuenow="54" aria-valuemin="0"
-                                                                aria-valuemax="100"></div>
-                                                        </div>
-                                                    </td>
-                                                    <td>123
-                                                        <div class="progress mt-1" style="height:4px;">
-                                                            <div class="progress-bar bg-primary rounded"
-                                                                role="progressbar" style="width: 70%;"
-                                                                aria-valuenow="70" aria-valuemin="0"
-                                                                aria-valuemax="100"></div>
-                                                        </div>
-                                                    </td>
-                                                    <td>756
-                                                        <div class="progress mt-1" style="height:4px;">
-                                                            <div class="progress-bar bg-warning rounded"
-                                                                role="progressbar" style="width: 75%;"
-                                                                aria-valuenow="75" aria-valuemin="0"
-                                                                aria-valuemax="100"></div>
-                                                        </div>
-                                                    </td>
-                                                    <td>78,6%
-                                                        <div class="progress mt-1" style="height:4px;">
-                                                            <div class="progress-bar bg-success rounded"
-                                                                role="progressbar" style="width: 60%;"
-                                                                aria-valuenow="60" aria-valuemin="0"
-                                                                aria-valuemax="100"></div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>1-6-2015</td>
-                                                    <td>465
-                                                        <div class="progress mt-1" style="height:4px;">
-                                                            <div class="progress-bar bg-danger rounded"
-                                                                role="progressbar" style="width: 66%;"
-                                                                aria-valuenow="66" aria-valuemin="0"
-                                                                aria-valuemax="100"></div>
-                                                        </div>
-                                                    </td>
-                                                    <td>463
-                                                        <div class="progress mt-1" style="height:4px;">
-                                                            <div class="progress-bar bg-primary rounded"
-                                                                role="progressbar" style="width: 50%;"
-                                                                aria-valuenow="50" aria-valuemin="0"
-                                                                aria-valuemax="100"></div>
-                                                        </div>
-                                                    </td>
-                                                    <td>456
-                                                        <div class="progress mt-1" style="height:4px;">
-                                                            <div class="progress-bar bg-warning rounded"
-                                                                role="progressbar" style="width: 30%;"
-                                                                aria-valuenow="30" aria-valuemin="0"
-                                                                aria-valuemax="100"></div>
-                                                        </div>
-                                                    </td>
-                                                    <td>68,6%
-                                                        <div class="progress mt-1" style="height:4px;">
-                                                            <div class="progress-bar bg-success rounded"
-                                                                role="progressbar" style="width: 30%;"
-                                                                aria-valuenow="30" aria-valuemin="0"
-                                                                aria-valuemax="100"></div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>8-11-2016</td>
-                                                    <td>786
-                                                        <div class="progress mt-1" style="height:4px;">
-                                                            <div class="progress-bar bg-danger rounded"
-                                                                role="progressbar" style="width: 43%;"
-                                                                aria-valuenow="43" aria-valuemin="0"
-                                                                aria-valuemax="100"></div>
-                                                        </div>
-                                                    </td>
-                                                    <td>485
-                                                        <div class="progress mt-1" style="height:4px;">
-                                                            <div class="progress-bar bg-primary rounded"
-                                                                role="progressbar" style="width: 70%;"
-                                                                aria-valuenow="70" aria-valuemin="0"
-                                                                aria-valuemax="100"></div>
-                                                        </div>
-                                                    </td>
-                                                    <td>769
-                                                        <div class="progress mt-1" style="height:4px;">
-                                                            <div class="progress-bar bg-warning rounded"
-                                                                role="progressbar" style="width: 69%;"
-                                                                aria-valuenow="69" aria-valuemin="0"
-                                                                aria-valuemax="100"></div>
-                                                        </div>
-                                                    </td>
-                                                    <td>45,3%
-                                                        <div class="progress mt-1" style="height:4px;">
-                                                            <div class="progress-bar bg-success rounded"
-                                                                role="progressbar" style="width: 90%;"
-                                                                aria-valuenow="90" aria-valuemin="0"
-                                                                aria-valuemax="100"></div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>15-10-2016</td>
-                                                    <td>786
-                                                        <div class="progress mt-1" style="height:4px;">
-                                                            <div class="progress-bar bg-danger rounded"
-                                                                role="progressbar" style="width: 61%;"
-                                                                aria-valuenow="61" aria-valuemin="0"
-                                                                aria-valuemax="100"></div>
-                                                        </div>
-                                                    </td>
-                                                    <td>523
-                                                        <div class="progress mt-1" style="height:4px;">
-                                                            <div class="progress-bar bg-primary rounded"
-                                                                role="progressbar" style="width: 45%;"
-                                                                aria-valuenow="45" aria-valuemin="0"
-                                                                aria-valuemax="100"></div>
-                                                        </div>
-                                                    </td>
-                                                    <td>736
-                                                        <div class="progress mt-1" style="height:4px;">
-                                                            <div class="progress-bar bg-warning rounded"
-                                                                role="progressbar" style="width: 70%;"
-                                                                aria-valuenow="70" aria-valuemin="0"
-                                                                aria-valuemax="100"></div>
-                                                        </div>
-                                                    </td>
-                                                    <td>78,3%
-                                                        <div class="progress mt-1" style="height:4px;">
-                                                            <div class="progress-bar bg-success rounded"
-                                                                role="progressbar" style="width: 60%;"
-                                                                aria-valuenow="60" aria-valuemin="0"
-                                                                aria-valuemax="100"></div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>8-8-2017</td>
-                                                    <td>624
-                                                        <div class="progress mt-1" style="height:4px;">
-                                                            <div class="progress-bar bg-danger rounded"
-                                                                role="progressbar" style="width: 66%;"
-                                                                aria-valuenow="66" aria-valuemin="0"
-                                                                aria-valuemax="100"></div>
-                                                        </div>
-                                                    </td>
-                                                    <td>436
-                                                        <div class="progress mt-1" style="height:4px;">
-                                                            <div class="progress-bar bg-primary rounded"
-                                                                role="progressbar" style="width: 55%;"
-                                                                aria-valuenow="55" aria-valuemin="0"
-                                                                aria-valuemax="100"></div>
-                                                        </div>
-                                                    </td>
-                                                    <td>756
-                                                        <div class="progress mt-1" style="height:4px;">
-                                                            <div class="progress-bar bg-warning rounded"
-                                                                role="progressbar" style="width: 90%;"
-                                                                aria-valuenow="90" aria-valuemin="0"
-                                                                aria-valuemax="100"></div>
-                                                        </div>
-                                                    </td>
-                                                    <td>78,3%
-                                                        <div class="progress mt-1" style="height:4px;">
-                                                            <div class="progress-bar bg-success rounded"
-                                                                role="progressbar" style="width: 66%;"
-                                                                aria-valuenow="66" aria-valuemin="0"
-                                                                aria-valuemax="100"></div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>11-12-2017</td>
-                                                    <td>423
-                                                        <div class="progress mt-1" style="height:4px;">
-                                                            <div class="progress-bar bg-danger rounded"
-                                                                role="progressbar" style="width: 35%;"
-                                                                aria-valuenow="35" aria-valuemin="0"
-                                                                aria-valuemax="100"></div>
-                                                        </div>
-                                                    </td>
-                                                    <td>123
-                                                        <div class="progress mt-1" style="height:4px;">
-                                                            <div class="progress-bar bg-primary rounded"
-                                                                role="progressbar" style="width: 60%;"
-                                                                aria-valuenow="60" aria-valuemin="0"
-                                                                aria-valuemax="100"></div>
-                                                        </div>
-                                                    </td>
-                                                    <td>756
-                                                        <div class="progress mt-1" style="height:4px;">
-                                                            <div class="progress-bar bg-warning rounded"
-                                                                role="progressbar" style="width: 70%;"
-                                                                aria-valuenow="70" aria-valuemin="0"
-                                                                aria-valuemax="100"></div>
-                                                        </div>
-                                                    </td>
-                                                    <td>78,6%
-                                                        <div class="progress mt-1" style="height:4px;">
-                                                            <div class="progress-bar bg-success rounded"
-                                                                role="progressbar" style="width: 50%;"
-                                                                aria-valuenow="50" aria-valuemin="0"
-                                                                aria-valuemax="100"></div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>1-6-2015</td>
-                                                    <td>465
-                                                        <div class="progress mt-1" style="height:4px;">
-                                                            <div class="progress-bar bg-danger rounded"
-                                                                role="progressbar" style="width: 66%;"
-                                                                aria-valuenow="66" aria-valuemin="0"
-                                                                aria-valuemax="100"></div>
-                                                        </div>
-                                                    </td>
-                                                    <td>463
-                                                        <div class="progress mt-1" style="height:4px;">
-                                                            <div class="progress-bar bg-primary rounded"
-                                                                role="progressbar" style="width: 50%;"
-                                                                aria-valuenow="50" aria-valuemin="0"
-                                                                aria-valuemax="100"></div>
-                                                        </div>
-                                                    </td>
-                                                    <td>456
-                                                        <div class="progress mt-1" style="height:4px;">
-                                                            <div class="progress-bar bg-warning rounded"
-                                                                role="progressbar" style="width: 30%;"
-                                                                aria-valuenow="30" aria-valuemin="0"
-                                                                aria-valuemax="100"></div>
-                                                        </div>
-                                                    </td>
-                                                    <td>68,6%
-                                                        <div class="progress mt-1" style="height:4px;">
-                                                            <div class="progress-bar bg-success rounded"
-                                                                role="progressbar" style="width: 90%;"
-                                                                aria-valuenow="90" aria-valuemin="0"
-                                                                aria-valuemax="100"></div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                <div class="dt-responsive table-responsive">
+                                    <table id="order-table-2" class="table table-striped table-bordered nowrap">
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Position</th>
+                                                <th>Office</th>
+                                                <th>Age</th>
+                                                <th>Start date</th>
+                                                <th>Salary</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Quinn Flynn</td>
+                                                <td>System Architect</td>
+                                                <td>Edinburgh</td>
+                                                <td>61</td>
+                                                <td>2011/04/25</td>
+                                                <td>$320,800</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Garrett Winters</td>
+                                                <td>Accountant</td>
+                                                <td>Tokyo</td>
+                                                <td>63</td>
+                                                <td>2011/07/25</td>
+                                                <td>$170,750</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Ashton Cox</td>
+                                                <td>Junior Technical Author</td>
+                                                <td>San Francisco</td>
+                                                <td>66</td>
+                                                <td>2009/01/12</td>
+                                                <td>$86,000</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Cedric Kelly</td>
+                                                <td>Senior Javascript Developer</td>
+                                                <td>Edinburgh</td>
+                                                <td>22</td>
+                                                <td>2012/03/29</td>
+                                                <td>$433,060</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Airi Satou</td>
+                                                <td>Accountant</td>
+                                                <td>Tokyo</td>
+                                                <td>33</td>
+                                                <td>2008/11/28</td>
+                                                <td>$162,700</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Brielle Williamson</td>
+                                                <td>Integration Specialist</td>
+                                                <td>New York</td>
+                                                <td>61</td>
+                                                <td>2012/12/02</td>
+                                                <td>$372,000</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Herrod Chandler</td>
+                                                <td>Sales Assistant</td>
+                                                <td>San Francisco</td>
+                                                <td>59</td>
+                                                <td>2012/08/06</td>
+                                                <td>$137,500</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Rhona Davidson</td>
+                                                <td>Integration Specialist</td>
+                                                <td>Tokyo</td>
+                                                <td>55</td>
+                                                <td>2010/10/14</td>
+                                                <td>$327,900</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Colleen Hurst</td>
+                                                <td>Javascript Developer</td>
+                                                <td>San Francisco</td>
+                                                <td>39</td>
+                                                <td>2009/09/15</td>
+                                                <td>$205,500</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Sonya Frost</td>
+                                                <td>Software Engineer</td>
+                                                <td>Edinburgh</td>
+                                                <td>23</td>
+                                                <td>2008/12/13</td>
+                                                <td>$103,600</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Jena Gaines</td>
+                                                <td>Office Manager</td>
+                                                <td>London</td>
+                                                <td>30</td>
+                                                <td>2008/12/19</td>
+                                                <td>$90,560</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Quinn Flynn</td>
+                                                <td>Support Lead</td>
+                                                <td>Edinburgh</td>
+                                                <td>22</td>
+                                                <td>2013/03/03</td>
+                                                <td>$342,000</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Charde Marshall</td>
+                                                <td>Regional Director</td>
+                                                <td>San Francisco</td>
+                                                <td>36</td>
+                                                <td>2008/10/16</td>
+                                                <td>$470,600</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Haley Kennedy</td>
+                                                <td>Senior Marketing Designer</td>
+                                                <td>London</td>
+                                                <td>43</td>
+                                                <td>2012/12/18</td>
+                                                <td>$313,500</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Tatyana Fitzpatrick</td>
+                                                <td>Regional Director</td>
+                                                <td>London</td>
+                                                <td>19</td>
+                                                <td>2010/03/17</td>
+                                                <td>$385,750</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Michael Silva</td>
+                                                <td>Marketing Designer</td>
+                                                <td>London</td>
+                                                <td>66</td>
+                                                <td>2012/11/27</td>
+                                                <td>$198,500</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Paul Byrd</td>
+                                                <td>Chief Financial Officer (CFO)</td>
+                                                <td>New York</td>
+                                                <td>64</td>
+                                                <td>2010/06/09</td>
+                                                <td>$725,000</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Gloria Little</td>
+                                                <td>Systems Administrator</td>
+                                                <td>New York</td>
+                                                <td>59</td>
+                                                <td>2009/04/10</td>
+                                                <td>$237,500</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Bradley Greer</td>
+                                                <td>Software Engineer</td>
+                                                <td>London</td>
+                                                <td>41</td>
+                                                <td>2012/10/13</td>
+                                                <td>$132,000</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Dai Rios</td>
+                                                <td>Personnel Lead</td>
+                                                <td>Edinburgh</td>
+                                                <td>35</td>
+                                                <td>2012/09/26</td>
+                                                <td>$217,500</td>
+                                            </tr>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Position</th>
+                                                <th>Office</th>
+                                                <th>Age</th>
+                                                <th>Start date</th>
+                                                <th>Salary</th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!-- sessions-section end -->
+
+
                 </div>
                 <!-- [ Main Content ] end -->
             </div>

@@ -10,6 +10,12 @@ $(document).ready(function() {
             ]
         });
 
+        $('#order-table-2').DataTable({
+            "order": [
+                [3, "desc"]
+            ]
+        });
+
         // [ Multi-Column Ordering ]
         $('#multi-colum-dt').DataTable({
             columnDefs: [{

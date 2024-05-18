@@ -75,7 +75,15 @@
                                     class="feather icon-layout"></i></span><span
                                 class="pcoded-mtext">Employee</span></a>
                         <ul class="pcoded-submenu">
-                            <li class=""><a href="" class="">Daftar Pesanan</a></li>
+                            <li class=""><a href="#" class="">Daftar Pesanan</a>
+                                <ul class="pcoded-submenu">
+                                    <li class=""><a href="{{ route('employee.daftarPesanan') }}" class="" >List Pesanan</a></li>
+                                    <li class=""><a href="{{ route('employee.daftarPesananPending') }}" class="" >List Pesanan Pending</a></li>
+                                </ul>
+                            </li>
+                            <li class="pcoded-hasmenu"><a href="{{ route('employee.daftarTransaksi') }}" class="">Daftar Transaksi</a>
+
+                            </li>
                             <li class="pcoded-hasmenu"><a href="#" class="">Menu</a>
                                 <ul class="pcoded-submenu">
                                     <li class=""><a href="{{ route('employee.menu') }}" class="">List Menu</a>
@@ -95,6 +103,14 @@
                                     </li>
                                     <li class=""><a href="{{ route('employee.addPromo') }}" class="" >Add Promo</a>
                                     </li>
+                                </ul>
+                            </li>
+                            <li class="pcoded-hasmenu"><a href="#!" class="">Reservasi</a>
+                                <ul class="pcoded-submenu">
+                                    <li class=""><a href="{{ route('employee.reservasi') }}" class="" >List
+                                            Reservasi</a></li>
+                                    <li class=""><a href="{{ route('employee.addReservasi') }}" class="" >Add Resercasi</a></li>
+
                                 </ul>
                             </li>
 

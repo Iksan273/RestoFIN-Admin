@@ -42,6 +42,17 @@ Route::view('/StrukPembelian-Add','Employee.add_strukPembelian')->name('employee
 Route::view('/MemberPoint-Pengurangan','Employee.member_point')->name('employee.pointMinus');
 Route::view('/MemberPoint-PenguranganAdmin','Employee.member_pointAdmin')->name('employee.pointMinusAdmin');
 
+Route::view('/daftar-pesanan','Employee.daftar_pesanan')->name('employee.daftarPesanan');
+Route::view('/daftar-pesanan-pending','Employee.daftar_pesananPending')->name('employee.daftarPesananPending');
+
+Route::view('/daftar-transaksi','Employee.daftar_transaksi')->name('employee.daftarTransaksi');
+Route::view('/daftar-pesanan-pending','Employee.daftar_pesananPending')->name('employee.daftarPesananPending');
+
+
+Route::view('/reservasi','Employee.reservasi')->name('employee.reservasi');
+Route::view('/reservasi-addReservasi','Employee.add_reservasi')->name('employee.addReservasi');
+Route::view('/reservasi-editReservasi','Employee.edit_reservasi')->name('employee.editReservasi');
+
 Route::get('/Login', function () {
     return view('Auth.Login');
 });

@@ -1,5 +1,16 @@
 @extends('Layouts.user')
 @section('content')
+@if (session('success'))
+<div class="alert alert-success">
+    {{ session('success') }}
+</div>
+@endif
+@if (session('error'))
+<div class="alert alert-danger">
+    {{ session('error') }}
+</div>
+@endif
+
     <div class="pcoded-content">
         <div class="pcoded-inner-content">
             <div class="main-body">
@@ -29,20 +40,20 @@
                                     <h5>Tambah Rekomendasi Menu</h5>
                                 </div>
                                 <div class="card-body">
-                                    <form action="" method="POST">
+                                    <form action="{{ route('rekomendasi.store') }}" method="POST">
                                         @csrf
                                         <div class="form-group">
                                             <label for="namaMenu">Nama Menu</label>
-                                            <select class="form-control" id="namaMenu" name="namaMenu">
-                                                <option value="Nasi Goreng">Nasi Goreng</option>
-                                                <option value="Mie Goreng">Mie Goreng</option>
-                                                <option value="Sate Ayam">Sate Ayam</option>
-                                                <!-- Tambahkan opsi lain sesuai kebutuhan -->
+                                            <select class="form-control" id="namaMenu" name="menu">
+                                                <option value="">Pilih Menu</option>
+                                                @foreach ($menu as $menu)
+                                                    <option value="{{ $menu->id }}">{{ $menu->title }}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                         <div class="form-group">
                                             <label for="deskripsi">Deskripsi</label>
-                                            <input type="text" class="form-control" id="deskripsi" name="deskripsi" placeholder="Masukkan deskripsi menu">
+                                            <textarea class="form-control" name="description" placeholder="Masukkan Deskripsi Menu"></textarea>
                                         </div>
                                         <button type="submit" class="btn btn-primary">Tambah</button>
                                     </form>

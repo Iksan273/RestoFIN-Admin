@@ -40,6 +40,8 @@
                                                     <th>Tanggal Reservasi</th>
                                                     <th>No Telepon</th>
                                                     <th>Email</th>
+                                                    <th>Keterangan</th>
+                                                    <th>Status</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
@@ -51,6 +53,8 @@
                                                     <td>2023-10-05</td>
                                                     <td>08123456789</td>
                                                     <td>johndoe@example.com</td>
+                                                    <td>-</td>
+                                                    <td>Pending</td>
                                                     <td>
                                                         <a href="{{ route('employee.editReservasi') }}"
                                                             class="btn btn-gradient-info"><i class="fas fa-edit"></i></a>

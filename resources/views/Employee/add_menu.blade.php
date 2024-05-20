@@ -1,5 +1,15 @@
 @extends('Layouts.user')
 @section('content')
+@if (session('success'))
+<div class="alert alert-success">
+    {{ session('success') }}
+</div>
+@endif
+@if (session('error'))
+<div class="alert alert-danger">
+    {{ session('error') }}
+</div>
+@endif
     <div class="pcoded-content">
         <div class="pcoded-inner-content">
             <div class="main-body">
@@ -13,7 +23,8 @@
                                         <h5 class="m-b-10">Employee</h5>
                                     </div>
                                     <ul class="breadcrumb">
-                                        <li class="breadcrumb-item"><a href="/"><i class="feather icon-home"></i></a></li>
+                                        <li class="breadcrumb-item"><a href="/"><i class="feather icon-home"></i></a>
+                                        </li>
                                         <li class="breadcrumb-item"><a href="#!">Tambah Menu</a></li>
                                     </ul>
                                 </div>
@@ -28,42 +39,49 @@
                                 <div class="card-header">
                                     <h5>Tambah Menu</h5>
                                 </div>
-                                <div class="card-body">
-                                    <form>
+                                <form action="{{ route('menu.store') }}" method="POST" enctype="multipart/form-data">
+                                    @csrf <!-- CSRF Token untuk keamanan -->
+                                    <div class="card-body">
                                         <div class="form-group">
                                             <label class="form-label">Nama Menu:</label>
-                                            <input type="text" class="form-control" placeholder="Masukkan Nama Menu">
+                                            <input type="text" class="form-control" name="title"
+                                                placeholder="Masukkan Nama Menu">
                                         </div>
                                         <div class="form-group">
                                             <label class="form-label">Deskripsi:</label>
-                                            <textarea class="form-control" placeholder="Masukkan Deskripsi Menu"></textarea>
+                                            <textarea class="form-control" name="description" placeholder="Masukkan Deskripsi Menu"></textarea>
                                         </div>
                                         <div class="form-group">
                                             <label class="form-label">Harga:</label>
-                                            <input type="number" class="form-control" placeholder="Masukkan Harga Menu">
+                                            <input type="number" class="form-control" name="price"
+                                                placeholder="Masukkan Harga Menu">
                                         </div>
                                         <div class="form-group">
                                             <label class="form-label">Kategori:</label>
-                                            <select class="form-control">
-                                                <option>Pilih Kategori</option>
-                                                <option value="makanan">Makanan</option>
-                                                <option value="minuman">Minuman</option>
-                                                <option value="snack">Snack</option>
+                                            <select class="form-control" name="kategori">
+                                                <option value="">Pilih Kategori</option>
+                                                @foreach ($categories as $category)
+                                                    <option value="{{ $category->id }}">{{ $category->title }}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                         <div class="form-group">
                                             <label class="form-label">Foto:</label>
-                                            <input type="file" class="form-control" onchange="previewFile()">
+                                            <input type="file" class="form-control" name="foto"
+                                                onchange="previewFile()">
                                             <small class="form-text text-muted">Silahkan upload gambar menu.</small>
-                                            <div class="preview-container" style="margin-top: 20px; border: 1px dashed #ccc; padding: 10px; display: flex; justify-content: center; align-items: center; height: 200px; width: 200px;">
-                                                <img id="previewImg" src="" alt="Preview Image" style="max-width: 100%; max-height: 100%; display: none;">
+                                            <div class="preview-container"
+                                                style="margin-top: 20px; border: 1px dashed #ccc; padding: 10px; display: flex; justify-content: center; align-items: center; height: 200px; width: 200px;">
+                                                <img id="previewImg" src="" alt="Preview Image"
+                                                    style="max-width: 100%; max-height: 100%; display: none;">
                                             </div>
                                         </div>
-                                    </form>
-                                </div>
-                                <div class="card-footer">
-                                    <button class="btn btn-primary me-2">Submit</button>
-                                </div>
+                                    </div>
+
+                                    <div class="card-footer">
+                                        <button type="submit" class="btn btn-primary me-2">Submit</button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -74,21 +92,21 @@
     </div>
 @endsection
 <script>
-function previewFile() {
-    var preview = document.getElementById('previewImg');
-    var file    = document.querySelector('input[type=file]').files[0];
-    var reader  = new FileReader();
+    function previewFile() {
+        var preview = document.getElementById('previewImg');
+        var file = document.querySelector('input[type=file]').files[0];
+        var reader = new FileReader();
 
-    reader.onloadend = function () {
-        preview.style.display = 'block';
-        preview.src = reader.result;
-    }
+        reader.onloadend = function() {
+            preview.style.display = 'block';
+            preview.src = reader.result;
+        }
 
-    if (file) {
-        reader.readAsDataURL(file);
-    } else {
-        preview.style.display = 'none';
-        preview.src = "";
+        if (file) {
+            reader.readAsDataURL(file);
+        } else {
+            preview.style.display = 'none';
+            preview.src = "";
+        }
     }
-}
 </script>

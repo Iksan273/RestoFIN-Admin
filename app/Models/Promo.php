@@ -14,7 +14,6 @@ class Promo extends Model
         'description',
         'start_date',
         'end_date',
-        'discount',
         'point_digunakan',
         'point_dibutuhkan',
         'image_url'

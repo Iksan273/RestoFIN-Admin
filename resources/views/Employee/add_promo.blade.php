@@ -1,5 +1,16 @@
 @extends('Layouts.user')
 @section('content')
+    @if (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+    @if (session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
+
     <div class="pcoded-content">
         <div class="pcoded-inner-content">
             <div class="main-body">
@@ -13,7 +24,8 @@
                                         <h5 class="m-b-10">Employee</h5>
                                     </div>
                                     <ul class="breadcrumb">
-                                        <li class="breadcrumb-item"><a href="/"><i class="feather icon-home"></i></a></li>
+                                        <li class="breadcrumb-item"><a href="/"><i class="feather icon-home"></i></a>
+                                        </li>
                                         <li class="breadcrumb-item"><a href="#!">Employee-Tambah Promo</a></li>
                                     </ul>
                                 </div>
@@ -28,40 +40,55 @@
                                 <div class="card-header">
                                     <h5>Form Tambah Promo</h5>
                                 </div>
-                                <div class="card-body">
-                                    <form action="" method="POST" enctype="multipart/form-data">
-                                        @csrf
+                                <form action="{{ route('promo.store') }}" method="POST" enctype="multipart/form-data">
+                                    @csrf
+                                    <div class="card-body">
+
                                         <div class="form-group">
                                             <label for="namaPromo">Nama Promo</label>
-                                            <input type="text" class="form-control" id="namaPromo" name="namaPromo" required>
+                                            <input type="text" class="form-control" id="namaPromo" name="title"
+                                                required>
                                         </div>
                                         <div class="form-group">
                                             <label for="fotoPromo">Foto Promo</label>
-                                            <input type="file" class="form-control" onchange="previewFile()">
+                                            <input type="file" class="form-control" onchange="previewFile()"
+                                                name="foto">
                                             <small class="form-text text-muted">Silahkan upload gambar Promo.</small>
-                                            <div class="preview-container" style="margin-top: 20px; border: 1px dashed #ccc; padding: 10px; display: flex; justify-content: center; align-items: center; height: 200px; width: 200px;">
-                                                <img id="previewImg" src="" alt="Preview Image" style="max-width: 100%; max-height: 100%; display: none;">
+                                            <div class="preview-container"
+                                                style="margin-top: 20px; border: 1px dashed #ccc; padding: 10px; display: flex; justify-content: center; align-items: center; height: 200px; width: 200px;">
+                                                <img id="previewImg" src="" alt="Preview Image"
+                                                    style="max-width: 100%; max-height: 100%; display: none;">
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label for="tanggalMulai">Tanggal Mulai</label>
-                                            <input type="date" class="form-control" id="tanggalMulai" name="tanggalMulai" required>
+                                            <input type="date" class="form-control" id="tanggalMulai" name="start_date"
+                                                required>
                                         </div>
                                         <div class="form-group">
                                             <label for="tanggalSelesai">Tanggal Selesai</label>
-                                            <input type="date" class="form-control" id="tanggalSelesai" name="tanggalSelesai" required>
+                                            <input type="date" class="form-control" id="tanggalSelesai" name="end_date"
+                                                required>
                                         </div>
                                         <div class="form-group">
                                             <label for="discount">Deskripsi</label>
-                                            <textarea class="form-control" id="discount" name="discount" required></textarea>
+                                            <textarea class="form-control" id="discount" name="description" required></textarea>
                                         </div>
                                         <div class="form-group">
                                             <label for="pointYangDigunakan">Point yang Digunakan</label>
-                                            <input type="number" class="form-control" id="pointYangDigunakan" name="pointYangDigunakan" required>
+                                            <input type="number" class="form-control" id="pointYangDigunakan"
+                                                name="point_gunakan" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="pointYangDigunakan">Minimal Point</label>
+                                            <input type="number" class="form-control" id="pointYangDigunakan"
+                                                name="point_dibutuhkan" required>
                                         </div>
                                         <button type="submit" class="btn btn-primary">Tambah Promo</button>
-                                    </form>
-                                </div>
+
+                                    </div>
+                                </form>
+
                             </div>
                         </div>
                     </div>
@@ -75,10 +102,10 @@
 <script>
     function previewFile() {
         var preview = document.getElementById('previewImg');
-        var file    = document.querySelector('input[type=file]').files[0];
-        var reader  = new FileReader();
+        var file = document.querySelector('input[type=file]').files[0];
+        var reader = new FileReader();
 
-        reader.onloadend = function () {
+        reader.onloadend = function() {
             preview.style.display = 'block';
             preview.src = reader.result;
         }
@@ -90,4 +117,4 @@
             preview.src = "";
         }
     }
-    </script>
+</script>

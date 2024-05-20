@@ -6,7 +6,12 @@ $(document).ready(function() {
         // [ Default Ordering ] start
         $('#order-table').DataTable({
             "order": [
-                [3, "desc"]
+                [0, "asc"]
+            ]
+        });
+        $('#order-table-desc').DataTable({
+            "order": [
+                [0, "desc"]
             ]
         });
 

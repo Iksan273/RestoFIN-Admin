@@ -1,5 +1,16 @@
 @extends('Layouts.user')
 @section('content')
+    @if (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+    @if (session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
+
     <div class="pcoded-content">
         <div class="pcoded-inner-content">
             <div class="main-body">
@@ -31,7 +42,7 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
-                                        <table id="promo-table" class="table table-striped table-bordered nowrap">
+                                        <table id="order-table" class="table table-striped table-bordered nowrap">
                                             <thead>
                                                 <tr>
                                                     <th>ID</th>
@@ -41,52 +52,64 @@
                                                     <th>Tanggal Selesai</th>
                                                     <th>Deskripsi</th>
                                                     <th>Point yang Digunakan</th>
+                                                    <th>Minimal Point</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <!-- Contoh data -->
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td>Promo Akhir Tahun</td>
-                                                    <td><img src="path/to/promo.jpg" alt="Promo Akhir Tahun"
-                                                            style="width: 50px; height: auto;"></td>
-                                                    <td>2023-12-01</td>
-                                                    <td>2023-12-31</td>
-                                                    <td>Free 1 minuman bro</td>
-                                                    <td>100 Point</td>
-                                                    <td>
-                                                        <a href="{{ route('employee.editPromo') }}"
-                                                            class="btn btn-gradient-info"><i class="fas fa-edit"></i></a>
-                                                        <button class="btn btn-gradient-danger" data-bs-toggle="modal"
-                                                            data-bs-target="#deleteModal"><i
-                                                                class="fas fa-trash"></i></button>
-                                                    </td>
-                                                </tr>
-                                                <div class="modal fade md-effect-1" id="deleteModal" tabindex="-1"
-                                                    role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
-                                                    <div class="modal-dialog" role="document">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h5 class="modal-title" id="deleteModalLabel">
-                                                                    Delete Menu</h5>
-                                                                <button type="button" class="btn-close"
-                                                                    data-bs-dismiss="modal" aria-label="Close"></button>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                <p>Kamu yakin ingin menghapus Promo nama ? <strong
-                                                                        id="username"></strong>?
-                                                                </p>
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary"
-                                                                    data-bs-dismiss="modal">Cancel</button>
-                                                                <button type="button" class="btn btn-danger"
-                                                                    id="confirm-delete">Delete</button>
+                                                @foreach ($promos as $data)
+                                                    <tr>
+                                                        <td>{{ $data->id }}</td>
+                                                        <td>{{ $data->title }}</td>
+                                                        <td><img src="{{ asset('promo/images/' . $data->image_url) }}"
+                                                                alt="{{ $data->nama_promo }}"
+                                                                style="width: 100px; height: auto;"></td>
+                                                        <td>{{ $data->start_date }}</td>
+                                                        <td>{{ $data->end_date }}</td>
+                                                        <td>{{ $data->description }}</td>
+                                                        <td>{{ (int)$data->point_digunakan }} Point</td>
+                                                        <td>{{ (int)$data->point_dibutuhkan }} Point</td>
+                                                        <td>
+                                                            <a href="{{ route('employee.editPromo', $data->id) }}"
+                                                                class="btn btn-gradient-info"><i
+                                                                    class="fas fa-edit"></i></a>
+                                                            <button class="btn btn-gradient-danger" data-bs-toggle="modal"
+                                                                data-bs-target="#deleteModal{{ $data->id }}"><i
+                                                                    class="fas fa-trash"></i></button>
+                                                        </td>
+                                                    </tr>
+                                                    <div class="modal fade" id="deleteModal{{ $data->id }}"
+                                                        tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+                                                        aria-hidden="true">
+                                                        <div class="modal-dialog" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="deleteModalLabel">Delete
+                                                                        Promo</h5>
+                                                                    <button type="button" class="btn-close"
+                                                                        data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <p>Kamu yakin ingin Menghapus Promo
+                                                                        {{ $data->title }}?</p>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <form action="{{ route('promo.delete', $data->id) }}"
+                                                                        method="POST">
+                                                                        @csrf
+                                                                        @method('DELETE')
+                                                                        <button type="button" class="btn btn-secondary"
+                                                                            data-bs-dismiss="modal">Cancel</button>
+                                                                        <button type="submit"
+                                                                            class="btn btn-danger">Delete</button>
+                                                                    </form>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
+
+                                                @endforeach
                                             </tbody>
                                             <tfoot>
                                                 <tr>

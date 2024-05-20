@@ -1,5 +1,16 @@
 @extends('Layouts.user')
 @section('content')
+    @if (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+    @if (session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
+
     <div class="pcoded-content">
         <div class="pcoded-inner-content">
             <div class="main-body">
@@ -46,47 +57,56 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td>Nasi Goreng</td>
-                                                    <td><img src="path/to/image.jpg" alt="Nasi Goreng"
-                                                            style="width: 50px; height: auto;"></td>
-                                                    <td>Nasi goreng dengan topping ayam dan sayuran</td>
-                                                    <td>Rp 25.000</td>
-                                                    <td>Makanan</td>
-                                                    <td>
-                                                        <a href="{{ route('employee.editMenu') }}"
-                                                            class="btn btn-gradient-info"><i class="fas fa-edit"></i></a>
-
-                                                        <button class="btn btn-gradient-danger" data-bs-toggle="modal"
-                                                            data-bs-target="#deleteModal"><i
-                                                                class="fas fa-trash"></i></button>
-                                                    </td>
-                                                </tr>
-                                                <div class="modal fade md-effect-1" id="deleteModal" tabindex="-1"
-                                                    role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
-                                                    <div class="modal-dialog" role="document">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h5 class="modal-title" id="deleteModalLabel">
-                                                                    Delete Menu</h5>
-                                                                <button type="button" class="btn-close"
-                                                                    data-bs-dismiss="modal" aria-label="Close"></button>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                <p>Kamu yakin ingin menghapus menu nama ? <strong
-                                                                        id="username"></strong>?
-                                                                </p>
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary"
-                                                                    data-bs-dismiss="modal">Cancel</button>
-                                                                <button type="button" class="btn btn-danger"
-                                                                    id="confirm-delete">Delete</button>
+                                                @foreach ($menus as $data)
+                                                    <tr>
+                                                        <td>{{ $data->id }}</td>
+                                                        <td>{{ $data->title }}</td>
+                                                        <td><img src="{{ asset('menu/images/' . $data->imageUrl) }}"
+                                                                alt="{{ $data->title }}"
+                                                                style="width: 100px; height: auto;"></td>
+                                                        <td>{{ $data->description }}</td>
+                                                        <td>Rp {{ number_format($data->price, 0, ',', '.') }}</td>
+                                                        <td>{{ $data->category->title }}</td>
+                                                        <td>
+                                                            <a href="{{ route('employee.editMenu', $data->id) }}"
+                                                                class="btn btn-gradient-info"><i
+                                                                    class="fas fa-edit"></i></a>
+                                                            <button class="btn btn-gradient-danger" data-bs-toggle="modal"
+                                                                data-bs-target="#deleteModal{{ $data->id }}"><i
+                                                                    class="fas fa-trash"></i></button>
+                                                        </td>
+                                                    </tr>
+                                                    <div class="modal fade" id="deleteModal{{ $data->id }}"
+                                                        tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+                                                        aria-hidden="true">
+                                                        <div class="modal-dialog" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="deleteModalLabel">Delete
+                                                                        menu</h5>
+                                                                    <button type="button" class="btn-close"
+                                                                        data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <p>Kamu yakin ingin Menghapus Menu
+                                                                        {{ $data->title }}?</p>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <form action="{{ route('menu.delete', $data->id) }}"
+                                                                        method="POST">
+                                                                        @csrf
+                                                                        @method('DELETE')
+                                                                        <button type="button" class="btn btn-secondary"
+                                                                            data-bs-dismiss="modal">Cancel</button>
+                                                                        <button type="submit"
+                                                                            class="btn btn-danger">Delete</button>
+                                                                    </form>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                @endforeach
+
 
                                             </tbody>
                                             <tfoot>

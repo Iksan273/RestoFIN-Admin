@@ -1,6 +1,17 @@
 @extends('layouts.user')
 
 @section('content')
+@if (session('success'))
+<div class="alert alert-success">
+    {{ session('success') }}
+</div>
+@endif
+@if (session('error'))
+<div class="alert alert-danger">
+    {{ session('error') }}
+</div>
+@endif
+
 <div class="pcoded-content">
     <div class="pcoded-inner-content">
         <div class="main-body">
@@ -27,16 +38,16 @@
                                 <h5>Edit Rekomendasi Menu</h5>
                             </div>
                             <div class="card-body">
-                                <form action="" method="POST">
+                                <form action="{{ route('rekomendasi.update', ['id' => $rekomendasi->id]) }}" method="POST">
                                     @csrf
                                     @method('PUT')
                                     <div class="form-group">
                                         <label for="nama">Nama Menu</label>
-                                        <input type="text" class="form-control" id="nama" name="nama"  disabled>
+                                        <input type="text" class="form-control" id="nama" name="menu"  disabled value="{{ $rekomendasi->menu->title }}">
                                     </div>
                                     <div class="form-group">
                                         <label for="deskripsi">Deskripsi</label>
-                                        <input class="form-control" id="deskripsi" name="deskripsi" rows="3" required></input>
+                                        <textarea class="form-control" name="description" placeholder="Masukkan Deskripsi Menu">{{ $rekomendasi->description }}</textarea>
                                     </div>
                                     <button type="submit" class="btn btn-primary">Update</button>
                                 </form>

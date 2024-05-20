@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\MenuController;
+use App\Http\Controllers\PromoController;
+use App\Http\Controllers\RecommendationController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,18 +27,38 @@ Route::view('/Master-Employee', 'Master.employee')->name('master.employee');
 Route::view('/Master-EditEmployee','Master.edit_employee')->name('edit-employee');
 
 
+
+
 //Menu Admin Route
-Route::view('/Menu', 'Employee.menu')->name('employee.menu');
-Route::view('/Menu-EditMenu','Employee.edit_menu')->name('employee.editMenu');
-Route::view('/Menu-TambahMenu','Employee.add_menu')->name('employee.addMenu');
+Route::get('/AdminMenu', [MenuController::class, 'index'])->name('employee.menu');
+Route::get('/Menu-EditMenu/{id}', [MenuController::class, 'edit'])->name('employee.editMenu');
+Route::get('/Menu-TambahMenu', [MenuController::class, 'create'])->name('employee.addMenu');
+Route::post('/Menu-Store', [MenuController::class, 'store'])->name('menu.store');
+Route::put('/Menu-Update/{id}', [MenuController::class, 'update'])->name('menu.update');
+Route::delete('/Menu-Delete/{id}', [MenuController::class, 'destroy'])->name('menu.delete');
 
-Route::view('/Rekomendasi-Menu','Employee.rekomendasi')->name('employee.rekomendasi');
-Route::view('/Rekomendasi-EditMenu','Employee.edit_rekomendasi')->name('employee.editRekomendasi');
-Route::view('/Rekomendasi-AddMenu','Employee.add_rekomendasi')->name('employee.addRekomendasi');
+Route::get('/Kategori',[CategoryController::class, 'index'])->name('employee.kategori');
+Route::get('/Kategori/editKategori/{id}', [CategoryController::class, 'edit'])->name('edit.kategori');
+Route::get('/Kategori-TambahKategori',[CategoryController::class, 'create'])->name('employee.addKategori');
+Route::post('/Kategori-Store',[CategoryController::class, 'store'])->name('kategori.store');
+Route::put('/Kategori-Update/{id}',[CategoryController::class, 'update'])->name('kategori.update');
+Route::delete('/Kategori-Delete/{id}',[CategoryController::class, 'destroy'])->name('kategori.delete');
 
-Route::view('/Promo','Employee.promo')->name('employee.promo');
-Route::view('/Promo-editPromo','Employee.edit_promo')->name('employee.editPromo');
-Route::view('/Promo-addPromo','Employee.add_promo')->name('employee.addPromo');
+// Route untuk Rekomendasi
+Route::get('/Rekomendasi', [RecommendationController::class, 'index'])->name('employee.rekomendasi');
+Route::get('/Rekomendasi/editRekomendasi/{id}', [RecommendationController::class, 'edit'])->name('employee.editRekomendasi');
+Route::get('/Rekomendasi/tambahRekomendasi', [RecommendationController::class, 'create'])->name('employee.addRekomendasi');
+Route::post('/Rekomendasi/store', [RecommendationController::class, 'store'])->name('rekomendasi.store');
+Route::put('/Rekomendasi/update/{id}', [RecommendationController::class, 'update'])->name('rekomendasi.update');
+Route::delete('/Rekomendasi/delete/{id}', [RecommendationController::class, 'destroy'])->name('rekomendasi.delete');
+
+// Route untuk Promo
+Route::get('/promo-employee', [PromoController::class, 'index'])->name('employee.promo');
+Route::get('/Promo/editPromo/{id}', [PromoController::class, 'edit'])->name('employee.editPromo');
+Route::get('/Promo/tambahPromo', [PromoController::class, 'create'])->name('employee.addPromo');
+Route::post('/Promo/store', [PromoController::class, 'store'])->name('promo.store');
+Route::put('/Promo/update/{id}', [PromoController::class, 'update'])->name('promo.update');
+Route::delete('/Promo/delete/{id}', [PromoController::class, 'destroy'])->name('promo.delete');
 
 Route::view('/StrukPembelian','Employee.struk_pembelian')->name('employee.struk');
 Route::view('/StrukPembelian-Add','Employee.add_strukPembelian')->name('employee.addStruk');

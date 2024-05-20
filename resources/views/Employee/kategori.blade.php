@@ -26,7 +26,7 @@
                                     <ul class="breadcrumb">
                                         <li class="breadcrumb-item"><a href="/"><i class="feather icon-home"></i></a>
                                         </li>
-                                        <li class="breadcrumb-item"><a href="#!">Employee-Rekomendasi Menu</a></li>
+                                        <li class="breadcrumb-item"><a href="#!">Employee-Kategori</a></li>
 
                                     </ul>
                                 </div>
@@ -40,7 +40,7 @@
                         <div class="col-xl-12 col-sm-12 col-md-6">
                             <div class="card">
                                 <div class="card-header">
-                                    <h5>List Rekomendasi Menu</h5>
+                                    <h5>List Kategori</h5>
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
@@ -48,20 +48,17 @@
                                             <thead>
                                                 <tr>
                                                     <th>ID</th>
-                                                    <th>Nama Menu</th>
-                                                    <th>Deskripsi</th>
+                                                    <th>Nama Kategori</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach ($rekomendasi as $data)
+                                                @foreach ($categories as $data)
                                                     <tr>
                                                         <td>{{ $data->id }}</td>
-                                                        <td>{{ $data->menu->title }}</td>
-                                                        <td>{{ $data->description }}</td>
-
+                                                        <td>{{ $data->title }}</td>
                                                         <td>
-                                                            <a href="{{ route('employee.editRekomendasi', $data->id) }}"
+                                                            <a href="{{ route('edit.kategori',['id'=>$data->id]) }}"
                                                                 class="btn btn-gradient-info"><i
                                                                     class="fas fa-edit"></i></a>
                                                             <button class="btn btn-gradient-danger" data-bs-toggle="modal"
@@ -69,6 +66,7 @@
                                                                     class="fas fa-trash"></i></button>
                                                         </td>
                                                     </tr>
+                                                    <!-- Modal Delete -->
                                                     <div class="modal fade" id="deleteModal{{ $data->id }}"
                                                         tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
                                                         aria-hidden="true">
@@ -76,16 +74,16 @@
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
                                                                     <h5 class="modal-title" id="deleteModalLabel">Delete
-                                                                       Rekomendasi menu</h5>
+                                                                        Kategori</h5>
                                                                     <button type="button" class="btn-close"
                                                                         data-bs-dismiss="modal" aria-label="Close"></button>
                                                                 </div>
                                                                 <div class="modal-body">
-                                                                    <p>Kamu yakin ingin Menghapus Rekomendasi Menu
-                                                                        {{ $data->menu->title }}?</p>
+                                                                    <p>Kamu yakin ingin menghapus kategori
+                                                                        {{ $data->title }}?</p>
                                                                 </div>
                                                                 <div class="modal-footer">
-                                                                    <form action="{{ route('rekomendasi.delete', $data->id) }}"
+                                                                    <form action="{{ route('kategori.delete', $data->id) }}"
                                                                         method="POST">
                                                                         @csrf
                                                                         @method('DELETE')
@@ -100,13 +98,11 @@
                                                     </div>
                                                 @endforeach
 
-
                                             </tbody>
                                             <tfoot>
                                                 <tr>
                                                     <th>ID</th>
-                                                    <th>Nama Menu</th>
-                                                    <th>Deskripsi</th>
+                                                    <th>Nama Kategori</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </tfoot>

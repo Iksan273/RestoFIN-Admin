@@ -1,5 +1,15 @@
 @extends('Layouts.user')
 @section('content')
+@if (session('success'))
+<div class="alert alert-success">
+    {{ session('success') }}
+</div>
+@endif
+@if (session('error'))
+<div class="alert alert-danger">
+    {{ session('error') }}
+</div>
+@endif
     <div class="pcoded-content">
         <div class="pcoded-inner-content">
             <div class="main-body">
@@ -13,8 +23,10 @@
                                         <h5 class="m-b-10">Employee</h5>
                                     </div>
                                     <ul class="breadcrumb">
-                                        <li class="breadcrumb-item"><a href="/"><i class="feather icon-home"></i></a></li>
-                                        <li class="breadcrumb-item"><a href="#!">Pengurangan Member Poin By Admin</a></li>
+                                        <li class="breadcrumb-item"><a href="/"><i class="feather icon-home"></i></a>
+                                        </li>
+                                        <li class="breadcrumb-item"><a href="#!">Pengurangan Member Poin By Admin</a>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
@@ -28,22 +40,29 @@
                                 <div class="card-header">
                                     <h5>Update Poin Member</h5>
                                 </div>
-                                <div class="card-body">
-                                    <form>
+                                <form action="{{ route('memberpoint.minusAdmin') }}" method="POST">
+                                    @csrf
+                                    <div class="card-body">
                                         <div class="form-group">
                                             <label class="form-label">Nomor Telepon:</label>
-                                            <input type="text" class="form-control" placeholder="Masukkan Nomor Telepon">
+                                            <input type="text" class="form-control" placeholder="Masukkan Nomor Telepon"
+                                                name="phone">
                                         </div>
                                         <div class="form-group">
                                             <label class="form-label">Jumlah Point:</label>
-                                            <input type="text" class="form-control" placeholder="Masukkan Jumlah Point">
+                                            <input type="text" class="form-control" placeholder="Masukkan Jumlah Point"
+                                                name="point">
                                         </div>
-
-                                    </form>
-                                </div>
-                                <div class="card-footer">
-                                    <button class="btn btn-primary me-2">Update Poin</button>
-                                </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Keterangan:</label>
+                                            <input type="text" class="form-control" placeholder="Masukkan Keterangan"
+                                                name="keterangan">
+                                        </div>
+                                    </div>
+                                    <div class="card-footer">
+                                        <button type="submit" class="btn btn-primary me-2">Update Poin</button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>

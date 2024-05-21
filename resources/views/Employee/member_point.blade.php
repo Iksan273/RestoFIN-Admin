@@ -1,5 +1,15 @@
 @extends('Layouts.user')
 @section('content')
+@if (session('success'))
+<div class="alert alert-success">
+    {{ session('success') }}
+</div>
+@endif
+@if (session('error'))
+<div class="alert alert-danger">
+    {{ session('error') }}
+</div>
+@endif
     <div class="pcoded-content">
         <div class="pcoded-inner-content">
             <div class="main-body">
@@ -28,26 +38,27 @@
                                 <div class="card-header">
                                     <h5>Update Poin Member</h5>
                                 </div>
-                                <div class="card-body">
-                                    <form>
+                                <form action="{{ route('memberpoint.minusPromo') }}" method="POST">
+                                    @csrf
+                                    <div class="card-body">
                                         <div class="form-group">
                                             <label class="form-label">Nomor Telepon:</label>
-                                            <input type="text" class="form-control" placeholder="Masukkan Nomor Telepon">
+                                            <input type="text" class="form-control" name="phone" placeholder="Masukkan Nomor Telepon">
                                         </div>
                                         <div class="form-group">
                                             <label class="form-label">Pilih Promo:</label>
-                                            <select class="form-control">
+                                            <select class="form-control" name="promo">
                                                 <option>Pilih Promo</option>
-                                                <option value="promo1">Promo 1</option>
-                                                <option value="promo2">Promo 2</option>
-                                                <option value="promo3">Promo 3</option>
+                                                @foreach ($promo as $item)
+                                                    <option value="{{ $item->point_digunakan }}&{{ $item->point_dibutuhkan }}">{{ $item->title }}</option>
+                                                @endforeach
                                             </select>
                                         </div>
-                                    </form>
-                                </div>
-                                <div class="card-footer">
-                                    <button class="btn btn-primary me-2">Update Poin</button>
-                                </div>
+                                    </div>
+                                    <div class="card-footer">
+                                        <button type="submit" class="btn btn-primary me-2">Update Poin</button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>

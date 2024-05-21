@@ -1,5 +1,15 @@
 @extends('Layouts.user')
 @section('content')
+@if (session('success'))
+<div class="alert alert-success">
+    {{ session('success') }}
+</div>
+@endif
+@if (session('error'))
+<div class="alert alert-danger">
+    {{ session('error') }}
+</div>
+@endif
     <div class="pcoded-content">
         <div class="pcoded-inner-content">
             <div class="main-body">
@@ -26,22 +36,23 @@
                         <div class="col-xl-12 col-sm-12 col-md-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h5>Tambah Poin by admin</h5>
+                                    <h5>Tambah Poin Pembelian Online by admin</h5>
                                 </div>
                                 <div class="card-body">
-                                    <form>
+                                    <form action="{{ route('struk.store') }}" method="POST">
+                                        @csrf
                                         <div class="form-group">
                                             <label class="form-label">Nomor Telepon:</label>
-                                            <input type="text" class="form-control" placeholder="Masukkan Nomor Telepon">
+                                            <input type="text" class="form-control" placeholder="Masukkan Nomor Telepon" name="phone">
                                         </div>
                                         <div class="form-group">
                                             <label class="form-label">Jumlah Poin:</label>
-                                            <input type="number" class="form-control" placeholder="Masukkan Jumlah Poin">
+                                            <input type="number" class="form-control" placeholder="Masukkan Jumlah Poin" name="point">
+                                        </div>
+                                        <div class="card-footer">
+                                            <button type="submit" class="btn btn-primary me-2">Submit</button>
                                         </div>
                                     </form>
-                                </div>
-                                <div class="card-footer">
-                                    <button class="btn btn-primary me-2">Submit</button>
                                 </div>
                             </div>
                         </div>

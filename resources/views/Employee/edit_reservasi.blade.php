@@ -1,4 +1,14 @@
 @extends('Layouts.user')
+@if (session('success'))
+<div class="alert alert-success">
+    {{ session('success') }}
+</div>
+@endif
+@if (session('error'))
+<div class="alert alert-danger">
+    {{ session('error') }}
+</div>
+@endif
 @section('content')
     <div class="pcoded-content">
         <div class="pcoded-inner-content">
@@ -26,27 +36,28 @@
                                     <h5>Tambah Reservasi</h5>
                                 </div>
                                 <div class="card-body">
-                                    <form action="" method="POST">
+                                    <form action="{{ route('reservasi.update',$reservasi->id) }}" method="POST">
                                         @csrf
+                                        @method('PUT')
                                         <div class="form-group">
                                             <label for="nama">Nama</label>
-                                            <input type="text" class="form-control" id="nama" name="nama" required>
+                                            <input type="text" class="form-control" id="nama" name="nama" required value="{{ $reservasi->nama }}">
                                         </div>
                                         <div class="form-group">
                                             <label for="jumlah_orang">Jumlah Orang</label>
-                                            <input type="number" class="form-control" id="jumlah_orang" name="jumlah_orang" required>
+                                            <input type="number" class="form-control" id="jumlah_orang" name="person" required value="{{ $reservasi->person }}">
                                         </div>
                                         <div class="form-group">
                                             <label for="tanggal_reservasi">Tanggal Reservasi</label>
-                                            <input type="date" class="form-control" id="tanggal_reservasi" name="tanggal_reservasi" required>
+                                            <input type="datetime-local" class="form-control" id="tanggal_reservasi" name="reservation_date" required value="{{ $reservasi->reservation_date  }}" >
                                         </div>
                                         <div class="form-group">
                                             <label for="no_telepon">No Telepon</label>
-                                            <input type="text" class="form-control" id="no_telepon" name="no_telepon" required>
+                                            <input type="text" class="form-control" id="no_telepon" name="phone" required  value="{{ $reservasi->phone }}" >
                                         </div>
                                         <div class="form-group">
                                             <label for="email">Email</label>
-                                            <input type="email" class="form-control" id="email" name="email" required>
+                                            <input type="email" class="form-control" id="email" name="email" value="{{ $reservasi->email }}" >
                                         </div>
                                         <button type="submit" class="btn btn-primary">Update Reservasi</button>
                                     </form>

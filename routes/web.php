@@ -1,9 +1,12 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\MemberPointController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\PromoController;
 use App\Http\Controllers\RecommendationController;
+use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\StrukOnlineController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -60,10 +63,11 @@ Route::post('/Promo/store', [PromoController::class, 'store'])->name('promo.stor
 Route::put('/Promo/update/{id}', [PromoController::class, 'update'])->name('promo.update');
 Route::delete('/Promo/delete/{id}', [PromoController::class, 'destroy'])->name('promo.delete');
 
-Route::view('/StrukPembelian','Employee.struk_pembelian')->name('employee.struk');
-Route::view('/StrukPembelian-Add','Employee.add_strukPembelian')->name('employee.addStruk');
 
-Route::view('/MemberPoint-Pengurangan','Employee.member_point')->name('employee.pointMinus');
+
+Route::post('/MemberPoint-Store', [MemberPointController::class, 'store'])->name('memberpoint.minusAdmin');
+Route::post('/MemberPoint-MinusPromo', [MemberPointController::class, 'minusPromo'])->name('memberpoint.minusPromo');
+Route::get('/MemberPoint-Pengurangan', [MemberPointController::class, 'formPoinPromo'])->name('employee.pointMinus');
 Route::view('/MemberPoint-PenguranganAdmin','Employee.member_pointAdmin')->name('employee.pointMinusAdmin');
 
 Route::view('/daftar-pesanan','Employee.daftar_pesanan')->name('employee.daftarPesanan');
@@ -73,9 +77,22 @@ Route::view('/daftar-transaksi','Employee.daftar_transaksi')->name('employee.daf
 Route::view('/daftar-pesanan-pending','Employee.daftar_pesananPending')->name('employee.daftarPesananPending');
 
 
-Route::view('/reservasi','Employee.reservasi')->name('employee.reservasi');
-Route::view('/reservasi-addReservasi','Employee.add_reservasi')->name('employee.addReservasi');
-Route::view('/reservasi-editReservasi','Employee.edit_reservasi')->name('employee.editReservasi');
+// Route untuk Reservasi
+Route::get('/reservasi-Employee', [ReservationController::class, 'index'])->name('employee.reservasi');
+Route::get('/reservasi/tambahReservasi', [ReservationController::class, 'create'])->name('employee.addReservasi');
+Route::post('/reservasi/store', [ReservationController::class, 'store'])->name('reservasi.store');
+Route::get('/reservasi/editReservasi/{id}', [ReservationController::class, 'edit'])->name('employee.editReservasi');
+Route::put('/reservasi/update/{id}', [ReservationController::class, 'update'])->name('reservasi.update');
+Route::put('/reservasi/accept/{id}', [ReservationController::class, 'acceptReservation'])->name('reservasi.accept');
+Route::delete('/reservasi/delete/{id}', [ReservationController::class, 'destroy'])->name('reservasi.delete');
+
+// Route untuk Struk Online
+Route::get('/struk-online', [StrukOnlineController::class, 'index'])->name('employee.struk');
+Route::view('/StrukPembelian-Add','Employee.add_strukPembelian')->name('employee.addStruk');
+Route::post('/struk-online/store', [StrukOnlineController::class, 'store'])->name('struk.store');
+Route::put('/struk-online/update/{id}', [StrukOnlineController::class, 'updatePointdanStatus'])->name('struk.update');
+Route::delete('/struk-online/delete/{id}', [StrukOnlineController::class, 'destroy'])->name('struk.delete');
+
 
 Route::get('/Login', function () {
     return view('Auth.Login');

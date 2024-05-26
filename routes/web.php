@@ -3,10 +3,12 @@
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\MemberPointController;
 use App\Http\Controllers\MenuController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PromoController;
 use App\Http\Controllers\RecommendationController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\StrukOnlineController;
+use App\Http\Controllers\TransactionController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -70,12 +72,19 @@ Route::post('/MemberPoint-MinusPromo', [MemberPointController::class, 'minusProm
 Route::get('/MemberPoint-Pengurangan', [MemberPointController::class, 'formPoinPromo'])->name('employee.pointMinus');
 Route::view('/MemberPoint-PenguranganAdmin','Employee.member_pointAdmin')->name('employee.pointMinusAdmin');
 
-Route::view('/daftar-pesanan','Employee.daftar_pesanan')->name('employee.daftarPesanan');
-Route::view('/daftar-pesanan-pending','Employee.daftar_pesananPending')->name('employee.daftarPesananPending');
+Route::get('/daftar-pesanan', [OrderController::class, 'getOrderLunas'])->name('employee.daftarPesanan');
+Route::get('/daftar-pesanan-pending', [OrderController::class, 'getOrderBelumBayar'])->name('employee.daftarPesananPending');
+Route::get('/daftar-pesanan-selesai', [OrderController::class, 'getOrderSelesai'])->name('employee.daftarPesananSelesai');
+Route::put('/daftar-pesanan-lunas/{id}', [OrderController::class, 'updateStatusPembayaranLunas'])->name('order.updateLunas');
+Route::put('/daftar-pesanan-selesai/{id}', [OrderController::class, 'updateStatusMakananSelesai'])->name('order.updateSelesai');
+Route::delete('/hapus-pesanan/{id}', [OrderController::class, 'deleteOrder'])->name('order.delete');
+Route::get('/download-nota/{id}', [OrderController::class, 'printNota'])->name('download-nota');
 
-Route::view('/daftar-transaksi','Employee.daftar_transaksi')->name('employee.daftarTransaksi');
-Route::view('/daftar-pesanan-pending','Employee.daftar_pesananPending')->name('employee.daftarPesananPending');
+Route::get('/daftar-transaksi', [TransactionController::class, 'index'])->name('employee.daftarTransaksi');
 
+
+
+Route::view('/nota','Layouts.nota')->name('nota');
 
 // Route untuk Reservasi
 Route::get('/reservasi-Employee', [ReservationController::class, 'index'])->name('employee.reservasi');
@@ -92,6 +101,8 @@ Route::view('/StrukPembelian-Add','Employee.add_strukPembelian')->name('employee
 Route::post('/struk-online/store', [StrukOnlineController::class, 'store'])->name('struk.store');
 Route::put('/struk-online/update/{id}', [StrukOnlineController::class, 'updatePointdanStatus'])->name('struk.update');
 Route::delete('/struk-online/delete/{id}', [StrukOnlineController::class, 'destroy'])->name('struk.delete');
+
+
 
 
 Route::get('/Login', function () {

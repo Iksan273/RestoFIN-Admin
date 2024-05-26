@@ -39,7 +39,7 @@
                         <div class="col-xl-12 col-sm-12 col-md-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h5>List Pesanan</h5>
+                                    <h5>List Pesanan Selesai</h5>
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
@@ -56,7 +56,6 @@
                                                     <th>Metode Pembayaran</th>
                                                     <th>Status Pembayaran</th>
                                                     <th>Status Makanan</th>
-                                                    <th>Action Makanan</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -73,10 +72,6 @@
                                                     <td>{{ $data->payment_method }}</td>
                                                     <td>{{ $data->status_pembayaran }}</td>
                                                     <td>{{ $data->status_makanan }}</td>
-                                                    <td><button class="btn btn-gradient-info" data-bs-toggle="modal"
-                                                            data-bs-target="#updateModalMakanan{{ $data->id }}"><i
-                                                                class="fas fa-edit"></i></button>
-                                                    </td> <!-- Action Makanan -->
                                                 </tr>
                                                 <div class="modal fade" id="viewDetailOrderModal{{ $data->id }}" tabindex="-1" role="dialog" aria-labelledby="viewDetailOrderLabel" aria-hidden="true">
                                                     <div class="modal-dialog" role="document">
@@ -91,70 +86,104 @@
                                                                     <p><strong>Nomor Meja:{{ $data->no_meja }}</strong> <span id="tableNumber"></span></p>
                                                                     <ul>
                                                                         @foreach ($data->orderItems as $item)
-                                                                            <li><strong>Nama Menu:</strong>
-                                                                                {{ $item->menu->title }} -
-                                                                                <strong>Jumlah:</strong>
-                                                                                {{ $item->jumlah }}</li>
+                                                                            <li><strong>Nama Menu:</strong> {{ $item->menu->title }} - <strong>Jumlah:</strong> {{ $item->jumlah }}</li>
                                                                         @endforeach
                                                                     </ul>
                                                                 </div>
                                                             </div>
                                                             <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary"
-                                                                    data-bs-dismiss="modal">Tutup</button>
-                                                                <a href="{{ route('download-nota', $data->id) }}" class="btn btn-primary">Cetak PDF</a>
+                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                                                                <button type="button" class="btn btn-primary" onclick="printOrderDetails()">Cetak PDF</button>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="modal fade md-effect-1" id="updateModalMakanan{{ $data->id }}" tabindex="-1"
-                                                role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
-                                                <div class="modal-dialog" role="document">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title" id="deleteModalLabel">
-                                                                Update Status Makanan</h5>
-                                                            <button type="button" class="btn-close"
-                                                                data-bs-dismiss="modal" aria-label="Close"></button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <p>Kamu yakin ingin Mengubah Status Makanan dengan no order {{ $data->order_number }} Menjadi Selesai
-                                                                ? <strong id="username"></strong>
-                                                            </p>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary"
-                                                                data-bs-dismiss="modal">Batal</button>
-                                                            <form method="POST" action="{{ route('order.updateSelesai', $data->id) }}">
-                                                                @csrf
-                                                                @method('PUT')
-                                                                <button type="submit" class="btn btn-danger"
-                                                                    id="confirm-update">Update</button>
-                                                            </form>
+                                                @endforeach
+                                                <div class="modal fade md-effect-1" id="updateModalMakanan" tabindex="-1"
+                                                    role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="deleteModalLabel">
+                                                                    Update Status Makanan</h5>
+                                                                <button type="button" class="btn-close"
+                                                                    data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <p>Kamu yakin ingin Mengubah Status Makanan Menjadi Selesai
+                                                                    ? <strong id="username"></strong>?
+                                                                </p>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary"
+                                                                    data-bs-dismiss="modal">Cancel</button>
+                                                                <button type="button" class="btn btn-danger"
+                                                                    id="confirm-delete">Update</button>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                                @endforeach
-
-
-
-
+                                                <div class="modal fade md-effect-1" id="updateModalPembayaran"
+                                                    tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+                                                    aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="deleteModalLabel">
+                                                                    Update Status Pembayaran</h5>
+                                                                <button type="button" class="btn-close"
+                                                                    data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <p>Kamu yakin ingin Mengubah Status Pembayaranb Menjadi
+                                                                    Sukses ? <strong id="username"></strong>?
+                                                                </p>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary"
+                                                                    data-bs-dismiss="modal">Cancel</button>
+                                                                <button type="button" class="btn btn-danger"
+                                                                    id="confirm-delete">Update</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal fade md-effect-1" id="deleteModalPembayaran"
+                                                    tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+                                                    aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="deleteModalLabel">
+                                                                    Delete Pesanan</h5>
+                                                                <button type="button" class="btn-close"
+                                                                    data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <p>Kamu yakin ingin menghapus pesanan dengan no ini ?
+                                                                    <strong id="username"></strong>?
+                                                                </p>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary"
+                                                                    data-bs-dismiss="modal">Cancel</button>
+                                                                <button type="button" class="btn btn-danger"
+                                                                    id="confirm-delete">Delete</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
 
                                             </tbody>
                                             <tfoot>
                                                 <tr>
                                                     <th>ID</th>
-                                                    <th>Nama</th>
-                                                    <th>No Meja</th>
-                                                    <th>No Pesanan</th>
-                                                    <th>Detail Pesanan</th>
-                                                    <th>Waktu Pesanan</th>
-                                                    <th>Total Pembayaran</th>
-                                                    <th>Metode Pembayaran</th>
-                                                    <th>Status Pembayaran</th>
-                                                    <th>Status Makanan</th>
-                                                    <th>Action Makanan</th>
+                                                    <th>Nama Menu</th>
+                                                    <th>Foto</th>
+                                                    <th>Deskripsi</th>
+                                                    <th>Price</th>
+                                                    <th>Kategori</th>
+                                                    <th>Action</th>
                                                 </tr>
                                             </tfoot>
                                         </table>

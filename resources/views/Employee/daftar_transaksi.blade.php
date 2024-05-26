@@ -44,20 +44,34 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <!-- Contoh data -->
+                                                @foreach ($transactions as  $data)
+
+
                                                 <tr>
-                                                    <td>1</td>
-                                                    <td>101</td>
-                                                    <td>Transfer Bank</td>
-                                                    <td>Rp 150.000</td>
-                                                    <td>Lunas</td>
-                                                    <td>2023-09-15</td>
+                                                    <td>{{ $data->id }}</td>
+                                                    <td>{{ $data->order->order_number }}</td>
+                                                    <td>{{ $data->payment_method }}</td>
+                                                    <td>Rp{{ number_format($data->total_amount, 0, ',', '.') }}</td>
+                                                    <td>{{ $data->status }}</td>
+                                                    <td>{{ $data->created_at }}</td>
                                                     <td>
                                                         <button class="btn btn-gradient-info" data-bs-toggle="modal" data-bs-target="#printModal">Cetak Nota</button>
                                                     </td>
                                                 </tr>
                                                 <!-- Data lainnya -->
+                                                @endforeach
                                             </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>No Order</th>
+                                                    <th>Metode Pembayaran</th>
+                                                    <th>Total Pembayaran</th>
+                                                    <th>Status</th>
+                                                    <th>Tanggal Transaksi</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </tfoot>
                                         </table>
                                     </div>
                                 </div>

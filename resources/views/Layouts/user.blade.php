@@ -20,18 +20,18 @@
         content="admin templates, bootstrap admin templates, bootstrap 5, dashboard, dashboard templets, sass admin templets, html admin templates, responsive, bootstrap admin templates free download,premium bootstrap admin templates, Dasho, Dasho bootstrap admin template">
     <meta name="author" content="Phoenixcoded" />
 
-   <!-- Favicon icon -->
-<link rel="icon" href="{{ asset('assets/images/favicon.svg') }}" type="image/x-icon">
-<!-- fontawesome icon -->
-<link rel="stylesheet" href="{{ asset('assets/fonts/fontawesome/css/fontawesome-all.min.css') }}">
-<!-- animation css -->
-<link rel="stylesheet" href="{{ asset('assets/plugins/animation/css/animate.min.css') }}">
-<!-- data tables css -->
-<link rel="stylesheet" href="{{ asset('assets/plugins/data-tables/css/datatables.min.css') }}">
-<!-- vendor css -->
-<link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
-<!-- Rating css -->
-<link rel="stylesheet" href="{{ asset('assets/plugins/ratting/css/bars-1to10.css') }}">
+    <!-- Favicon icon -->
+    <link rel="icon" href="{{ asset('assets/images/favicon.svg') }}" type="image/x-icon">
+    <!-- fontawesome icon -->
+    <link rel="stylesheet" href="{{ asset('assets/fonts/fontawesome/css/fontawesome-all.min.css') }}">
+    <!-- animation css -->
+    <link rel="stylesheet" href="{{ asset('assets/plugins/animation/css/animate.min.css') }}">
+    <!-- data tables css -->
+    <link rel="stylesheet" href="{{ asset('assets/plugins/data-tables/css/datatables.min.css') }}">
+    <!-- vendor css -->
+    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+    <!-- Rating css -->
+    <link rel="stylesheet" href="{{ asset('assets/plugins/ratting/css/bars-1to10.css') }}">
 
 </head>
 
@@ -68,104 +68,131 @@
                         <ul class="pcoded-submenu">
                             <li class=""><a href="{{ route('master.dashboard') }}" class="">Omset</a></li>
                             <li class=""><a href="{{ route('master.member') }}" class="">Member</a></li>
-                            <li class=""><a href="{{ route('master.employee') }}" class="">Employee</a></li>
+                            <li class=""><a href="{{ route('master.employee') }}" class="">Employee</a>
+                            </li>
                         </ul>
                     </li>
                     <li data-username="vertical horizontal box layout RTL fixed static collapse menu color icon dark background image"
                         class="nav-item pcoded-hasmenu">
                         <a href="#!" class="nav-link"><span class="pcoded-micon"><i
-                                    class="feather icon-layout"></i></span><span
-                                class="pcoded-mtext">Employee</span></a>
+                                    class="fas fa-clipboard-list"></i></span><span
+                                class="pcoded-mtext">Pesanan</span></a>
                         <ul class="pcoded-submenu">
-                            <li class=""><a href="#" class="">Daftar Pesanan</a>
-                                <ul class="pcoded-submenu">
-                                    <li class=""><a href="{{ route('employee.daftarPesanan') }}"
-                                            class="">List Pesanan</a></li>
-                                    <li class=""><a href="{{ route('employee.daftarPesananPending') }}"
-                                            class="">List Pesanan Pending</a></li>
-                                </ul>
-                            </li>
-                            <li class="pcoded-hasmenu"><a href="{{ route('employee.daftarTransaksi') }}"
+
+
+                            <li class=""><a href="{{ route('employee.daftarPesanan') }}" class="">List
+                                    Pesanan</a></li>
+                            <li class=""><a href="{{ route('employee.daftarPesananPending') }}"
+                                    class="">List Pesanan Pending</a></li>
+                            <li class=""><a href="{{ route('employee.daftarPesananSelesai') }}"
+                                    class="">List Pesanan Selesai </a></li>
+
+
+
+                        </ul>
+                    </li>
+                    <li data-username="vertical horizontal box layout RTL fixed static collapse menu color icon dark background image"
+                        class="nav-item pcoded-hasmenu">
+                        <a href="#!" class="nav-link"><span class="pcoded-micon"><i
+                                    class="fas fa-file-invoice-dollar"></i></span><span
+                                class="pcoded-mtext">Transaksi</span></a>
+                        <ul class="pcoded-submenu">
+
+
+                            <li class=""><a href="{{ route('employee.daftarTransaksi') }}"
                                     class="">Daftar Transaksi</a>
 
                             </li>
-                            <li class="pcoded-hasmenu"><a href="#!" class="">Kategori</a>
-                                <ul class="pcoded-submenu">
-                                    <li class=""><a href="{{ route('employee.kategori') }}" class="">List
-                                            Kategori</a>
-                                    </li>
-                                    <li class=""><a href="{{ route('employee.addKategori') }}"
-                                            class="">Tambah Kategori</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="pcoded-hasmenu"><a href="#" class="">Menu</a>
-                                <ul class="pcoded-submenu">
-                                    <li class=""><a href="{{ route('employee.menu') }}" class="">List
-                                            Menu</a>
-                                    </li>
-                                    <li class=""><a href="{{ route('employee.addMenu') }}" class="">Add
-                                            Menu</a>
-                                    </li>
-                                    <li class=""><a href="{{ route('employee.rekomendasi') }}"
-                                            class="">List Rekomendasi
-                                            Menu</a></li>
-                                    <li class=""><a href="{{ route('employee.addRekomendasi') }}"
-                                            class="">Add Rekomendasi
-                                            Menu</a></li>
-                                </ul>
-                            </li>
-                            <li class="pcoded-hasmenu"><a href="#!" class="">Promo</a>
-                                <ul class="pcoded-submenu">
-                                    <li class=""><a href="{{ route('employee.promo') }}" class="">List
-                                            Promo</a>
-                                    </li>
-                                    <li class=""><a href="{{ route('employee.addPromo') }}" class="">Add
-                                            Promo</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="pcoded-hasmenu"><a href="#!" class="">Reservasi</a>
-                                <ul class="pcoded-submenu">
-                                    <li class=""><a href="{{ route('employee.reservasi') }}"
-                                            class="">List
-                                            Reservasi</a></li>
-                                    <li class=""><a href="{{ route('employee.addReservasi') }}"
-                                            class="">Add Resercasi</a></li>
-
-                                </ul>
-                            </li>
-
-                            <li class="pcoded-hasmenu"><a href="#!" class="">Struk Pembelian Online</a>
-                                <ul class="pcoded-submenu">
-                                    <li class=""><a href="{{ route('employee.struk') }}" class="">List
-                                            Pembelian</a></li>
-                                    <li class=""><a href="{{ route('employee.addStruk') }}"
-                                            class="">Add</a></li>
-                                </ul>
-                            </li>
-                            <li class="pcoded-hasmenu"><a href="#!" class="">Member Point</a>
-                                <ul class="pcoded-submenu">
-                                    <li class=""><a href="{{ route('employee.pointMinusAdmin') }}"
-                                            class="">Mengurangi Point by admin</a></li>
-                                    <li class=""><a href="{{ route('employee.pointMinus') }}"
-                                            class="">Mengurangi Point dengan promo</a></li>
-                                </ul>
-                            </li>
-
                         </ul>
                     </li>
-                    <li data-username="widget statistic data chart" class="nav-item pcoded-hasmenu">
+                    <li data-username="vertical horizontal box layout RTL fixed static collapse menu color icon dark background image"
+                        class="nav-item pcoded-hasmenu">
                         <a href="#!" class="nav-link"><span class="pcoded-micon"><i
-                                    class="feather icon-layers"></i></span><span
-                                class="pcoded-mtext">Widget</span><span
-                                class="pcoded-badge label label-success">100+</span></a>
+                                    class="fas fa-layer-group"></i></span><span
+                                class="pcoded-mtext">Kategori</span></a>
                         <ul class="pcoded-submenu">
-                            <li class=""><a href="widget-statistic.html" class="">Statistic</a></li>
-                            <li class=""><a href="widget-data.html" class="">Data</a></li>
-                            <li class=""><a href="widget-chart.html" class="">Chart</a></li>
+                            <li class=""><a href="{{ route('employee.kategori') }}" class="">List
+                                    Kategori</a>
+                            </li>
+                            <li class=""><a href="{{ route('employee.addKategori') }}" class="">Tambah
+                                    Kategori</a>
+                            </li>
                         </ul>
                     </li>
+                    <li data-username="vertical horizontal box layout RTL fixed static collapse menu color icon dark background image"
+                        class="nav-item pcoded-hasmenu">
+                        <a href="#!" class="nav-link"><span class="pcoded-micon"><i
+                                    class="fas fa-book"></i></span><span class="pcoded-mtext">Menu</span></a>
+                        <ul class="pcoded-submenu">
+                            <li class=""><a href="{{ route('employee.menu') }}" class="">List
+                                    Menu</a>
+                            </li>
+                            <li class=""><a href="{{ route('employee.addMenu') }}" class="">Add
+                                    Menu</a>
+                            </li>
+                            <li class=""><a href="{{ route('employee.rekomendasi') }}" class="">List
+                                    Rekomendasi
+                                    Menu</a></li>
+                            <li class=""><a href="{{ route('employee.addRekomendasi') }}" class="">Add
+                                    Rekomendasi
+                                    Menu</a></li>
+                        </ul>
+                    </li>
+                    <li data-username="vertical horizontal box layout RTL fixed static collapse menu color icon dark background image"
+                        class="nav-item pcoded-hasmenu">
+                        <a href="#!" class="nav-link"><span class="pcoded-micon"><i
+                                    class="fas fa-bullhorn"></i></span><span class="pcoded-mtext">Promo</span></a>
+                        <ul class="pcoded-submenu">
+                            <li class=""><a href="{{ route('employee.promo') }}" class="">List
+                                    Promo</a>
+                            </li>
+                            <li class=""><a href="{{ route('employee.addPromo') }}" class="">Add
+                                    Promo</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li data-username="vertical horizontal box layout RTL fixed static collapse menu color icon dark background image"
+                        class="nav-item pcoded-hasmenu">
+                        <a href="#!" class="nav-link"><span class="pcoded-micon"><i
+                                    class="fas fa-calendar-alt"></i></span><span
+                                class="pcoded-mtext">Reservasi</span></a>
+                        <ul class="pcoded-submenu">
+                            <li class=""><a href="{{ route('employee.reservasi') }}" class="">List
+                                    Reservasi</a></li>
+                            <li class=""><a href="{{ route('employee.addReservasi') }}" class="">Add
+                                    Reservasi</a></li>
+
+                        </ul>
+                    </li>
+                    <li data-username="vertical horizontal box layout RTL fixed static collapse menu color icon dark background image"
+                        class="nav-item pcoded-hasmenu">
+                        <a href="#!" class="nav-link"><span class="pcoded-micon"><i
+                                    class="fas fa-shopping-cart"></i></span><span class="pcoded-mtext">Pembelian
+                                Online</span></a>
+                        <ul class="pcoded-submenu">
+                            <li class=""><a href="{{ route('employee.struk') }}" class="">List
+                                    Pembelian</a></li>
+                            <li class=""><a href="{{ route('employee.addStruk') }}" class="">Add</a>
+                            </li>
+
+                        </ul>
+                    </li>
+                    <li data-username="vertical horizontal box layout RTL fixed static collapse menu color icon dark background image"
+                        class="nav-item pcoded-hasmenu">
+                        <a href="#!" class="nav-link"><span class="pcoded-micon"><i
+                                    class="fas fa-coins"></i></span><span class="pcoded-mtext">Member
+                                Point</span></a>
+                        <ul class="pcoded-submenu">
+                            <li class=""><a href="{{ route('employee.pointMinusAdmin') }}"
+                                    class="">Mengurangi Point by admin</a></li>
+                            <li class=""><a href="{{ route('employee.pointMinus') }}"
+                                    class="">Mengurangi Point dengan promo</a></li>
+
+                        </ul>
+                    </li>
+                </ul>
+                </li>
+
 
                 </ul>
 

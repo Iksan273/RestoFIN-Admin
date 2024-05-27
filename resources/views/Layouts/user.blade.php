@@ -70,6 +70,8 @@
                             <li class=""><a href="{{ route('master.member') }}" class="">Member</a></li>
                             <li class=""><a href="{{ route('master.employee') }}" class="">Employee</a>
                             </li>
+                            <li class=""><a href="{{ route('add.employee') }}" class="">Tambah Employee</a>
+                            </li>
                         </ul>
                     </li>
                     <li data-username="vertical horizontal box layout RTL fixed static collapse menu color icon dark background image"
@@ -99,8 +101,8 @@
                         <ul class="pcoded-submenu">
 
 
-                            <li class=""><a href="{{ route('employee.daftarTransaksi') }}"
-                                    class="">Daftar Transaksi</a>
+                            <li class=""><a href="{{ route('employee.daftarTransaksi') }}" class="">Daftar
+                                    Transaksi</a>
 
                             </li>
                         </ul>
@@ -190,6 +192,18 @@
 
                         </ul>
                     </li>
+                    <li data-username="vertical horizontal box layout RTL fixed static collapse menu color icon dark background image"
+                        class="nav-item">
+                        <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="nav-link">
+                            <span class="pcoded-micon"><i class="fas fa-sign-out-alt"></i></span>
+                            <span class="pcoded-mtext">Log Out</span>
+                        </a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+                        </form>
+                    </li>
+
+
                 </ul>
                 </li>
 

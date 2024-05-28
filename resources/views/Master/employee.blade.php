@@ -1,5 +1,15 @@
 @extends('Layouts.user')
 @section('content')
+@if (session('success'))
+<div class="alert alert-success">
+    {{ session('success') }}
+</div>
+@endif
+@if (session('error'))
+<div class="alert alert-danger">
+    {{ session('error') }}
+</div>
+@endif
     <div class="pcoded-content">
         <div class="pcoded-inner-content">
             <div class="main-body">
@@ -43,20 +53,23 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                @foreach ($employee as $data)
+
+
                                                 <tr>
-                                                    <td>John</td>
-                                                    <td>Doe</td>
-                                                    <td>johndoe</td>
-                                                    <td>Admin</td>
+                                                    <td>{{ $data->firstname }}</td>
+                                                    <td>{{ $data->lastname }}</td>
+                                                    <td>{{ $data->username }}</td>
+                                                    <td>{{ $data->role }}</td>
                                                     <td>
-                                                        <a href="{{ route('edit-employee') }}" class="btn btn-gradient-info"><i class="fas fa-edit"></i></a>
+                                                        <a href="{{ route('edit-employee', ['id' => $data->id]) }}" class="btn btn-gradient-info"><i class="fas fa-edit"></i></a>
 
                                                         <button class="btn btn-gradient-danger" data-bs-toggle="modal"
-                                                            data-bs-target="#deleteModal"><i
+                                                            data-bs-target="#deleteModal{{ $data->id }}"><i
                                                                 class="fas fa-trash"></i></button>
                                                     </td>
                                                 </tr>
-                                                <div class="modal fade md-effect-1" id="deleteModal" tabindex="-1"
+                                                <div class="modal fade md-effect-1" id="deleteModal{{ $data->id }}" tabindex="-1"
                                                     role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
                                                     <div class="modal-dialog" role="document">
                                                         <div class="modal-content">
@@ -67,20 +80,22 @@
                                                                     data-bs-dismiss="modal" aria-label="Close"></button>
                                                             </div>
                                                             <div class="modal-body">
-                                                                <p>Are you sure you want to delete the employee with
-                                                                    the username <strong id="username"></strong>?
+                                                                <p>Anda yakin akan menghapus employee dengan nama {{ $data->username }} <strong id="username"></strong>?
                                                                 </p>
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-secondary"
                                                                     data-bs-dismiss="modal">Cancel</button>
-                                                                <button type="button" class="btn btn-danger"
-                                                                    id="confirm-delete">Delete</button>
+                                                                <form method="POST" action="{{ route('employee.delete', ['id' => $data->id]) }}">
+                                                                    @csrf
+                                                                    @method('DELETE')
+                                                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                                                </form>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-
+                                                @endforeach
 
 
                                             </tbody>
@@ -88,7 +103,7 @@
                                                 <tr>
                                                     <th>First Name</th>
                                                     <th>Last Name</th>
-                                                    <th>Username/th>
+                                                    <th>Username</th>
                                                     <th>Role</th>
                                                     <th>Action</th>
                                                 </tr>
@@ -100,9 +115,7 @@
                         </div>
 
                     </div>
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
-                        data-whatever="@getbootstrap">Open modal for
-                        @bootstrap</button>
+
 
 
 

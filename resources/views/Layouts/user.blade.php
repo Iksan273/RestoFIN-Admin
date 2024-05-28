@@ -185,8 +185,11 @@
                                     class="fas fa-coins"></i></span><span class="pcoded-mtext">Member
                                 Point</span></a>
                         <ul class="pcoded-submenu">
+                            <li class=""><a href="{{ route('employee.pointAddAdmin') }}"
+                                    class="">Penambahan Point by admin</a></li>
                             <li class=""><a href="{{ route('employee.pointMinusAdmin') }}"
                                     class="">Mengurangi Point by admin</a></li>
+
                             <li class=""><a href="{{ route('employee.pointMinus') }}"
                                     class="">Mengurangi Point dengan promo</a></li>
 
@@ -194,7 +197,9 @@
                     </li>
                     <li data-username="vertical horizontal box layout RTL fixed static collapse menu color icon dark background image"
                         class="nav-item">
-                        <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="nav-link">
+                        <a href="{{ route('logout') }}"
+                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+                            class="nav-link">
                             <span class="pcoded-micon"><i class="fas fa-sign-out-alt"></i></span>
                             <span class="pcoded-mtext">Log Out</span>
                         </a>

@@ -18,6 +18,11 @@ class RoleMiddleware
 
         $user = Auth::guard('employee')->user();
 
+        // Tambahkan pengecualian untuk role 'Master'
+        if ($user->role === 'Master') {
+            return $next($request); // Jika user adalah Master, izinkan akses ke semua halaman
+        }
+
         if ($user->role !== $role) {
             return redirect()->route('dashboard')->with('error', "Anda tidak memiliki akses ke halaman ini.");
         }

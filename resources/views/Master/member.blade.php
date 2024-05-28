@@ -29,7 +29,7 @@
                             <div class="card bg-c-red order-card">
                                 <div class="card-body">
                                     <h6 class="m-b-20">Jumlah Member</h6>
-                                    <h2 class="text-start"><span>486</span><i
+                                    <h2 class="text-start"><span>{{ $memberCount }}</span><i
                                             class="feather icon-user float-end"></i></h2>
 
                                 </div>
@@ -39,7 +39,7 @@
                             <div class="card bg-c-green order-card">
                                 <div class="card-body">
                                     <h6 class="m-b-20">Point Terbanyak (Member)</h6>
-                                    <h2 class="text-start"><span>Ikhsan</span><i
+                                    <h2 class="text-start"><span>{{ $memberWithMostPoints->firstname }} {{ $memberWithMostPoints->lastname }}</span><i
                                             class="feather icon-award float-end"></i></h2>
 
                                 </div>
@@ -49,7 +49,7 @@
                             <div class="card bg-c-blue order-card">
                                 <div class="card-body">
                                     <h6 class="m-b-20">Jumlah Order Terbanyak (Member)</h6>
-                                    <h2 class="text-start"><span>486</span><i
+                                    <h2 class="text-start"><span>{{ $memberWithMostOrders->firstname }} {{ $memberWithMostOrders->lastname }}</span><i
                                             class="feather icon-shopping-cart float-end"></i></h2>
                                 </div>
                             </div>
@@ -72,41 +72,15 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                            @foreach ($member as $data)
                                                 <tr>
-                                                    <td>John</td>
-                                                    <td>Doe</td>
-                                                    <td>john.doe@example.com</td>
-                                                    <td>555-1234</td>
-                                                    <td>85</td>
+                                                    <td>{{ $data->firstname }}</td>
+                                                    <td>{{ $data->lastname }}</td>
+                                                    <td>{{ $data->email }}</td>
+                                                    <td>{{ $data->phone }}</td>
+                                                    <td>{{ number_format($data->point, 0, '.', '') }}</td>
                                                 </tr>
-                                                <tr>
-                                                    <td>Jane</td>
-                                                    <td>Smith</td>
-                                                    <td>jane.smith@example.com</td>
-                                                    <td>555-5678</td>
-                                                    <td>92</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Michael</td>
-                                                    <td>Johnson</td>
-                                                    <td>michael.johnson@example.com</td>
-                                                    <td>555-8765</td>
-                                                    <td>78</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Emily</td>
-                                                    <td>Davis</td>
-                                                    <td>emily.davis@example.com</td>
-                                                    <td>555-4321</td>
-                                                    <td>88</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>David</td>
-                                                    <td>Brown</td>
-                                                    <td>david.brown@example.com</td>
-                                                    <td>555-3456</td>
-                                                    <td>95</td>
-                                                </tr>
+                                            @endforeach
 
                                             </tbody>
                                             <tfoot>

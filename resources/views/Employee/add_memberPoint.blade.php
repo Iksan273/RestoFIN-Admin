@@ -25,7 +25,7 @@
                                     <ul class="breadcrumb">
                                         <li class="breadcrumb-item"><a href="/"><i class="feather icon-home"></i></a>
                                         </li>
-                                        <li class="breadcrumb-item"><a href="#!">Pengurangan Member Poin By Admin</a>
+                                        <li class="breadcrumb-item"><a href="#!">Penambahan Member Poin By Admin</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -38,16 +38,16 @@
                         <div class="col-xl-12 col-sm-12 col-md-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h5>Update Poin Member</h5>
+                                    <h5>Penambahan Poin Member</h5>
                                 </div>
-                                <form action="{{ route('memberpoint.minusAdmin') }}" method="POST">
+                                <form action="{{ route('memberpoint.addPoint') }}" method="POST">
                                     @csrf
                                     <div class="card-body">
                                         <div class="form-group">
                                             <label class="form-label">Nomor Telepon:</label>
                                             <div class="input-group">
                                                 <input type="text" class="form-control"
-                                                    placeholder="Masukkan Nomor Telepon" name="phone" id="phoneInput">
+                                                    placeholder="Masukkan Nomor Telepon" name="phone" id="phoneInput" required>
                                                 <button class="btn btn-primary" type="button" id="checkMemberBtn">Cek
                                                     Member</button>
                                             </div>
@@ -56,12 +56,12 @@
                                         <div class="form-group">
                                             <label class="form-label">Jumlah Point:</label>
                                             <input type="text" class="form-control" placeholder="Masukkan Jumlah Point"
-                                                name="point">
+                                                name="point" required>
                                         </div>
                                         <div class="form-group">
                                             <label class="form-label">Keterangan:</label>
                                             <input type="text" class="form-control" placeholder="Masukkan Keterangan"
-                                                name="keterangan">
+                                                name="keterangan" required>
                                         </div>
                                     </div>
                                     <div class="card-footer">

@@ -1,5 +1,15 @@
 @extends('Layouts.user')
 @section('content')
+@if (session('success'))
+<div class="alert alert-success">
+    {{ session('success') }}
+</div>
+@endif
+@if (session('error'))
+<div class="alert alert-danger">
+    {{ session('error') }}
+</div>
+@endif
     <div class="pcoded-content">
         <div class="pcoded-inner-content">
             <div class="main-body">
@@ -30,34 +40,43 @@
                                 <div class="card-header">
                                     <h5>Edit Employee</h5>
                                 </div>
+                                <form action="{{ route('employee.update', ['id' => $employee->id]) }}" method="post">
+                                @csrf
+                                @method('PUT')
                                 <div class="card-body">
-                                    <form>
+
                                         <div class="form-group">
                                             <label class="form-label">First Name:</label>
-                                            <input type="text" class="form-control" placeholder="Enter First Name">
+                                            <input type="text" class="form-control" name="firstname" placeholder="Enter First Name" value="{{ $employee->firstname }}">
 
                                         </div>
                                         <div class="form-group">
                                             <label class="form-label">Last Name:</label>
-                                            <input type="text" class="form-control" placeholder="Enter Last Name">
+                                            <input type="text" class="form-control" name="lastname" placeholder="Enter Last Name" value="{{ $employee->lastname }}">
 
                                         </div>
                                         <div class="form-group">
                                             <label class="form-label">Username:</label>
-                                            <input type="text" class="form-control" placeholder="Enter Username">
+                                            <input type="text" class="form-control" name="username" placeholder="Enter Username" value="{{ $employee->username }}">
 
                                         </div>
                                         <div class="form-group">
+                                            <label class="form-label">Password:</label>
+                                            <input type="text" class="form-control" name="password" placeholder="Enter password">
+                                            <small>Kosongkan jika tidak ingin mengganti password</small>
+                                        </div>
+                                        <div class="form-group">
                                             <label class="form-label">Role:</label>
-                                            <input type="text" class="form-control" placeholder="Enter Role">
+                                            <input type="text" class="form-control" name="role" placeholder="Enter Role" value="{{ $employee->role }}">
 
                                         </div>
-                                    </form>
-                                </div>
-                                <div class="card-footer">
-                                    <button class="btn btn-primary me-2">Submit</button>
 
                                 </div>
+                                <div class="card-footer">
+                                    <button type="submit" class="btn btn-primary me-2">Submit</button>
+
+                                </div>
+                            </form>
                         </div>
 
                         </div>

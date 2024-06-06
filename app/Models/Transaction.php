@@ -13,7 +13,8 @@ class Transaction extends Model
         'orders_id',
         'payment_method',
         'total_amount',
-        'status'
+        'status',
+        'order_date'
 
     ];
     public function order()

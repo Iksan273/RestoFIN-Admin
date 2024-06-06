@@ -49,7 +49,7 @@
                             <div class="card bg-c-blue order-card">
                                 <div class="card-body">
                                     <h6 class="m-b-20">Jumlah Order Terbanyak (Member)</h6>
-                                    <h2 class="text-start"><span>{{ $memberWithMostOrders->firstname }} {{ $memberWithMostOrders->lastname }}</span><i
+                                    <h2 class="text-start"><span>{{ $memberWithMostOrders->firstname }} {{ $memberWithMostOrders->lastname }} ({{ $countOrder }})</span><i
                                             class="feather icon-shopping-cart float-end"></i></h2>
                                 </div>
                             </div>

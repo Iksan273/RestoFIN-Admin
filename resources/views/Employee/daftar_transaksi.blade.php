@@ -53,7 +53,7 @@
                                                     <td>{{ $data->payment_method }}</td>
                                                     <td>Rp{{ number_format($data->total_amount, 0, ',', '.') }}</td>
                                                     <td>{{ $data->status }}</td>
-                                                    <td>{{ $data->created_at }}</td>
+                                                    <td>{{ $data->order_date }}</td>
                                                     <td>
                                                         <button class="btn btn-gradient-info" data-bs-toggle="modal" data-bs-target="#printModal">Cetak Nota</button>
                                                     </td>

@@ -17,11 +17,13 @@ class UserController extends Controller
         $memberWithMostOrders = User::with('orders')->get()->sortByDesc(function ($user) {
             return $user->orders->count();
         })->first();
+        $memberWithMostOrdersCount = $memberWithMostOrders->first()->orders->count();
         return view('Master.member', [
             'member' => $member,
             'memberCount' => $memberCount,
             'memberWithMostPoints' => $memberWithMostPoints,
-            'memberWithMostOrders' => $memberWithMostOrders
+            'memberWithMostOrders' => $memberWithMostOrders,
+            'countOrder' => $memberWithMostOrdersCount,
         ]);
     }
 

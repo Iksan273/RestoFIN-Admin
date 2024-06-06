@@ -163,6 +163,7 @@ class OrderController extends Controller
                 Transaction::create([
                     'orders_id' => $order->id,
                     'payment_method' => '-',
+                    'order_date' => now(),
                     'total_amount' => $validatedData['total_price'],
                     'status' => 'Belum Bayar',
                 ]);

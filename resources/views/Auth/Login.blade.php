@@ -43,7 +43,7 @@
                 <div class="row align-items-center">
                     <div class="col-md-6">
                         <div class="card-body">
-                            <h2 class="mb-4">Welcome to <span class="text-c-blue">Dasho</span></h2>
+                            <h2 class="mb-4">Welcome to <span class="text-c-blue">VIN Resto</span></h2>
                             <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry Lorem Ipsum has
                                 been the industry's.</p>
                             <div class="toggle-block">

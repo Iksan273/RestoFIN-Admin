@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\MemberPointController;
 use App\Http\Controllers\MenuController;
@@ -13,6 +14,7 @@ use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Route;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,7 +49,7 @@ Route::post('/logout', [EmployeeController::class, 'logout'])->name('logout');
 Route::middleware(['role:Master'])->group(function () {
     Route::view('/', 'index')->name('dashboard');
     // Master ADMIN ROUTE///
-    Route::get('/Master', [EmployeeController::class, 'index'])->name('master.dashboard');
+    Route::get('/Master', [DashboardController::class, 'index'])->name('master.dashboard');
     Route::get('/Master-Member', [UserController::class, 'index'])->name('master.member');
     Route::get('/Master-Employee', [EmployeeController::class, 'employee'])->name('master.employee');
     Route::put('/Master-Employee/{id}', [EmployeeController::class, 'update'])->name('employee.update');

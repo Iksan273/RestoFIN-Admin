@@ -58,8 +58,7 @@ class MemberPointController extends Controller
 
 
 
-            $user->point += $request->point;
-            $user->save();
+
 
             $memberPoint = new MemberPoint();
             $memberPoint->users_id = $user->id;
@@ -177,6 +176,7 @@ class MemberPointController extends Controller
 
             if ($user) {
                 return response()->json([
+                    'id' => $user->id,
                     'name' => $user->firstname . ' ' . $user->lastname,
                     'email' => $user->email,
                     'points' => $user->point,

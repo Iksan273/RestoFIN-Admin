@@ -1,15 +1,15 @@
 @extends('Layouts.user')
 @section('content')
-@if (session('success'))
-<div class="alert alert-success">
-    {{ session('success') }}
-</div>
-@endif
-@if (session('error'))
-<div class="alert alert-danger">
-    {{ session('error') }}
-</div>
-@endif
+    @if (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+    @if (session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
     <div class="pcoded-content">
         <div class="pcoded-inner-content">
             <div class="main-body">
@@ -64,7 +64,8 @@
                                                 @foreach ($order as $data)
                                                     <tr>
                                                         <td>{{ $data->id }}</td>
-                                                        <td>{{ $data->user->firstname }} {{ $data->user->lastname }}</td>
+                                                        <td>{{ $data->user ? $data->user->firstname . ' ' . $data->user->lastname : $data->guest . '(Guest)' }}
+                                                        </td>
                                                         <td>{{ $data->no_meja }}</td>
                                                         <td>{{ $data->order_number }}</td>
                                                         <td> <button class="btn btn-gradient-info text-center"
@@ -100,15 +101,18 @@
                                                                     <div class="order-details">
                                                                         <p><strong>Nomor
                                                                                 Pesanan:{{ $data->order_number }}</strong>
-                                                                            <span id="orderNumber"></span></p>
+                                                                            <span id="orderNumber"></span>
+                                                                        </p>
                                                                         <p><strong>Nomor Meja:{{ $data->no_meja }}</strong>
-                                                                            <span id="tableNumber"></span></p>
+                                                                            <span id="tableNumber"></span>
+                                                                        </p>
                                                                         <ul>
                                                                             @foreach ($data->orderItems as $item)
                                                                                 <li><strong>Nama Menu:</strong>
                                                                                     {{ $item->menu->title }} -
                                                                                     <strong>Jumlah:</strong>
-                                                                                    {{ $item->jumlah }}</li>
+                                                                                    {{ $item->jumlah }}
+                                                                                </li>
                                                                             @endforeach
                                                                         </ul>
                                                                     </div>
@@ -116,72 +120,93 @@
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-secondary"
                                                                         data-bs-dismiss="modal">Tutup</button>
-                                                                    <a href="{{ route('download-nota', $data->id) }}" class="btn btn-primary">Cetak PDF</a>
+                                                                    <a href="{{ route('download-nota', $data->id) }}"
+                                                                        class="btn btn-primary">Cetak PDF</a>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="modal fade md-effect-1" id="updateModalPembayaran{{ $data->id }}"
-                                                    tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
-                                                    aria-hidden="true">
-                                                    <div class="modal-dialog" role="document">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h5 class="modal-title" id="deleteModalLabel">
-                                                                    Update Status Pembayaran</h5>
-                                                                <button type="button" class="btn-close"
-                                                                    data-bs-dismiss="modal" aria-label="Close"></button>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                <p>Kamu yakin ingin Mengubah Status Pembayaran Menjadi
-                                                                    Lunas ? <strong id="username"></strong>
-                                                                </p>
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary"
-                                                                    data-bs-dismiss="modal">Batal</button>
-                                                                <form method="post" action="{{ route('order.updateLunas', $data->id) }}">
-                                                                    @csrf
-                                                                    @method('PUT')
-                                                                    <button type="submit" class="btn btn-danger"
-                                                                        id="confirm-update">Update</button>
-                                                                </form>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="modal fade md-effect-1" id="deleteModalPembayaran{{ $data->id }}"
-                                                    tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
-                                                    aria-hidden="true">
-                                                    <div class="modal-dialog" role="document">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h5 class="modal-title" id="deleteModalLabel">
-                                                                    Delete Pesanan</h5>
-                                                                <button type="button" class="btn-close"
-                                                                    data-bs-dismiss="modal" aria-label="Close"></button>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                <p>Kamu yakin ingin menghapus pesanan {{ $data->order_number }}?
-                                                                    <strong id="username"></strong>
-                                                                </p>
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary"
-                                                                    data-bs-dismiss="modal">Batal</button>
-                                                                <form method="post" action="{{ route('order.delete', $data->id) }}">
-                                                                    @csrf
-                                                                    @method('DELETE')
-                                                                    <button type="submit" class="btn btn-danger"
-                                                                        id="confirm-delete">Hapus</button>
-                                                                </form>
+                                                    <div class="modal fade md-effect-1"
+                                                        id="updateModalPembayaran{{ $data->id }}" tabindex="-1"
+                                                        role="dialog" aria-labelledby="deleteModalLabel"
+                                                        aria-hidden="true">
+                                                        <div class="modal-dialog" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="deleteModalLabel">
+                                                                        Update Status Pembayaran</h5>
+                                                                    <button type="button" class="btn-close"
+                                                                        data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <p>Kamu yakin ingin Mengubah Status Pembayaran Menjadi
+                                                                        Lunas dan menambahkan point ke pembeli (Khusus Member)?
+                                                                    </p>
+                                                                    <form method="post"
+                                                                        action="{{ route('order.updateLunas', $data->id) }}">
+                                                                        @csrf
+                                                                        @method('PUT')
+                                                                        <div class="form-group">
+                                                                            <label for="metode_pembayaran">Metode Pembayaran</label>
+                                                                            <select class="form-control" id="metode_pembayaran" name="metode_pembayaran">
+                                                                                <option value="QRIS">QRIS</option>
+                                                                                <option value="Cash">Cash</option>
+                                                                                <option value="Debit">Debit</option>
+                                                                            </select>
+                                                                        </div>
+                                                                        @if($data->user)
+                                                                            <input type="hidden" name="user_id" value="{{ $data->user->id }}">
+                                                                        @endif
+                                                                        <input type="hidden" name="total_price" value="{{$data->total_price}}">
+                                                                        <input type="hidden" name="order_id" value="{{$data->id}}">
+                                                                        <div class="modal-footer">
+                                                                            <button type="button" class="btn btn-secondary"
+                                                                                data-bs-dismiss="modal">Batal</button>
+                                                                            <button type="submit" class="btn btn-danger"
+                                                                                id="confirm-update">Update</button>
+                                                                        </div>
+                                                                    </form>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                    <div class="modal fade md-effect-1"
+                                                        id="deleteModalPembayaran{{ $data->id }}" tabindex="-1"
+                                                        role="dialog" aria-labelledby="deleteModalLabel"
+                                                        aria-hidden="true">
+                                                        <div class="modal-dialog" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="deleteModalLabel">
+                                                                        Delete Pesanan</h5>
+                                                                    <button type="button" class="btn-close"
+                                                                        data-bs-dismiss="modal"
+                                                                        aria-label="Close"></button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <p>Kamu yakin ingin menghapus pesanan
+                                                                        {{ $data->order_number }}?
+                                                                        <strong id="username"></strong>
+                                                                    </p>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary"
+                                                                        data-bs-dismiss="modal">Batal</button>
+                                                                    <form method="post"
+                                                                        action="{{ route('order.delete', $data->id) }}">
+                                                                        @csrf
+                                                                        @method('DELETE')
+                                                                        <button type="submit" class="btn btn-danger"
+                                                                            id="confirm-delete">Hapus</button>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 @endforeach
-                                                <div class="modal fade md-effect-1" id="updateModalMakanan" tabindex="-1"
-                                                    role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                                                <div class="modal fade md-effect-1" id="updateModalMakanan"
+                                                    tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+                                                    aria-hidden="true">
                                                     <div class="modal-dialog" role="document">
                                                         <div class="modal-content">
                                                             <div class="modal-header">

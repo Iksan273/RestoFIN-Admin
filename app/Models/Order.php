@@ -17,7 +17,8 @@ class Order extends Model
         'order_date',
         'status_pembayaran',
         'no_meja',
-        'status_makanan'
+        'status_makanan',
+        'guest'
 
     ];
 

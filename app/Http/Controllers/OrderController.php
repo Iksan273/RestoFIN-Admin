@@ -2,12 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\MemberPoint;
+use App\Models\Menu;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\Transaction;
+use App\Models\User;
 use Barryvdh\DomPDF\Facade as PDF;
 use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
 use Barryvdh\DomPDF\PDF as DomPDFPDF;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class OrderController extends Controller
 {
@@ -31,13 +38,58 @@ class OrderController extends Controller
         $order = Order::where('status_makanan', 'Selesai')->get();
         return view('Employee.daftar_pesananSelesai', compact('order'));
     }
-    public function updateStatusPembayaranLunas($id)
+    public function updateStatusPembayaranLunas(Request $request, $id)
     {
-        $order = Order::findOrFail($id);
-        $order->status_pembayaran = 'Lunas';
-        $order->save();
+        try {
 
-        return redirect()->route('employee.daftarPesanan')->with('success', 'Status pembayaran telah diupdate menjadi Lunas.');
+            $validatedData = $request->validate([
+                'metode_pembayaran' => 'required|string',
+                'user_id' => 'nullable|integer',
+                'total_price' => 'required|numeric',
+                'order_id'=>'required|integer'
+            ]);
+            $order = Order::findOrFail($id);
+            $order->status_pembayaran = 'Lunas';
+            $order->payment_method = $request->metode_pembayaran;
+            $order->save();
+
+            $transaction=Transaction::where('orders_id', $request->order_id)->first();
+            $transaction->status='Lunas';
+            $transaction->payment_method = $request->metode_pembayaran;
+            $transaction->save();
+
+            if ($request->has('user_id') && $validatedData['user_id'] != null) {
+                $user = User::find($validatedData['user_id']);
+                if ($user) {
+                    $user->point += $validatedData['total_price'] * 0.01;
+                    $user->save();
+
+                    $memberPoint = new MemberPoint();
+                    $memberPoint->users_id = $user->id;
+                    $memberPoint->point = $validatedData['total_price'] * 0.01;
+                    $memberPoint->keterangan = "Point dari total pembelian " . $validatedData['total_price'];
+                    $memberPoint->save();
+                }
+            }
+
+            return redirect()->route('employee.daftarPesanan')->with('success', 'Status pembayaran telah diupdate menjadi Lunas.');
+        } catch (Exception $e) {
+            return back()->with('error', 'Gagal memproses data: ' . $e->getMessage());
+        }
+    }
+
+    public function orderForm()
+    {
+
+        $makanan = Menu::whereHas('category', function ($query) {
+            $query->where('title', 'Makanan');
+        })->get();
+        $minuman = Menu::whereHas('category', function ($query) {
+            $query->where('title', 'Minuman');
+        })->get();
+
+
+        return view('Employee.add_order', compact('makanan', 'minuman'));
     }
 
     public function updateStatusMakananSelesai($id)
@@ -60,13 +112,66 @@ class OrderController extends Controller
     {
         $order = Order::findOrFail($id); // Menggunakan findOrFail untuk menghandle kasus jika order tidak ditemukan
         $pdf = FacadePdf::loadView('Layouts.nota', compact('order'));
-        return $pdf->download('nota-order-' . $id. '.pdf'); // Menambahkan ID order pada nama file untuk memudahkan identifikasi
+        return $pdf->download('nota-order-' . $id . '.pdf'); // Menambahkan ID order pada nama file untuk memudahkan identifikasi
     }
 
     public function printNota($id)
     {
         $order = Order::findOrFail($id); // Menggunakan findOrFail untuk menghandle kasus jika order tidak ditemukan
         $pdf = FacadePdf::loadView('Layouts.nota', compact('order'));
-        return $pdf->stream('nota-order-' . $id. '.pdf'); // Menampilkan PDF di browser
+        return $pdf->stream('nota-order-' . $id . '.pdf'); // Menampilkan PDF di browser
+    }
+    public function store(Request $request)
+    {
+        try {
+            $validatedData = $request->validate([
+                'no_meja' => 'required|integer',
+                'customer_name' => 'nullable|string|max:255',
+                'member_id' => 'nullable|integer',
+                'total_price' => 'required|numeric',
+                'cart' => 'required|array',
+                'cart.*.quantity' => 'required|integer|min:1',
+                'cart.*.price' => 'required|numeric|min:0',
+            ]);
+
+            DB::transaction(function () use ($validatedData) {
+                $orderNumber = 'TRX' . date('dmY');
+                $orderCount = Order::whereDate('created_at', now()->format('Y-m-d'))->count();
+                $order = Order::create([
+                    'order_number' => $orderNumber . str_pad($orderCount + 1, 4, '0', STR_PAD_LEFT),
+                    'total_price' => $validatedData['total_price'],
+                    'payment_method' => '-',
+                    'order_date' => now(),
+                    'status_pembayaran' => 'Belum Bayar',
+                    'no_meja' => $validatedData['no_meja'],
+                    'guest' => $validatedData['customer_name'] ?? null,
+                    'users_id' => $validatedData['member_id'] ?? null,
+                ]);
+
+
+
+                foreach ($validatedData['cart'] as $id => $item) {
+                    OrderItem::create([
+                        'orders_id' => $order->id,
+                        'menus_id' => $id,
+                        'jumlah' => $item['quantity'],
+                        'price' => $item['price'],
+                        'total_price' => $item['quantity'] * $item['price'],
+                    ]);
+                }
+
+                Transaction::create([
+                    'orders_id' => $order->id,
+                    'payment_method' => '-',
+                    'total_amount' => $validatedData['total_price'],
+                    'status' => 'Belum Bayar',
+                ]);
+            });
+
+            return response()->json(['success' => true, 'message' => 'Order successfully created!']);
+        } catch (\Exception $e) {
+            Log::error('Error creating order: ' . $e->getMessage());
+            return response()->json(['success' => false, 'message' => 'Error creating order'], 500);
+        }
     }
 }

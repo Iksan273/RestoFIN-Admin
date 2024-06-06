@@ -35,7 +35,7 @@ Route::post('/register', [EmployeeController::class, 'register'])->name('registe
 
 Route::post('/logout', [EmployeeController::class, 'logout'])->name('logout');
 
-Route::view('/order', 'Employee.add_order')->name('order');
+
 // // Master ADMIN ROUTE///
 // Route::view('/Master', 'Master.index')->name('master.dashboard');
 // Route::view('/Master-Member', 'Master.member')->name('master.member');
@@ -103,10 +103,10 @@ Route::middleware(['role:Master'])->group(function () {
     Route::put('/daftar-pesanan-selesai/{id}', [OrderController::class, 'updateStatusMakananSelesai'])->name('order.updateSelesai');
     Route::delete('/hapus-pesanan/{id}', [OrderController::class, 'deleteOrder'])->name('order.delete');
     Route::get('/download-nota/{id}', [OrderController::class, 'printNota'])->name('download-nota');
-
     Route::get('/daftar-transaksi', [TransactionController::class, 'index'])->name('employee.daftarTransaksi');
-
     Route::view('/nota', 'Layouts.nota')->name('nota');
+    Route::get('/order', [OrderController::class, 'orderForm'])->name('employee.Addorder');
+    Route::post('/order/store', [OrderController::class, 'store'])->name('employee.StoreOrder');
 
     // route untuk reservasi
     Route::get('/reservasi-Employee', [ReservationController::class, 'index'])->name('employee.reservasi');

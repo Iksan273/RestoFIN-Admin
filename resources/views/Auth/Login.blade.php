@@ -29,22 +29,15 @@
     <!-- vendor css -->
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
 
+
 </head>
 
 <body>
-    @if (session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
-        </div>
-    @endif
-    @if (session('error'))
-        <div class="alert alert-danger">
-            {{ session('error') }}
-        </div>
-    @endif
+
     <!-- [ signin-img-tabs ] start -->
     <div class="blur-bg-images"></div>
     <div class="auth-wrapper">
+
         <div class="auth-content container">
             <div class="card">
                 <div class="row align-items-center">
@@ -71,6 +64,16 @@
                                             name="password" maxlength="14" required>
                                     </div>
                                     <button type="submit" class="btn btn-primary mb-4 btf">Login</button>
+                                    @if (session('success'))
+                                        <div class="alert alert-success">
+                                            {{ session('success') }}
+                                        </div>
+                                    @endif
+                                    @if (session('error'))
+                                        <div class="alert alert-danger">
+                                            {{ session('error') }}
+                                        </div>
+                                    @endif
                                 </form>
                                 <p class="mb-2 text-muted">Forgot password? <a href="auth-reset-password.html"
                                         class="f-w-400">Reset</a></p>

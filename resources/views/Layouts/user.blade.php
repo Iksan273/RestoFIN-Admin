@@ -19,6 +19,7 @@
     <meta name="keywords"
         content="admin templates, bootstrap admin templates, bootstrap 5, dashboard, dashboard templets, sass admin templets, html admin templates, responsive, bootstrap admin templates free download,premium bootstrap admin templates, Dasho, Dasho bootstrap admin template">
     <meta name="author" content="Phoenixcoded" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Favicon icon -->
     <link rel="icon" href="{{ asset('assets/images/favicon.svg') }}" type="image/x-icon">
@@ -88,6 +89,8 @@
                                     class="">List Pesanan Pending</a></li>
                             <li class=""><a href="{{ route('employee.daftarPesananSelesai') }}"
                                     class="">List Pesanan Selesai </a></li>
+                            <li class=""><a href="{{ route('employee.Addorder') }}"
+                                    class="">Add Order </a></li>
 
 
 

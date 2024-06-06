@@ -1,148 +1,301 @@
 @extends('Layouts.user')
 @section('content')
-@if (session('success'))
-<div class="alert alert-success">
-    {{ session('success') }}
-</div>
-@endif
-@if (session('error'))
-<div class="alert alert-danger">
-    {{ session('error') }}
-</div>
-@endif
-<div class="pcoded-content">
-    <div class="pcoded-inner-content">
-        <div class="main-body">
-            <div class="page-wrapper">
-                <!-- [ breadcrumb ] start -->
-                <div class="page-header">
-                    <div class="page-block">
-                        <div class="row align-items-center">
-                            <div class="col-md-12">
-                                <div class="page-header-title">
-                                    <h5 class="m-b-10">Dashboard</h5>
-                                </div>
-                                <ul class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="/"><i
-                                                class="feather icon-home"></i></a></li>
-                                    <li class="breadcrumb-item"><a href="#!">Dashboard</a></li>
+    @if (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+    @if (session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
+    <div class="pcoded-content">
+        <div class="pcoded-inner-content">
+            <div class="main-body">
+                <div class="page-wrapper">
+                    <!-- [ breadcrumb ] start -->
+                    <div class="page-header">
+                        <div class="page-block">
+                            <div class="row align-items-center">
+                                <div class="col-md-12">
+                                    <div class="page-header-title">
+                                        <h5 class="m-b-10">Dashboard</h5>
+                                    </div>
+                                    <ul class="breadcrumb">
+                                        <li class="breadcrumb-item"><a href="/"><i class="feather icon-home"></i></a>
+                                        </li>
+                                        <li class="breadcrumb-item"><a href="#!">Dashboard</a></li>
 
-                                </ul>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <!-- [ breadcrumb ] end -->
-                <!-- [ Main Content ] start -->
-                <div class="row">
-                    <div class="col-lg-8 col-md-10 col-sm-12">
-                        <ul class="nav nav-tabs" id="myTab" role="tablist">
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link active" id="makanan-tab" data-bs-toggle="tab" data-bs-target="#makanan" type="button" role="tab" aria-controls="makanan" aria-selected="true">Makanan</button>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="minuman-tab" data-bs-toggle="tab" data-bs-target="#minuman" type="button" role="tab" aria-controls="minuman" aria-selected="false">Minuman</button>
-                            </li>
-                        </ul>
-                        <div class="tab-content" id="myTabContent">
-                            <div class="tab-pane fade show active" id="makanan" role="tabpanel" aria-labelledby="makanan-tab">
-                                <div class="row overflow-auto" style="max-height: 800px;">
-                                    @for ($i = 1; $i <= 15; $i++)
-                                    <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
-                                        <div class="card" onclick="addToCart({{ $i }}, 'Dummy Food {{ $i }}', 50000)">
-                                            <img src="https://via.placeholder.com/50" class="card-img-top" alt="Dummy Food {{ $i }}">
-                                            <div class="card-body">
-                                                <h5 class="card-title">Dummy Food {{ $i }}</h5>
-                                                <p class="card-text">Rp50.000</p>
+                    <!-- [ breadcrumb ] end -->
+                    <!-- [ Main Content ] start -->
+                    <div class="row">
+                        <div class="col-lg-8 col-md-10 col-sm-12">
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link active" id="makanan-tab" data-bs-toggle="tab"
+                                        data-bs-target="#makanan" type="button" role="tab" aria-controls="makanan"
+                                        aria-selected="true">Makanan</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="minuman-tab" data-bs-toggle="tab" data-bs-target="#minuman"
+                                        type="button" role="tab" aria-controls="minuman"
+                                        aria-selected="false">Minuman</button>
+                                </li>
+                            </ul>
+                            <div class="tab-content" id="myTabContent">
+                                <div class="tab-pane fade show active" id="makanan" role="tabpanel"
+                                    aria-labelledby="makanan-tab">
+                                    <div class="row overflow-auto" style="max-height: 800px;">
+                                        @foreach ($makanan as $m)
+                                            <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
+                                                <div class="card"
+                                                    onclick="addToCart({{ $m->id }}, '{{ $m->title }}', {{ $m->price }})">
+                                                    <img src="{{ asset('menu/images/' . $m->imageUrl) }}"
+                                                        class="card-img-top img-fluid" alt="{{ $m->title }}">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title">{{ $m->title }}</h5>
+                                                        <p class="card-text">Rp{{ $m->price }}</p>
+                                                    </div>
+                                                </div>
                                             </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="minuman" role="tabpanel" aria-labelledby="minuman-tab">
+                                    <div class="row overflow-auto" style="max-height: 800px;">
+                                        @foreach ($minuman as $m)
+                                            <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
+                                                <div class="card"
+                                                    onclick="addToCart({{ $m->id }}, '{{ $m->title }}', {{ $m->price }})">
+                                                    <img src="{{ asset('menu/images/' . $m->imageUrl) }}"
+                                                        class="card-img-top img-fluid" alt="{{ $m->title }}">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title">{{ $m->title }}</h5>
+                                                        <p class="card-text">Rp{{ $m->price }}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-sm-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5>Keranjang</h5>
+                                </div>
+                                <div class="card-body" style="overflow-y: auto; max-height: 300px;">
+                                    <ul class="list-group cart-items">
+                                        <!-- Cart items will be added here dynamically -->
+                                    </ul>
+                                    <p class="mt-3">Total: Rp<span class="total-price">0</span></p>
+
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="is-member"
+                                            onchange="toggleMemberForm()">
+                                        <label class="form-check-label" for="is-member">Centang Jika Member</label>
+                                    </div>
+                                    <div id="member-form" style="display: none;">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" id="member-phone"
+                                                placeholder="Masukkan Nomor Telepon">
+                                            <button class="btn btn-primary" id="checkMemberBtn">Cek Member</button>
+                                        </div>
+                                        <div id="memberInfo" style="margin-top: 10px;s"></div>
+                                    </div>
+                                    <div id="non-member-form" style="display: none;">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" id="customer-name"
+                                                placeholder="Masukkan Nama">
                                         </div>
                                     </div>
-                                    @endfor
-                                </div>
-                            </div>
-                            <div class="tab-pane fade" id="minuman" role="tabpanel" aria-labelledby="minuman-tab">
-                                <div class="row overflow-auto" style="max-height: 400px;">
-                                    @for ($i = 1; $i <= 5; $i++)
-                                    <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-                                        <div class="card" onclick="addToCart({{ $i+5 }}, 'Dummy Drink {{ $i }}', 20000)">
-                                            <img src="https://via.placeholder.com/150" class="card-img-top" alt="Dummy Drink {{ $i }}">
-                                            <div class="card-body">
-                                                <h5 class="card-title">Dummy Drink {{ $i }}</h5>
-                                                <p class="card-text">Rp20.000</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    @endfor
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6 col-sm-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h5>Keranjang</h5>
-                            </div>
-                            <div class="card-body">
-                                <ul class="list-group cart-items">
-                                    <!-- Cart items will be added here dynamically -->
-                                </ul>
-                                <p class="mt-3">Total: Rp<span class="total-price">0</span></p>
-                                <button class="btn btn-success mt-2" id="submit-order">Submit Order</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
-                <!-- [ Main Content ] end -->
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <label class="form-label">No Meja:</label>
+                                        <input type="Number" class="form-control" id="table-number"
+                                            placeholder="Masukkan Nomor Meja">
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="btn btn-success mt-2" id="submit-order">Submit Order</button>
+
+                        </div>
+                    </div>
+
+                    <!-- [ Main Content ] end -->
+                </div>
             </div>
         </div>
     </div>
-</div>
 @endsection
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const cartItems = document.querySelector('.cart-items');
-        const totalPriceElement = document.querySelector('.total-price');
-        let totalPrice = 0;
-        let cart = {};
+@section('script')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
 
-        window.addToCart = function (id, name, price) {
-            if (!cart[id]) {
-                cart[id] = { name, price, quantity: 1 };
-                const listItem = document.createElement('li');
-                listItem.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center', 'mb-2', 'shadow-sm');
-                listItem.id = `item-${id}`;
-                listItem.innerHTML = `<div><img src="https://via.placeholder.com/50" class="rounded-circle" alt="Icon ${name}">${name} - Rp${price.toLocaleString()}</div> <div><button class="btn btn-danger btn-sm" onclick="changeQuantity(${id}, -1)">-</button> <span id="qty-${id}" class="badge bg-primary rounded-pill">${cart[id].quantity}</span> <button class="btn btn-success btn-sm" onclick="changeQuantity(${id}, 1)">+</button></div>`;
-                cartItems.appendChild(listItem);
-                updateCartTotal(); // Memperbarui total saat item baru ditambahkan
-            } else {
-                cart[id].quantity++;
-                document.getElementById(`qty-${id}`).textContent = cart[id].quantity;
-                updateCartTotal(); // Memperbarui total setiap kali kuantitas item diubah
+            const cartItems = document.querySelector('.cart-items');
+            const totalPriceElement = document.querySelector('.total-price');
+            let totalPrice = 0;
+            let totalPay=0;
+            let cart = {};
+
+
+            window.addToCart = function(id, name, price) {
+                if (!cart[id]) {
+                    cart[id] = {
+                        name,
+                        price,
+                        quantity: 1
+                    };
+                    const listItem = document.createElement('li');
+                    listItem.classList.add('list-group-item', 'd-flex', 'justify-content-between',
+                        'align-items-center', 'mb-2', 'shadow-sm');
+                    listItem.id = `item-${id}`;
+                    listItem.innerHTML =
+                        `<div><img src="https://via.placeholder.com/50" class="rounded-circle" alt="Icon ${name}">${name} - Rp${price.toLocaleString()}</div> <div><button class="btn btn-danger btn-sm" onclick="changeQuantity(${id}, -1)">-</button> <span id="qty-${id}" class="badge bg-primary rounded-pill">${cart[id].quantity}</span> <button class="btn btn-success btn-sm" onclick="changeQuantity(${id}, 1)">+</button></div>`;
+                    cartItems.appendChild(listItem);
+                    updateCartTotal(); // Memperbarui total saat item baru ditambahkan
+                } else {
+                    cart[id].quantity += 1;
+                    document.getElementById(`qty-${id}`).textContent = cart[id].quantity;
+                    updateCartTotal(); // Memperbarui total setiap kali kuantitas item diubah
+                }
+            };
+
+            window.changeQuantity = function(id, change) {
+                if (cart[id].quantity + change > 0) {
+                    cart[id].quantity += change;
+                    document.getElementById(`qty-${id}`).textContent = cart[id].quantity;
+                    updateCartTotal(); // Memperbarui total setiap kali kuantitas item diubah
+                } else {
+                    delete cart[id];
+                    document.getElementById(`item-${id}`).remove();
+                    updateCartTotal(); // Memperbarui total setelah item dihapus dari cart
+                }
+            };
+
+            function updateCartTotal() {
+                totalPrice = 0;
+                Object.values(cart).forEach(item => {
+                    totalPrice += item.price * item.quantity;
+                });
+                const taxPrice = totalPrice * 0.1;
+                totalPay = totalPrice + taxPrice;
+                totalPriceElement.innerHTML =
+                    `Total Harga: Rp${totalPrice.toLocaleString()}<br>PPN (10%): Rp${taxPrice.toLocaleString()}<br>Total Bayar: Rp${totalPay.toLocaleString()}`;
             }
-        };
 
-        window.changeQuantity = function (id, change) {
-            if (cart[id].quantity + change > 0) {
-                cart[id].quantity += change;
-                document.getElementById(`qty-${id}`).textContent = cart[id].quantity;
-                updateCartTotal(); // Memperbarui total setiap kali kuantitas item diubah
-            }
-        };
+            document.getElementById('submit-order').addEventListener('click', function() {
+                const no_meja = parseInt($('#table-number').val());
+                let member_id_text = $('#idMember').text();
+                let member = member_id_text.replace('ID:', '').trim();
+                const member_id=parseInt(member);
+                const customer_name = $('#customer-name').val();
+                const orderData = {
+                    no_meja,
+                    customer_name,
+                    member_id,
+                    total_price: totalPay,
+                    cart: cart,
+                };
+                console.log(orderData);
 
-        function updateCartTotal() {
-            totalPrice = 0;
-            Object.values(cart).forEach(item => {
-                totalPrice += item.price * item.quantity;
+                const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+                $.ajax({
+                    url: '{{ route('employee.StoreOrder') }}',
+                    type: 'POST',
+                    data: JSON.stringify(orderData),
+                    contentType: 'application/json',
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken
+                    },
+                    success: function(response) {
+                        alert('Order submitted successfully!');
+                        window.location.href = "/daftar-pesanan-pending";
+                    },
+                    error: function(xhr, status, error) {
+                        alert('Error submitting order');
+                    }
+                });
             });
-            const taxPrice = totalPrice * 0.1;
-            const totalPay = totalPrice + taxPrice;
-            totalPriceElement.innerHTML = `Total Harga: Rp${totalPrice.toLocaleString()}<br>PPN (10%): Rp${taxPrice.toLocaleString()}<br>Total Bayar: Rp${totalPay.toLocaleString()}`;
+        });
+    </script>
+    <script>
+        function toggleMemberForm() {
+            const isMemberCheckbox = document.getElementById('is-member');
+            const memberForm = document.getElementById('member-form');
+            const nonMemberForm = document.getElementById('non-member-form');
+
+            if (isMemberCheckbox.checked) {
+                memberForm.style.display = 'block';
+                nonMemberForm.style.display = 'none';
+            } else {
+                memberForm.style.display = 'none';
+                nonMemberForm.style.display = 'block';
+            }
         }
 
-        document.getElementById('submit-order').addEventListener('click', function () {
-            alert('Order submitted!');
-            // Here you would typically handle the order submission logic
+        document.addEventListener('DOMContentLoaded', function() {
+            toggleMemberForm();
         });
-    });
-</script>
+        document.getElementById('is-member').addEventListener('change', toggleMemberForm);
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('#checkMemberBtn').click(function() {
+                var phone = $('#member-phone').val();
+                if (!phone) {
+                    $('#memberInfo').html(
+                        '<div class="alert alert-warning">Harap masukkan nomor telepon.</div>');
+                    return;
+                }
+                $.ajax({
+                    url: '{{ route('fetch-user') }}',
+                    type: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        phone: phone
+                    },
+                    success: function(response) {
+
+                        $('#memberInfo').html('<p id="idMember" >ID:' + response.id +
+                            '</p><p id="name">Nama: ' + response.name +
+                            '</p><p id="email">Email: ' + response.email +
+                            '</p><p id="points">Poin: ' + response.points + '</p>');
+
+                    },
+                    error: function(xhr) {
+                        if (xhr.responseJSON && xhr.responseJSON.error) {
+                            if (xhr.status === 404) {
+                                $('#memberInfo').html('<div class="alert alert-warning">' +
+                                    'Member tidak ditemukan.' + '</div>');
+                            } else {
+                                $('#memberInfo').html('<div class="alert alert-danger">' +
+                                    xhr.responseJSON.error + '</div>');
+                            }
+                        } else {
+                            $('#memberInfo').html(
+                                '<div class="alert alert-danger">Gagal mengambil data dari server.</div>'
+                            )
+                        };
+                    }
+                });
+            });
+        });
+    </script>
+@endsection

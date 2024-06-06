@@ -98,10 +98,7 @@ class EmployeeController extends Controller
             }
 
             Log::error('Login gagal: Username atau password salah.');
-            return back()->withErrors([
-                'username' => 'Username yang anda masukan salah',
-                'password' => 'Password yang Anda masukkan salah.',
-            ]);
+            return back()->with('error', 'Username atau password salah');
         } catch (ValidationException $e) {
             Log::error('Error validasi saat login: ' . $e->getMessage());
             return back()->with('error', 'Gagal Login: ' . $e->getMessage());

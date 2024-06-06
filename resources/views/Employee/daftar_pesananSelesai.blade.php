@@ -62,7 +62,7 @@
                                                 @foreach ($order as $data)
                                                 <tr>
                                                     <td>{{ $data->id }}</td>
-                                                    <td>{{ $data->user->firstname}} {{ $data->user->lastname}}</td>
+                                                    <td>{{ $data->user ? $data->user->firstname . ' ' . $data->user->lastname : $data->guest . '(Guest)' }}
                                                     <td>{{ $data->no_meja }}</td>
                                                     <td>{{ $data->order_number }}</td>
                                                     <td> <button class="btn btn-gradient-info text-center" data-bs-toggle="modal"

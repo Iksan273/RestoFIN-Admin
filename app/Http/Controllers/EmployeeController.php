@@ -77,7 +77,7 @@ class EmployeeController extends Controller
     }
     public function showLoginForm()
     {
-        return view('Auth.login');
+        return view('Auth.Login');
     }
 
     public function showRegisterForm()

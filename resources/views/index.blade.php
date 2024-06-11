@@ -1,508 +1,201 @@
 @extends('Layouts.user')
 @section('content')
-@if (session('success'))
-<div class="alert alert-success">
-    {{ session('success') }}
-</div>
-@endif
-@if (session('error'))
-<div class="alert alert-danger">
-    {{ session('error') }}
-</div>
-@endif
-<div class="pcoded-content">
-    <div class="pcoded-inner-content">
-        <div class="main-body">
-            <div class="page-wrapper">
-                <!-- [ breadcrumb ] start -->
-                <div class="page-header">
-                    <div class="page-block">
-                        <div class="row align-items-center">
-                            <div class="col-md-12">
-                                <div class="page-header-title">
-                                    <h5 class="m-b-10">Dashboard</h5>
-                                </div>
-                                <ul class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="/"><i
-                                                class="feather icon-home"></i></a></li>
-                                    <li class="breadcrumb-item"><a href="#!">Dashboard</a></li>
+    @if (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+    @if (session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
+    <div class="pcoded-content">
+        <div class="pcoded-inner-content">
+            <div class="main-body">
+                <div class="page-wrapper">
+                    <!-- [ breadcrumb ] start -->
+                    <div class="page-header">
+                        <div class="page-block">
+                            <div class="row align-items-center">
+                                <div class="col-md-12">
+                                    <div class="page-header-title">
+                                        <h5 class="m-b-10">Dashboard</h5>
+                                    </div>
+                                    <ul class="breadcrumb">
+                                        <li class="breadcrumb-item"><a href="/"><i class="feather icon-home"></i></a>
+                                        </li>
+                                        <li class="breadcrumb-item"><a href="#!">Dashboard</a></li>
 
-                                </ul>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
+                    <!-- [ breadcrumb ] end -->
+                    <!-- [ Main Content ] start -->
+                    <div class="row">
+                        <!-- table card-1 start -->
+                        <div class="col-md-4 col-xl-4">
+                            <div class="card bg-c-blue order-card">
+                                <div class="card-body">
+                                    <h6 class="m-b-20">Total Order Hari Ini/h6>
+                                        <h2 class="text-start"><span>{{ $totalOrdersToday }}</span><i
+                                                class="feather icon-shopping-cart float-end"></i></h2>
+                                        <p class="m-b-0 text-end">Orderan Selesai
+                                        </p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- table card-1 end -->
+                        <!-- table card-2 start -->
+                        <div class="col-md-4 col-xl-4">
+                            <div class="card bg-c-green order-card">
+                                <div class="card-body">
+                                    <h6 class="m-b-20">Total Pendapatan Hari Ini</h6>
+                                    <h2 class="text-start"><span>Rp. {{ number_format($todaySales, 0, ',', '.') }}</span><i
+                                            class="feather icon-shopping-cart float-end"></i></h2>
+                                    <p class="m-b-0 text-end">Hari Ini</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- table card-2 end -->
+                        <!-- Widget primary-success card start -->
+                        <div class="col-md-4 col-xl-4">
+                            <div class="card bg-c-blue order-card">
+                                <div class="card-body">
+                                    <h6 class="m-b-20">Total Rating</h6>
+                                    <h2 class="text-start"><span>{{ $averageRating }}</span><i
+                                            class="feather icon-star-on float-end"></i></h2>
+                                    <p class="m-b-0 text-end">Pelanggan</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-6 col-md-6">
+                            <div class="card prod-p-card bg-c-red">
+                                <div class="card-body">
+                                    <div class="row align-items-center m-b-25">
+                                        <div class="col">
+                                            <h6 class="m-b-5 text-white">Total Order This Month</h6>
+                                            <h3 class="m-b-0 text-white">{{ $totalOrdersThisMonth }}</h3>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-money-bill-alt text-c-red f-18"></i>
+                                        </div>
+                                    </div>
+                                    <p class="m-b-0 text-white"><span
+                                            class="label label-danger m-r-10">+{{ $percentageIncrease }}%</span>Dari Bulan
+                                        Lalu
+                                        ({{ $totalLastMonthOrders }})</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-md-6">
+                            <div class="card prod-p-card bg-c-yellow">
+                                <div class="card-body">
+                                    <div class="row align-items-center m-b-25">
+                                        <div class="col">
+                                            <h6 class="m-b-5 text-white">Total Member</h6>
+                                            <h3 class="m-b-0 text-white">{{ $totalMembers }}</h3>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-tags text-c-yellow f-18"></i>
+                                        </div>
+                                    </div>
+                                    <p class="m-b-0 text-white"><span class="label  m-r-10"></span></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-sm-12 col-md-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5>Menu Terlaris</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table id="order-table" class="table table-striped table-bordered nowrap">
+                                            <thead>
+                                                <tr>
+
+                                                    <th>Nama Menu</th>
+                                                    <th>Jumlah di pesan</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($topMenu as $data)
+                                                    <tr>
+
+                                                        <td>{{ $data->menu->title }}</td>
+                                                        <td>{{ $data->order_count }}</td>
+                                                    </tr>
+                                                @endforeach
+
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+
+                                                    <th>Nama Menu</th>
+                                                    <th>Jumlah di pesan</th>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-6 col-md-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5>List Promo</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="dt-responsive table-responsive">
+                                        <table id="order-table-2" class="table table-striped table-bordered nowrap">
+                                            <thead>
+                                                <tr>
+                                                    <th>Name</th>
+                                                    <th>deskripsi</th>
+                                                    <th>tanggal mulai</th>
+                                                    <th>tanggal berakhir</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($promo as $data )
+                                                <tr>
+                                                    <td>{{ $data->title }}</td>
+                                                    <td>{{ $data->description }}</td>
+                                                    <td>{{ $data->start_date}}</td>
+                                                    <td>{{ $data->end_date}}</td>
+
+                                                </tr>
+
+                                                @endforeach
+
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <th>Name</th>
+                                                    <th>deskripsi</th>
+                                                    <th>tanggal mulai</th>
+                                                    <th>tanggal berakhir</th>
+
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <!-- [ Main Content ] end -->
                 </div>
-                <!-- [ breadcrumb ] end -->
-                <!-- [ Main Content ] start -->
-                <div class="row">
-                    <!-- table card-1 start -->
-                    <div class="col-md-4 col-xl-4">
-                        <div class="card bg-c-blue order-card">
-                            <div class="card-body">
-                                <h6 class="m-b-20">Orders Received Today</h6>
-                                <h2 class="text-start"><span>486</span><i
-                                        class="feather icon-shopping-cart float-end"></i></h2>
-                                <p class="m-b-0 text-end">Completed Orders
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- table card-1 end -->
-                    <!-- table card-2 start -->
-                    <div class="col-md-4 col-xl-4">
-                        <div class="card bg-c-green order-card">
-                            <div class="card-body">
-                                <h6 class="m-b-20">Total Sales</h6>
-                                <h2 class="text-start"><span>1641</span><i
-                                        class="feather icon-shopping-cart float-end"></i></h2>
-                                <p class="m-b-0 text-end">Today</p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- table card-2 end -->
-                    <!-- Widget primary-success card start -->
-                    <div class="col-md-4 col-xl-4">
-                        <div class="card bg-c-blue order-card">
-                            <div class="card-body">
-                                <h6 class="m-b-20">Review Rating</h6>
-                                <h2 class="text-start"><span>1641</span><i
-                                        class="feather icon-star-on float-end"></i></h2>
-                                <p class="m-b-0 text-end">This Month</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-xl-6 col-md-6">
-                        <div class="card prod-p-card bg-c-red">
-                            <div class="card-body">
-                                <div class="row align-items-center m-b-25">
-                                    <div class="col">
-                                        <h6 class="m-b-5 text-white">Total Order This Month</h6>
-                                        <h3 class="m-b-0 text-white">1,783</h3>
-                                    </div>
-                                    <div class="col-auto">
-                                        <i class="fas fa-money-bill-alt text-c-red f-18"></i>
-                                    </div>
-                                </div>
-                                <p class="m-b-0 text-white"><span
-                                        class="label label-danger m-r-10">+11%</span>From Previous Month</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-6 col-md-6">
-                        <div class="card prod-p-card bg-c-yellow">
-                            <div class="card-body">
-                                <div class="row align-items-center m-b-25">
-                                    <div class="col">
-                                        <h6 class="m-b-5 text-white">Total Users Membership</h6>
-                                        <h3 class="m-b-0 text-white">6,784</h3>
-                                    </div>
-                                    <div class="col-auto">
-                                        <i class="fas fa-tags text-c-yellow f-18"></i>
-                                    </div>
-                                </div>
-                                <p class="m-b-0 text-white"><span
-                                        class="label  m-r-10"></span></p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-6 col-sm-12 col-md-6">
-                        <div class="card">
-                            <div class="card-header">
-                                <h5>Rekomendasi Menu</h5>
-                            </div>
-                            <div class="card-body">
-                                <div class="table-responsive">
-                                    <table id="order-table" class="table table-striped table-bordered nowrap">
-                                        <thead>
-                                            <tr>
-                                                <th>Name</th>
-                                                <th>Position</th>
-                                                <th>Office</th>
-                                                <th>Age</th>
-                                                <th>Start date</th>
-                                                <th>Salary</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>Quinn Flynn</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>61</td>
-                                                <td>2011/04/25</td>
-                                                <td>$320,800</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Garrett Winters</td>
-                                                <td>Accountant</td>
-                                                <td>Tokyo</td>
-                                                <td>63</td>
-                                                <td>2011/07/25</td>
-                                                <td>$170,750</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Ashton Cox</td>
-                                                <td>Junior Technical Author</td>
-                                                <td>San Francisco</td>
-                                                <td>66</td>
-                                                <td>2009/01/12</td>
-                                                <td>$86,000</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Cedric Kelly</td>
-                                                <td>Senior Javascript Developer</td>
-                                                <td>Edinburgh</td>
-                                                <td>22</td>
-                                                <td>2012/03/29</td>
-                                                <td>$433,060</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Airi Satou</td>
-                                                <td>Accountant</td>
-                                                <td>Tokyo</td>
-                                                <td>33</td>
-                                                <td>2008/11/28</td>
-                                                <td>$162,700</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Brielle Williamson</td>
-                                                <td>Integration Specialist</td>
-                                                <td>New York</td>
-                                                <td>61</td>
-                                                <td>2012/12/02</td>
-                                                <td>$372,000</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Herrod Chandler</td>
-                                                <td>Sales Assistant</td>
-                                                <td>San Francisco</td>
-                                                <td>59</td>
-                                                <td>2012/08/06</td>
-                                                <td>$137,500</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Rhona Davidson</td>
-                                                <td>Integration Specialist</td>
-                                                <td>Tokyo</td>
-                                                <td>55</td>
-                                                <td>2010/10/14</td>
-                                                <td>$327,900</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Colleen Hurst</td>
-                                                <td>Javascript Developer</td>
-                                                <td>San Francisco</td>
-                                                <td>39</td>
-                                                <td>2009/09/15</td>
-                                                <td>$205,500</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Sonya Frost</td>
-                                                <td>Software Engineer</td>
-                                                <td>Edinburgh</td>
-                                                <td>23</td>
-                                                <td>2008/12/13</td>
-                                                <td>$103,600</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Jena Gaines</td>
-                                                <td>Office Manager</td>
-                                                <td>London</td>
-                                                <td>30</td>
-                                                <td>2008/12/19</td>
-                                                <td>$90,560</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Quinn Flynn</td>
-                                                <td>Support Lead</td>
-                                                <td>Edinburgh</td>
-                                                <td>22</td>
-                                                <td>2013/03/03</td>
-                                                <td>$342,000</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Charde Marshall</td>
-                                                <td>Regional Director</td>
-                                                <td>San Francisco</td>
-                                                <td>36</td>
-                                                <td>2008/10/16</td>
-                                                <td>$470,600</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Haley Kennedy</td>
-                                                <td>Senior Marketing Designer</td>
-                                                <td>London</td>
-                                                <td>43</td>
-                                                <td>2012/12/18</td>
-                                                <td>$313,500</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Tatyana Fitzpatrick</td>
-                                                <td>Regional Director</td>
-                                                <td>London</td>
-                                                <td>19</td>
-                                                <td>2010/03/17</td>
-                                                <td>$385,750</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Michael Silva</td>
-                                                <td>Marketing Designer</td>
-                                                <td>London</td>
-                                                <td>66</td>
-                                                <td>2012/11/27</td>
-                                                <td>$198,500</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Paul Byrd</td>
-                                                <td>Chief Financial Officer (CFO)</td>
-                                                <td>New York</td>
-                                                <td>64</td>
-                                                <td>2010/06/09</td>
-                                                <td>$725,000</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Gloria Little</td>
-                                                <td>Systems Administrator</td>
-                                                <td>New York</td>
-                                                <td>59</td>
-                                                <td>2009/04/10</td>
-                                                <td>$237,500</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Bradley Greer</td>
-                                                <td>Software Engineer</td>
-                                                <td>London</td>
-                                                <td>41</td>
-                                                <td>2012/10/13</td>
-                                                <td>$132,000</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Dai Rios</td>
-                                                <td>Personnel Lead</td>
-                                                <td>Edinburgh</td>
-                                                <td>35</td>
-                                                <td>2012/09/26</td>
-                                                <td>$217,500</td>
-                                            </tr>
-                                        </tbody>
-                                        <tfoot>
-                                            <tr>
-                                                <th>Name</th>
-                                                <th>Position</th>
-                                                <th>Office</th>
-                                                <th>Age</th>
-                                                <th>Start date</th>
-                                                <th>Salary</th>
-                                            </tr>
-                                        </tfoot>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-xl-6 col-md-6">
-                        <div class="card">
-                            <div class="card-header">
-                                <h5>List Promo</h5>
-                            </div>
-                            <div class="card-body">
-                                <div class="dt-responsive table-responsive">
-                                    <table id="order-table-2" class="table table-striped table-bordered nowrap">
-                                        <thead>
-                                            <tr>
-                                                <th>Name</th>
-                                                <th>Position</th>
-                                                <th>Office</th>
-                                                <th>Age</th>
-                                                <th>Start date</th>
-                                                <th>Salary</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>Quinn Flynn</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>61</td>
-                                                <td>2011/04/25</td>
-                                                <td>$320,800</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Garrett Winters</td>
-                                                <td>Accountant</td>
-                                                <td>Tokyo</td>
-                                                <td>63</td>
-                                                <td>2011/07/25</td>
-                                                <td>$170,750</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Ashton Cox</td>
-                                                <td>Junior Technical Author</td>
-                                                <td>San Francisco</td>
-                                                <td>66</td>
-                                                <td>2009/01/12</td>
-                                                <td>$86,000</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Cedric Kelly</td>
-                                                <td>Senior Javascript Developer</td>
-                                                <td>Edinburgh</td>
-                                                <td>22</td>
-                                                <td>2012/03/29</td>
-                                                <td>$433,060</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Airi Satou</td>
-                                                <td>Accountant</td>
-                                                <td>Tokyo</td>
-                                                <td>33</td>
-                                                <td>2008/11/28</td>
-                                                <td>$162,700</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Brielle Williamson</td>
-                                                <td>Integration Specialist</td>
-                                                <td>New York</td>
-                                                <td>61</td>
-                                                <td>2012/12/02</td>
-                                                <td>$372,000</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Herrod Chandler</td>
-                                                <td>Sales Assistant</td>
-                                                <td>San Francisco</td>
-                                                <td>59</td>
-                                                <td>2012/08/06</td>
-                                                <td>$137,500</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Rhona Davidson</td>
-                                                <td>Integration Specialist</td>
-                                                <td>Tokyo</td>
-                                                <td>55</td>
-                                                <td>2010/10/14</td>
-                                                <td>$327,900</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Colleen Hurst</td>
-                                                <td>Javascript Developer</td>
-                                                <td>San Francisco</td>
-                                                <td>39</td>
-                                                <td>2009/09/15</td>
-                                                <td>$205,500</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Sonya Frost</td>
-                                                <td>Software Engineer</td>
-                                                <td>Edinburgh</td>
-                                                <td>23</td>
-                                                <td>2008/12/13</td>
-                                                <td>$103,600</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Jena Gaines</td>
-                                                <td>Office Manager</td>
-                                                <td>London</td>
-                                                <td>30</td>
-                                                <td>2008/12/19</td>
-                                                <td>$90,560</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Quinn Flynn</td>
-                                                <td>Support Lead</td>
-                                                <td>Edinburgh</td>
-                                                <td>22</td>
-                                                <td>2013/03/03</td>
-                                                <td>$342,000</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Charde Marshall</td>
-                                                <td>Regional Director</td>
-                                                <td>San Francisco</td>
-                                                <td>36</td>
-                                                <td>2008/10/16</td>
-                                                <td>$470,600</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Haley Kennedy</td>
-                                                <td>Senior Marketing Designer</td>
-                                                <td>London</td>
-                                                <td>43</td>
-                                                <td>2012/12/18</td>
-                                                <td>$313,500</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Tatyana Fitzpatrick</td>
-                                                <td>Regional Director</td>
-                                                <td>London</td>
-                                                <td>19</td>
-                                                <td>2010/03/17</td>
-                                                <td>$385,750</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Michael Silva</td>
-                                                <td>Marketing Designer</td>
-                                                <td>London</td>
-                                                <td>66</td>
-                                                <td>2012/11/27</td>
-                                                <td>$198,500</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Paul Byrd</td>
-                                                <td>Chief Financial Officer (CFO)</td>
-                                                <td>New York</td>
-                                                <td>64</td>
-                                                <td>2010/06/09</td>
-                                                <td>$725,000</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Gloria Little</td>
-                                                <td>Systems Administrator</td>
-                                                <td>New York</td>
-                                                <td>59</td>
-                                                <td>2009/04/10</td>
-                                                <td>$237,500</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Bradley Greer</td>
-                                                <td>Software Engineer</td>
-                                                <td>London</td>
-                                                <td>41</td>
-                                                <td>2012/10/13</td>
-                                                <td>$132,000</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Dai Rios</td>
-                                                <td>Personnel Lead</td>
-                                                <td>Edinburgh</td>
-                                                <td>35</td>
-                                                <td>2012/09/26</td>
-                                                <td>$217,500</td>
-                                            </tr>
-                                        </tbody>
-                                        <tfoot>
-                                            <tr>
-                                                <th>Name</th>
-                                                <th>Position</th>
-                                                <th>Office</th>
-                                                <th>Age</th>
-                                                <th>Start date</th>
-                                                <th>Salary</th>
-                                            </tr>
-                                        </tfoot>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-                </div>
-                <!-- [ Main Content ] end -->
             </div>
         </div>
     </div>
-</div>
 @endsection

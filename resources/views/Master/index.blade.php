@@ -54,7 +54,7 @@
                         <div class="col-md-4 col-xl-4">
                             <div class="card bg-c-blue order-card">
                                 <div class="card-body">
-                                    <h6 class="m-b-20">Review Rating</h6>
+                                    <h6 class="m-b-20">Total Rating</h6>
                                     <h2 class="text-start"><span>{{ $averageRating }}</span><i
                                             class="feather icon-star-on float-end"></i>
                                     </h2>
@@ -68,7 +68,7 @@
                                 <div class="card-body">
                                     <div class="row align-items-center m-b-25">
                                         <div class="col">
-                                            <h6 class="m-b-5 text-white">Total Order This Month</h6>
+                                            <h6 class="m-b-5 text-white">Total Orderan Bulan Ini</h6>
                                             <h3 class="m-b-0 text-white">{{ $totalOrdersThisMonth }}</h3>
                                         </div>
                                         <div class="col-auto">

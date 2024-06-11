@@ -62,6 +62,7 @@
                     <li class="nav-item pcoded-menu-caption">
                         <label>Navigation</label>
                     </li>
+
                     <li data-username="dashboard default ecommerce sales Helpdesk ticket CRM analytics project"
                         class="nav-item pcoded-hasmenu">
                         <a href="#!" class="nav-link"><span class="pcoded-micon"><i
@@ -75,6 +76,7 @@
                             </li>
                         </ul>
                     </li>
+
                     <li data-username="vertical horizontal box layout RTL fixed static collapse menu color icon dark background image"
                         class="nav-item pcoded-hasmenu">
                         <a href="#!" class="nav-link"><span class="pcoded-micon"><i

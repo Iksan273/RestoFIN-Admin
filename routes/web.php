@@ -32,8 +32,7 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 Route::get('/login', [EmployeeController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [EmployeeController::class, 'login'])->name('login');
-Route::get('/register', [EmployeeController::class, 'showRegisterForm'])->name('add.employee');
-Route::post('/register', [EmployeeController::class, 'register'])->name('register');
+
 
 Route::post('/logout', [EmployeeController::class, 'logout'])->name('logout');
 
@@ -47,7 +46,9 @@ Route::post('/logout', [EmployeeController::class, 'logout'])->name('logout');
 
 
 Route::middleware(['role:Master'])->group(function () {
-    Route::view('/', 'index')->name('dashboard');
+    Route::get('/register', [EmployeeController::class, 'showRegisterForm'])->name('add.employee');
+    Route::post('/register', [EmployeeController::class, 'register'])->name('register');
+    Route::get('/', [DashboardController::class, 'dashboard'])->name('dashboard');
     // Master ADMIN ROUTE///
     Route::get('/Master', [DashboardController::class, 'index'])->name('master.dashboard');
     Route::get('/Master-Member', [UserController::class, 'index'])->name('master.member');
@@ -128,7 +129,7 @@ Route::middleware(['role:Master'])->group(function () {
 });
 
 Route::middleware(['role:Employee'])->group(function () {
-    Route::view('/', 'index')->name('dashboard');
+    Route::get('/', [DashboardController::class, 'dashboard'])->name('dashboard');
     //Menu Admin Route
     Route::get('/AdminMenu', [MenuController::class, 'index'])->name('employee.menu');
     Route::get('/Menu-EditMenu/{id}', [MenuController::class, 'edit'])->name('employee.editMenu');

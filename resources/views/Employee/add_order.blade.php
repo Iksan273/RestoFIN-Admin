@@ -37,53 +37,38 @@
                     <div class="row">
                         <div class="col-lg-8 col-md-10 col-sm-12">
                             <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link active" id="makanan-tab" data-bs-toggle="tab"
-                                        data-bs-target="#makanan" type="button" role="tab" aria-controls="makanan"
-                                        aria-selected="true">Makanan</button>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="minuman-tab" data-bs-toggle="tab" data-bs-target="#minuman"
-                                        type="button" role="tab" aria-controls="minuman"
-                                        aria-selected="false">Minuman</button>
-                                </li>
+                                @foreach ($categories as $category)
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link @if ($loop->first) active @endif"
+                                            id="{{ 'tab-' . $category->id }}" data-bs-toggle="tab"
+                                            data-bs-target="{{ '#content-' . $category->id }}" type="button" role="tab"
+                                            aria-controls="{{ 'content-' . $category->id }}"
+                                            aria-selected="{{ $loop->first ? 'true' : 'false' }}">{{ $category->title }}</button>
+                                    </li>
+                                @endforeach
                             </ul>
                             <div class="tab-content" id="myTabContent">
-                                <div class="tab-pane fade show active" id="makanan" role="tabpanel"
-                                    aria-labelledby="makanan-tab">
-                                    <div class="row overflow-auto" style="max-height: 800px;">
-                                        @foreach ($makanan as $m)
-                                            <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
-                                                <div class="card"
-                                                    onclick="addToCart({{ $m->id }}, '{{ $m->title }}', {{ $m->price }})">
-                                                    <img src="{{ asset('menu/images/' . $m->imageUrl) }}"
-                                                        class="card-img-top img-fluid" alt="{{ $m->title }}">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title">{{ $m->title }}</h5>
-                                                        <p class="card-text">Rp{{ $m->price }}</p>
+                                @foreach ($categories as $category)
+                                    <div class="tab-pane fade @if ($loop->first) show active @endif"
+                                        id="{{ 'content-' . $category->id }}" role="tabpanel"
+                                        aria-labelledby="{{ 'tab-' . $category->id }}">
+                                        <div class="row overflow-auto" style="max-height: 800px;">
+                                            @foreach ($category->menus as $menu)
+                                                <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                                                    <div class="card"
+                                                        onclick="addToCart({{ $menu->id }}, '{{ $menu->title }}', {{ $menu->price }})">
+                                                        <img src="{{ asset('menu/images/' . $menu->imageUrl) }}"
+                                                            class="card-img-top img-fluid" alt="{{ $menu->title }}">
+                                                        <div class="card-body">
+                                                            <p class="card-title" style="font-size: small">{{ $menu->title }}</p>
+                                                            <p class="card-text" style="font-size: small">Rp{{ number_format($menu->price, 0, ',', '.') }}</p>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        @endforeach
+                                            @endforeach
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="tab-pane fade" id="minuman" role="tabpanel" aria-labelledby="minuman-tab">
-                                    <div class="row overflow-auto" style="max-height: 800px;">
-                                        @foreach ($minuman as $m)
-                                            <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
-                                                <div class="card"
-                                                    onclick="addToCart({{ $m->id }}, '{{ $m->title }}', {{ $m->price }})">
-                                                    <img src="{{ asset('menu/images/' . $m->imageUrl) }}"
-                                                        class="card-img-top img-fluid" alt="{{ $m->title }}">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title">{{ $m->title }}</h5>
-                                                        <p class="card-text">Rp{{ $m->price }}</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        @endforeach
-                                    </div>
-                                </div>
+                                @endforeach
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-6 col-sm-12">
@@ -150,7 +135,7 @@
             const cartItems = document.querySelector('.cart-items');
             const totalPriceElement = document.querySelector('.total-price');
             let totalPrice = 0;
-            let totalPay=0;
+            let totalPay = 0;
             let cart = {};
 
 
@@ -166,7 +151,7 @@
                         'align-items-center', 'mb-2', 'shadow-sm');
                     listItem.id = `item-${id}`;
                     listItem.innerHTML =
-                        `<div><img src="https://via.placeholder.com/50" class="rounded-circle" alt="Icon ${name}">${name} - Rp${price.toLocaleString()}</div> <div><button class="btn btn-danger btn-sm" onclick="changeQuantity(${id}, -1)">-</button> <span id="qty-${id}" class="badge bg-primary rounded-pill">${cart[id].quantity}</span> <button class="btn btn-success btn-sm" onclick="changeQuantity(${id}, 1)">+</button></div>`;
+                        `<div>${name} - Rp${price.toLocaleString()}</div> <div><button class="btn btn-danger btn-sm" onclick="changeQuantity(${id}, -1)">-</button> <span id="qty-${id}" class="badge bg-primary rounded-pill">${cart[id].quantity}</span> <button class="btn btn-success btn-sm" onclick="changeQuantity(${id}, 1)">+</button></div>`;
                     cartItems.appendChild(listItem);
                     updateCartTotal(); // Memperbarui total saat item baru ditambahkan
                 } else {
@@ -203,7 +188,7 @@
                 const no_meja = parseInt($('#table-number').val());
                 let member_id_text = $('#idMember').text();
                 let member = member_id_text.replace('ID:', '').trim();
-                const member_id=parseInt(member);
+                const member_id = parseInt(member);
                 const customer_name = $('#customer-name').val();
                 const orderData = {
                     no_meja,

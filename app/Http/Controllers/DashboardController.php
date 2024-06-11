@@ -57,7 +57,7 @@ class DashboardController extends Controller
             ->with('menu')
             ->get();
 
-        $promo=Promo::all();
+        $promo = Promo::all();
         // dd($topItems);
         return view('index', [
             'promo' => $promo,
@@ -71,5 +71,56 @@ class DashboardController extends Controller
             'totalLastMonthOrders' => $totalLastMonthOrders,
             'percentageIncrease' => $percentageIncrease,
         ]);
+    }
+    public function getSalesData(Request $request)
+    {
+        $month = $request->query('month');
+        $monthNumber = date('m', strtotime($month));
+
+        $salesData = DB::table('transactions')
+            ->select(DB::raw('DAY(order_date) as day'), DB::raw('SUM(total_amount) as sales'))
+            ->whereYear('order_date', now()->year)
+            ->whereMonth('order_date', $monthNumber)
+            ->groupBy(DB::raw('DAY(order_date)'))
+            ->orderBy(DB::raw('DAY(order_date)'))
+            ->get();
+
+        $data = [['Day', 'Omset']];
+        if ($salesData->isEmpty()) {
+            return response()->json($data);
+        }
+
+        foreach ($salesData as $sales) {
+            $data[] = [(int)$sales->day, (float)$sales->sales];
+        }
+
+        return response()->json($data);
+    }
+    public function getYearlySalesData(Request $request)
+    {
+        // Retrieve the selected year from the query string
+        $selectedYear = $request->query('year', date('Y'));
+
+        // Query your database to fetch yearly sales data
+        $yearlySalesData = DB::table('transactions')
+            ->select(DB::raw('MONTH(order_date) as month'), DB::raw('SUM(total_amount) as sales'))
+            ->whereYear('order_date', $selectedYear)
+            ->groupBy(DB::raw('MONTH(order_date)'))
+            ->orderBy(DB::raw('MONTH(order_date)'))
+            ->get();
+
+        $data = [];
+        $formattedData = [];
+
+        foreach ($yearlySalesData as $sales) {
+            // Simpan nilai asli dalam array $data
+            $data[] = (float) $sales->sales;
+
+            // Format nilai dengan mata uang Rupiah
+            $formattedData[] =number_format($sales->sales, 0, ',', '.');
+        }
+
+        // Return both original and formatted data as JSON response
+        return response()->json(['data' => $data, 'formattedData' => $formattedData]);
     }
 }

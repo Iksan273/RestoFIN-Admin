@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\MemberPoint;
 use App\Models\Menu;
 use App\Models\Order;
@@ -81,15 +82,8 @@ class OrderController extends Controller
     public function orderForm()
     {
 
-        $makanan = Menu::whereHas('category', function ($query) {
-            $query->where('title', 'Makanan');
-        })->get();
-        $minuman = Menu::whereHas('category', function ($query) {
-            $query->where('title', 'Minuman');
-        })->get();
-
-
-        return view('Employee.add_order', compact('makanan', 'minuman'));
+        $categories = Category::with('menus')->get();
+        return view('Employee.add_order', compact('categories'));
     }
 
     public function updateStatusMakananSelesai($id)

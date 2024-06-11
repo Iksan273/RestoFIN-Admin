@@ -91,8 +91,8 @@
                                     class="">List Pesanan Pending</a></li>
                             <li class=""><a href="{{ route('employee.daftarPesananSelesai') }}"
                                     class="">List Pesanan Selesai </a></li>
-                            <li class=""><a href="{{ route('employee.Addorder') }}"
-                                    class="">Add Order </a></li>
+                            <li class=""><a href="{{ route('employee.Addorder') }}" class="">Add Order </a>
+                            </li>
 
 
 
@@ -332,6 +332,11 @@
     <!-- google chart -->
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script src="{{ asset('assets/js/pages/chart-google-custom.js') }}"></script>
+
+    <!--echarts chart -->
+    <script src="http://echarts.baidu.com/echarts2/doc/example/timelineOption.js"></script>
+    <script src="assets/plugins/chart-echarts/js/echarts-en.min.js"></script>
+    <script src="assets/js/pages/chart-echart-custom.js"></script>
 
 
 

@@ -35,7 +35,8 @@ Route::post('/login', [EmployeeController::class, 'login'])->name('login');
 
 
 Route::post('/logout', [EmployeeController::class, 'logout'])->name('logout');
-
+Route::get('/get-sales-data', [DashboardController::class, 'getSalesData']);
+Route::get('/get-yearly-sales-data', [DashboardController::class, 'getYearlySalesData']);
 
 // // Master ADMIN ROUTE///
 // Route::view('/Master', 'Master.index')->name('master.dashboard');
@@ -49,6 +50,8 @@ Route::middleware(['role:Master'])->group(function () {
     Route::get('/register', [EmployeeController::class, 'showRegisterForm'])->name('add.employee');
     Route::post('/register', [EmployeeController::class, 'register'])->name('register');
     Route::get('/', [DashboardController::class, 'dashboard'])->name('dashboard');
+
+
     // Master ADMIN ROUTE///
     Route::get('/Master', [DashboardController::class, 'index'])->name('master.dashboard');
     Route::get('/Master-Member', [UserController::class, 'index'])->name('master.member');

@@ -2,28 +2,28 @@
 $(document).ready(function() {
     setTimeout(function() {
         // [ line-chart ] start
-        var dom = document.getElementById("chart-echart-line-basic");
-        var myChart = echarts.init(dom);
-        var app = {};
-        var option = null;
-        option = {
-            tooltip: {
-                trigger: 'axis'
-            },
-            xAxis: {
-                type: 'category',
-                data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-            },
-            yAxis: {
-                type: 'value'
-            },
-            color: "#19BCBF",
-            series: [{
-                data: [1, 5, 3, 6, 4, 8, 10],
-                type: 'line',
-            }]
-        };
-        myChart.setOption(option, true);
+        // var dom = document.getElementById("chart-echart-line-basic");
+        // var myChart = echarts.init(dom);
+        // var app = {};
+        // var option = null;
+        // option = {
+        //     tooltip: {
+        //         trigger: 'axis'
+        //     },
+        //     xAxis: {
+        //         type: 'category',
+        //         data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+        //     },
+        //     yAxis: {
+        //         type: 'value'
+        //     },
+        //     color: "#19BCBF",
+        //     series: [{
+        //         data: [1, 5, 3, 6, 4, 8, 10],
+        //         type: 'line',
+        //     }]
+        // };
+        // myChart.setOption(option, true);
         // [ line-chart ] end
 
         // [ area-chart ] Start

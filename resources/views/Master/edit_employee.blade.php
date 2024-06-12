@@ -67,8 +67,10 @@
                                         </div>
                                         <div class="form-group">
                                             <label class="form-label">Role:</label>
-                                            <input type="text" class="form-control" name="role" placeholder="Enter Role" value="{{ $employee->role }}">
-
+                                            <select class="form-control" name="role">
+                                                <option value="Master" {{ $employee->role == 'Master' ? 'selected' : '' }}>Master</option>
+                                                <option value="Pegawai" {{ $employee->role == 'Pegawai' ? 'selected' : '' }}>Pegawai</option>
+                                            </select>
                                         </div>
 
                                 </div>

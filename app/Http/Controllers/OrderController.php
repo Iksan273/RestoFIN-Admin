@@ -9,9 +9,7 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Transaction;
 use App\Models\User;
-use Barryvdh\DomPDF\Facade as PDF;
-use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
-use Barryvdh\DomPDF\PDF as DomPDFPDF;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -47,15 +45,15 @@ class OrderController extends Controller
                 'metode_pembayaran' => 'required|string',
                 'user_id' => 'nullable|integer',
                 'total_price' => 'required|numeric',
-                'order_id'=>'required|integer'
+                'order_id' => 'required|integer'
             ]);
             $order = Order::findOrFail($id);
             $order->status_pembayaran = 'Lunas';
             $order->payment_method = $request->metode_pembayaran;
             $order->save();
 
-            $transaction=Transaction::where('orders_id', $request->order_id)->first();
-            $transaction->status='Lunas';
+            $transaction = Transaction::where('orders_id', $request->order_id)->first();
+            $transaction->status = 'Lunas';
             $transaction->payment_method = $request->metode_pembayaran;
             $transaction->save();
 
@@ -102,18 +100,13 @@ class OrderController extends Controller
 
         return redirect()->route('employee.daftarPesanan')->with('success', 'Order berhasil dihapus.');
     }
+
+
     public function downloadNota($id)
     {
         $order = Order::findOrFail($id); // Menggunakan findOrFail untuk menghandle kasus jika order tidak ditemukan
-        $pdf = FacadePdf::loadView('Layouts.nota', compact('order'));
-        return $pdf->download('nota-order-' . $id . '.pdf'); // Menambahkan ID order pada nama file untuk memudahkan identifikasi
-    }
-
-    public function printNota($id)
-    {
-        $order = Order::findOrFail($id); // Menggunakan findOrFail untuk menghandle kasus jika order tidak ditemukan
-        $pdf = FacadePdf::loadView('Layouts.nota', compact('order'));
-        return $pdf->stream('nota-order-' . $id . '.pdf'); // Menampilkan PDF di browser
+        $pdf = Pdf::loadView('Layouts.invoice', ['order' => $order]);
+        return $pdf->download('invoice.pdf');
     }
     public function store(Request $request)
     {

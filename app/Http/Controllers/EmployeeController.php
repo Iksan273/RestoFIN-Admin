@@ -55,12 +55,14 @@ class EmployeeController extends Controller
                 'lastname' => 'required|string|max:255',
                 'username' => 'required|string|max:255',
                 'password' => 'nullable|string',
+                'role' => 'required|string|max:255', // tambahkan role
             ]);
 
             $employee = Employee::findOrFail($id);
             $employee->firstname = $validatedData['firstname'];
             $employee->lastname = $validatedData['lastname'];
             $employee->username = $validatedData['username'];
+            $employee->role = $validatedData['role']; // tambahkan role
             if (!empty($validatedData['password'])) {
                 $employee->password = bcrypt($validatedData['password']);
             }

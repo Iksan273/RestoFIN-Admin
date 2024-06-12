@@ -19,6 +19,6 @@ class Transaction extends Model
     ];
     public function order()
     {
-        return $this->belongsTo(Order::class, 'orders_id');
+        return $this->belongsTo(Order::class, 'orders_id', 'id'); // 'orders_id' is the foreign key in the 'transactions' table, 'id' is the primary key in the 'orders' table
     }
 }

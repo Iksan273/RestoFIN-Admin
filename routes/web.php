@@ -37,7 +37,7 @@ Route::post('/login', [EmployeeController::class, 'login'])->name('login');
 Route::post('/logout', [EmployeeController::class, 'logout'])->name('logout');
 Route::get('/get-sales-data', [DashboardController::class, 'getSalesData']);
 Route::get('/get-yearly-sales-data', [DashboardController::class, 'getYearlySalesData']);
-
+Route::get('/excel', [TransactionController::class, 'excel_export'])->name('exportExcel');
 // // Master ADMIN ROUTE///
 // Route::view('/Master', 'Master.index')->name('master.dashboard');
 // Route::view('/Master-Member', 'Master.member')->name('master.member');
@@ -108,9 +108,9 @@ Route::middleware(['role:Master'])->group(function () {
     Route::put('/daftar-pesanan-lunas/{id}', [OrderController::class, 'updateStatusPembayaranLunas'])->name('order.updateLunas');
     Route::put('/daftar-pesanan-selesai/{id}', [OrderController::class, 'updateStatusMakananSelesai'])->name('order.updateSelesai');
     Route::delete('/hapus-pesanan/{id}', [OrderController::class, 'deleteOrder'])->name('order.delete');
-    Route::get('/download-nota/{id}', [OrderController::class, 'printNota'])->name('download-nota');
+    Route::get('/download-nota/{id}', [OrderController::class, 'downloadNota'])->name('download-nota');
     Route::get('/daftar-transaksi', [TransactionController::class, 'index'])->name('employee.daftarTransaksi');
-    Route::view('/nota', 'Layouts.nota')->name('nota');
+    Route::view('/nota', 'Layouts.invoice')->name('nota');
     Route::get('/order', [OrderController::class, 'orderForm'])->name('employee.Addorder');
     Route::post('/order/store', [OrderController::class, 'store'])->name('employee.StoreOrder');
 
@@ -177,12 +177,13 @@ Route::middleware(['role:Employee'])->group(function () {
     Route::get('/daftar-pesanan-selesai', [OrderController::class, 'getOrderSelesai'])->name('employee.daftarPesananSelesai');
     Route::put('/daftar-pesanan-lunas/{id}', [OrderController::class, 'updateStatusPembayaranLunas'])->name('order.updateLunas');
     Route::put('/daftar-pesanan-selesai/{id}', [OrderController::class, 'updateStatusMakananSelesai'])->name('order.updateSelesai');
+    Route::get('/download-nota/{id}', [OrderController::class, 'downloadNota'])->name('download-nota');
     Route::delete('/hapus-pesanan/{id}', [OrderController::class, 'deleteOrder'])->name('order.delete');
-    Route::get('/download-nota/{id}', [OrderController::class, 'printNota'])->name('download-nota');
+
 
     Route::get('/daftar-transaksi', [TransactionController::class, 'index'])->name('employee.daftarTransaksi');
 
-    Route::view('/nota', 'Layouts.nota')->name('nota');
+    Route::view('/nota', 'Layouts.invoice')->name('nota');
 
     // Route untuk Reservasi
     Route::get('/reservasi-Employee', [ReservationController::class, 'index'])->name('employee.reservasi');

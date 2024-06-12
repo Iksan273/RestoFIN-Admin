@@ -28,6 +28,7 @@
                             <div class="card">
                                 <div class="card-header">
                                     <h5>Daftar Transaksi</h5>
+                                    <button class="btn btn-gradient-success" onclick="location.href='{{ route('exportExcel') }}'">Download Excel</button>
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">

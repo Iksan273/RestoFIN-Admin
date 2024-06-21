@@ -28,8 +28,22 @@
                             <div class="card">
                                 <div class="card-header">
                                     <h5>Daftar Transaksi</h5>
-                                    <button class="btn btn-gradient-success" onclick="location.href='{{ route('exportExcel') }}'">Download Excel</button>
+                                    <form action="{{ route('exportExcel') }}" method="GET" style="display: flex; align-items: center; gap: 10px;">
+                                        <select class="form-control" name="month" id="month" style="width: auto;">
+                                            @foreach(range(1, 12) as $month)
+                                                <option value="{{ str_pad($month, 2, '0', STR_PAD_LEFT) }}">{{ DateTime::createFromFormat('!m', $month)->format('F') }}</option>
+                                            @endforeach
+                                        </select>
+                                        <select class="form-control" name="year" id="year" style="width: auto;">
+                                            @foreach(range(2020, date('Y')) as $year)
+                                                <option value="{{ $year }}">{{ $year }}</option>
+                                            @endforeach
+                                        </select>
+                                        <button type="submit" class="btn btn-gradient-success" style="white-space: nowrap;">Download Excel</button>
+                                    </form>
                                 </div>
+
+
                                 <div class="card-body">
                                     <div class="table-responsive">
                                         <table id="order-table" class="table table-striped table-bordered nowrap">

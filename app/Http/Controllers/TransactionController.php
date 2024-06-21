@@ -14,8 +14,12 @@ class TransactionController extends Controller
         $transactions = Transaction::all();
         return view('Employee.daftar_transaksi', compact('transactions'));
     }
-    public function excel_export()
+    public function excel_export(Request $request)
+
     {
-        return Excel::download(new TransactionsExport, 'transactions.xlsx');
+        $month = $request->input('month');
+        $year = $request->input('year');
+
+        return Excel::download(new TransactionsExport($month, $year), 'transactions_' . $month . '_' . $year . '.xlsx');
     }
 }

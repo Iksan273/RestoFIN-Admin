@@ -37,6 +37,7 @@ class OrderController extends Controller
         $order = Order::where('status_makanan', 'Selesai')->get();
         return view('Employee.daftar_pesananSelesai', compact('order'));
     }
+
     public function updateStatusPembayaranLunas(Request $request, $id)
     {
         try {
@@ -66,7 +67,8 @@ class OrderController extends Controller
                     $memberPoint = new MemberPoint();
                     $memberPoint->users_id = $user->id;
                     $memberPoint->point = $validatedData['total_price'] * 0.01;
-                    $memberPoint->keterangan = "Point dari total pembelian " . $validatedData['total_price'];
+                    $memberPoint->keterangan = "Point dari total pembelian Rp." . number_format($validatedData['total_price'], 0, ',', '.');
+                    $memberPoint->orders_id = $order->id;
                     $memberPoint->save();
                 }
             }

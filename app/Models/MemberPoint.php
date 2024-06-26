@@ -12,6 +12,7 @@ class MemberPoint extends Model
     protected $fillable = [
         'users_id',
         'points',
+        'orders_id',
 
     ];
 

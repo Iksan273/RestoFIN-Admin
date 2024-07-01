@@ -10,6 +10,7 @@ use App\Models\OrderItem;
 use App\Models\Transaction;
 use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
+use charlieuki\ReceiptPrinter\ReceiptPrinter;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -102,6 +103,25 @@ class OrderController extends Controller
 
         return redirect()->route('employee.daftarPesanan')->with('success', 'Order berhasil dihapus.');
     }
+    public function checkNewOrders()
+    {
+        // Mengambil jumlah orderan hari ini dari session atau cache jika ada
+        $todayOrdersCount = session('today_orders_count', function () {
+            // Jika tidak ada dalam session atau cache, hitung kembali
+            $count = Order::whereDate('created_at', now()->toDateString())->count();
+            session(['today_orders_count' => $count]);
+            return $count;
+        });
+
+        return response()->json(['count' => $todayOrdersCount]);
+    }
+
+    public function resetOrdersCount()
+    {
+        session()->forget('today_orders_count');
+    }
+
+
 
 
     public function downloadNota($id)
@@ -109,6 +129,88 @@ class OrderController extends Controller
         $order = Order::findOrFail($id); // Menggunakan findOrFail untuk menghandle kasus jika order tidak ditemukan
         $pdf = Pdf::loadView('Layouts.invoice', ['order' => $order]);
         return $pdf->download('invoice.pdf');
+    }
+
+    public function printNota()
+    {
+        // Set params
+        $mid = '123123456';
+        $store_name = 'YOURMART';
+        $store_address = 'Mart Address';
+        $store_phone = '1234567890';
+        $store_email = 'yourmart@email.com';
+        $store_website = 'yourmart.com';
+        $tax_percentage = 10;
+        $transaction_id = 'TX123ABC456';
+        $currency = 'Rp';
+        $image_path = 'logo.png';
+
+        // Set items
+        $items = [
+            [
+                'name' => 'French Fries (tera)',
+                'qty' => 2,
+                'price' => 65000,
+            ],
+            [
+                'name' => 'Roasted Milk Tea (large)',
+                'qty' => 1,
+                'price' => 24000,
+            ],
+            [
+                'name' => 'Honey Lime (large)',
+                'qty' => 3,
+                'price' => 10000,
+            ],
+            [
+                'name' => 'Jasmine Tea (grande)',
+                'qty' => 3,
+                'price' => 8000,
+            ],
+        ];
+
+        // Init printer
+        $printer = new ReceiptPrinter;
+        $printer->init(
+            config('receiptprinter.connector_type'),
+            config('receiptprinter.connector_descriptor')
+        );
+
+        // Set store info
+        $printer->setStore($mid, $store_name, $store_address, $store_phone, $store_email, $store_website);
+
+        // Set currency
+        $printer->setCurrency($currency);
+
+        // Add items
+        foreach ($items as $item) {
+            $printer->addItem(
+                $item['name'],
+                $item['qty'],
+                $item['price']
+            );
+        }
+        // Set tax
+        $printer->setTax($tax_percentage);
+
+        // Calculate total
+        $printer->calculateSubTotal();
+        $printer->calculateGrandTotal();
+
+        // Set transaction ID
+        $printer->setTransactionID($transaction_id);
+
+        // Set logo
+        // Uncomment the line below if $image_path is defined
+        //$printer->setLogo($image_path);
+
+        // Set QR code
+        $printer->setQRcode([
+            'tid' => $transaction_id,
+        ]);
+
+        // Print receipt
+        $printer->printReceipt();
     }
     public function store(Request $request)
     {

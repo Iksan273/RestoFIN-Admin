@@ -50,14 +50,15 @@
     <nav class="pcoded-navbar menupos-fixed menu-dark menu-item-icon-style6 ">
         <div class="navbar-wrapper ">
             <div class="navbar-brand header-logo">
-                <a href="index.html" class="b-brand">
+                <a href="" class="b-brand">
 
-                    <img src="{{ asset('assets/images/logo.svg') }}" alt="logo" class="logo images">
+                    <img src="{{ asset('assets/images/vin/Logo-Putih.png') }}" alt="logo" class="logo images"
+                        style="width: 150px; height: auto;">
                     <img src="{{ asset('assets/images/logo-icon.svg') }}" alt="logo" class="logo-thumb images">
                 </a>
                 <a class="mobile-menu" id="mobile-collapse" href="#!"><span></span></a>
             </div>
-            <div class="navbar-content scroll-div   " id="layout-sidenav">
+            <div class="navbar-content scroll-div" id="layout-sidenav">
                 <ul class="nav pcoded-inner-navbar sidenav-inner">
                     <li class="nav-item pcoded-menu-caption">
                         <label>Navigation</label>
@@ -337,6 +338,65 @@
     <script src="http://echarts.baidu.com/echarts2/doc/example/timelineOption.js"></script>
     <script src="assets/plugins/chart-echarts/js/echarts-en.min.js"></script>
     <script src="assets/js/pages/chart-echart-custom.js"></script>
+    <script>
+        $(document).ready(function() {
+            let lastOrderCount = 0; // Menyimpan jumlah orderan terakhir yang diperiksa
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            function checkNewOrders() {
+                $.ajax({
+                    url: '/check-new-orders',
+                    method: 'GET',
+                    success: function(response) {
+                        const todayOrderCount = response.count;
+
+                        // Membandingkan jumlah orderan hari ini dengan yang sebelumnya
+                        if (todayOrderCount > lastOrderCount) {
+                            lastOrderCount = todayOrderCount; // Update nilai terakhir
+                            playNotificationSound();
+                            alert('New order received!'); // Atau tampilkan notifikasi lainnya
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error fetching new orders:', error);
+                    }
+                });
+            }
+
+            function playNotificationSound() {
+                const audio = new Audio('{{ asset('assets/music/bell.mp3') }}');
+                audio.play();
+            }
+
+            // Memanggil fungsi checkNewOrders() pertama kali saat halaman dimuat
+            checkNewOrders();
+
+            // Set interval untuk memanggil checkNewOrders() setiap 5 detik
+            setInterval(checkNewOrders, 5000);
+
+            // Reset jumlah orderan hari ini saat halaman dimuat ulang
+            $(window).on('beforeunload', function() {
+                $.ajax({
+                    url: '/reset-orders-count',
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(response) {
+                        console.log('Orders count reset successfully.');
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error resetting orders count:', error);
+                    }
+                });
+            });
+        });
+    </script>
 
 
 

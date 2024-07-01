@@ -32,8 +32,10 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 Route::get('/login', [EmployeeController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [EmployeeController::class, 'login'])->name('login');
+Route::get('/check-new-orders', [OrderController::class, 'checkNewOrders']);
 
 
+Route::get('print/test', [OrderController::class, 'printNota']);
 Route::post('/logout', [EmployeeController::class, 'logout'])->name('logout');
 Route::get('/get-sales-data', [DashboardController::class, 'getSalesData']);
 Route::get('/get-yearly-sales-data', [DashboardController::class, 'getYearlySalesData']);

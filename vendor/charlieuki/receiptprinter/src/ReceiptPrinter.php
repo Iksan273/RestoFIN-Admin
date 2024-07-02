@@ -250,7 +250,7 @@ class ReceiptPrinter
             $this->printer->text($header . "\n");
             $this->printer->feed();
             // Print nomor meja
-            $this->printer->text("No Meja: " . $this->meja . "\n");
+            // $this->printer->text("No Meja: " . $this->meja . "\n");
             $this->printer->feed();
             // Print receipt title
             $this->printer->setEmphasis(true);

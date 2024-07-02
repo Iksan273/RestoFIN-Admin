@@ -120,8 +120,13 @@
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-secondary"
                                                                         data-bs-dismiss="modal">Tutup</button>
-                                                                    <a href="{{ route('download-nota', $data->id) }}"
-                                                                        class="btn btn-primary">Cetak PDF</a>
+                                                                    <button type="button" class="btn btn-primary"
+                                                                        onclick="printNotaKitchen({{ $data->id }})">Cetak
+                                                                        Nota Dapur</button>
+                                                                    <button type="button" class="btn btn-primary"
+                                                                        onclick="printNotaAjax({{ $data->id }})">Cetak
+                                                                        Invoice</button>
+
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -140,27 +145,35 @@
                                                                 </div>
                                                                 <div class="modal-body">
                                                                     <p>Kamu yakin ingin Mengubah Status Pembayaran Menjadi
-                                                                        Lunas dan menambahkan point ke pembeli (Khusus Member)?
+                                                                        Lunas dan menambahkan point ke pembeli (Khusus
+                                                                        Member)?
                                                                     </p>
                                                                     <form method="post"
                                                                         action="{{ route('order.updateLunas', $data->id) }}">
                                                                         @csrf
                                                                         @method('PUT')
                                                                         <div class="form-group">
-                                                                            <label for="metode_pembayaran">Metode Pembayaran</label>
-                                                                            <select class="form-control" id="metode_pembayaran" name="metode_pembayaran">
+                                                                            <label for="metode_pembayaran">Metode
+                                                                                Pembayaran</label>
+                                                                            <select class="form-control"
+                                                                                id="metode_pembayaran"
+                                                                                name="metode_pembayaran">
                                                                                 <option value="QRIS">QRIS</option>
                                                                                 <option value="Cash">Cash</option>
                                                                                 <option value="Debit">Debit</option>
                                                                             </select>
                                                                         </div>
-                                                                        @if($data->user)
-                                                                            <input type="hidden" name="user_id" value="{{ $data->user->id }}">
+                                                                        @if ($data->user)
+                                                                            <input type="hidden" name="user_id"
+                                                                                value="{{ $data->user->id }}">
                                                                         @endif
-                                                                        <input type="hidden" name="total_price" value="{{$data->total_price}}">
-                                                                        <input type="hidden" name="order_id" value="{{$data->id}}">
+                                                                        <input type="hidden" name="total_price"
+                                                                            value="{{ $data->total_price }}">
+                                                                        <input type="hidden" name="order_id"
+                                                                            value="{{ $data->id }}">
                                                                         <div class="modal-footer">
-                                                                            <button type="button" class="btn btn-secondary"
+                                                                            <button type="button"
+                                                                                class="btn btn-secondary"
                                                                                 data-bs-dismiss="modal">Batal</button>
                                                                             <button type="submit" class="btn btn-danger"
                                                                                 id="confirm-update">Update</button>
@@ -262,10 +275,41 @@
     </div>
 @endsection
 
-<script>
-    function printOrderDetails() {
-        // Implementasi fungsi untuk mencetak detail pesanan menjadi PDF
-        // Contoh sederhana menggunakan window.print(), bisa disesuaikan dengan kebutuhan
-        window.print();
-    }
-</script>
+
+@section('script')
+    <script>
+        function printNotaAjax(orderId) {
+            $.ajax({
+                url: '{{ url('printNota') }}/' + orderId, // Menggunakan parameter orderId
+                type: 'GET',
+                success: function(response) {
+                    // Handle success response, if needed
+                    console.log('Nota printed successfully');
+                    // Tutup modal setelah selesai mencetak
+                    $('#viewDetailOrderModal' + orderId).modal('hide');
+                },
+                error: function(xhr, status, error) {
+                    // Handle error response, if needed
+                    console.error('Error printing nota:', error);
+                }
+            });
+        }
+
+        function printNotaKitchen(orderId) {
+            $.ajax({
+                url: '{{ url('printNotaKitchen') }}/' + orderId, // Menggunakan parameter orderId
+                type: 'GET',
+                success: function(response) {
+                    // Handle success response, if needed
+                    console.log('Nota printed successfully');
+                    // Tutup modal setelah selesai mencetak
+                    $('#viewDetailOrderModal' + orderId).modal('hide');
+                },
+                error: function(xhr, status, error) {
+                    // Handle error response, if needed
+                    console.error('Error printing nota:', error);
+                }
+            });
+        }
+    </script>
+@endsection

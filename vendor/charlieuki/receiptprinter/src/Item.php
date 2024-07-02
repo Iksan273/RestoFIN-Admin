@@ -26,6 +26,9 @@ class Item
     public function getPrice() {
         return $this->price;
     }
+    public function getName() {
+        return $this->name;
+    }
 
     public function __toString()
     {
@@ -34,7 +37,7 @@ class Item
 
         $item_price = $this->currency . number_format($this->price, 0, ',', '.');
         $item_subtotal = $this->currency . number_format($this->price * $this->qty, 0, ',', '.');
-        
+
         $print_name = str_pad($this->name, 16) ;
         $print_priceqty = str_pad($item_price . ' x ' . $this->qty, $left_cols);
         $print_subtotal = str_pad($item_subtotal, $right_cols, ' ', STR_PAD_LEFT);

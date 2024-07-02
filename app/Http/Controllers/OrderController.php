@@ -15,6 +15,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Mike42\Escpos\EscposImage;
 
 class OrderController extends Controller
 {
@@ -130,44 +131,32 @@ class OrderController extends Controller
         $pdf = Pdf::loadView('Layouts.invoice', ['order' => $order]);
         return $pdf->download('invoice.pdf');
     }
-
-    public function printNota()
+    public function printNotaKitchen($id)
     {
+        $order = Order::findOrFail($id);
         // Set params
         $mid = '123123456';
-        $store_name = 'YOURMART';
-        $store_address = 'Mart Address';
-        $store_phone = '1234567890';
+        $meja = $order->no_meja;
+        $store_name = 'Vin Gallery Art and Resto';
+        $store_address = 'Vinautism Galery Gwalk Junction TL6 no 11';
+        $store_phone = '08123032006';
         $store_email = 'yourmart@email.com';
-        $store_website = 'yourmart.com';
+        $store_website = 'vinresto.com';
         $tax_percentage = 10;
-        $transaction_id = 'TX123ABC456';
+        $transaction_id = $order->order_number;
         $currency = 'Rp';
-        $image_path = 'logo.png';
+        $image_path = url("assets/images/vin/Logo-Putih.png");
+        $items = [];
 
-        // Set items
-        $items = [
-            [
-                'name' => 'French Fries (tera)',
-                'qty' => 2,
-                'price' => 65000,
-            ],
-            [
-                'name' => 'Roasted Milk Tea (large)',
-                'qty' => 1,
-                'price' => 24000,
-            ],
-            [
-                'name' => 'Honey Lime (large)',
-                'qty' => 3,
-                'price' => 10000,
-            ],
-            [
-                'name' => 'Jasmine Tea (grande)',
-                'qty' => 3,
-                'price' => 8000,
-            ],
-        ];
+        foreach ($order->orderItems as $item) {
+            $items[] = [
+                'name' => $item->menu->title, // Sesuaikan dengan atribut yang sesuai di objek $orderItem
+                'qty' => $item->jumlah,
+                'price' => $item->price,
+            ];
+        }
+
+
 
         // Init printer
         $printer = new ReceiptPrinter;
@@ -178,6 +167,7 @@ class OrderController extends Controller
 
         // Set store info
         $printer->setStore($mid, $store_name, $store_address, $store_phone, $store_email, $store_website);
+        $printer->setNoMeja($meja);
 
         // Set currency
         $printer->setCurrency($currency);
@@ -202,12 +192,81 @@ class OrderController extends Controller
 
         // Set logo
         // Uncomment the line below if $image_path is defined
-        //$printer->setLogo($image_path);
+        // $printer->setLogo($image_path);
 
-        // Set QR code
-        $printer->setQRcode([
-            'tid' => $transaction_id,
-        ]);
+
+
+        // Print receipt
+        $printer->printKitchen();
+    }
+
+    public function printNota($id)
+    {
+        $order = Order::findOrFail($id);
+        // Set params
+        $mid = '123123456';
+        $meja = $order->no_meja;
+        $store_name = 'Vin Gallery Art and Resto';
+        $store_address = 'Vinautism Galery Gwalk Junction TL6 no 11';
+        $store_phone = '08123032006';
+        $store_email = 'yourmart@email.com';
+        $store_website = 'vinresto.com';
+        $tax_percentage = 10;
+        $transaction_id = $order->order_number;
+        $currency = 'Rp';
+        $image_path = url("assets/images/vin/Logo-Putih.png");
+        $items = [];
+
+        foreach ($order->orderItems as $item) {
+            $items[] = [
+                'name' => $item->menu->title, // Sesuaikan dengan atribut yang sesuai di objek $orderItem
+                'qty' => $item->jumlah,
+                'price' => $item->price,
+            ];
+        }
+
+
+
+        // Init printer
+        $printer = new ReceiptPrinter;
+        $printer->init(
+            config('receiptprinter.connector_type'),
+            config('receiptprinter.connector_descriptor')
+        );
+
+        // Set store info
+        $printer->setStore($mid, $store_name, $store_address, $store_phone, $store_email, $store_website);
+        $printer->setNoMeja($meja);
+
+        // Set currency
+        $printer->setCurrency($currency);
+
+        // Add items
+        foreach ($items as $item) {
+            $printer->addItem(
+                $item['name'],
+                $item['qty'],
+                $item['price']
+            );
+        }
+        // Set tax
+        $printer->setTax($tax_percentage);
+
+        // Calculate total
+        $printer->calculateSubTotal();
+        $printer->calculateGrandTotal();
+
+        // Set transaction ID
+        $printer->setTransactionID($transaction_id);
+
+        // Set logo
+        // Uncomment the line below if $image_path is defined
+        // $printer->setLogo($image_path);
+
+        // // Set QR code
+        // $printer->setQRcode([
+        //     'tid' => $transaction_id,
+        // ]);
 
         // Print receipt
         $printer->printReceipt();

@@ -35,7 +35,9 @@ Route::post('/login', [EmployeeController::class, 'login'])->name('login');
 Route::get('/check-new-orders', [OrderController::class, 'checkNewOrders']);
 
 
-Route::get('print/test', [OrderController::class, 'printNota']);
+Route::get('/printNota/{id}', [OrderController::class, 'printNota'])->name('printNota');
+Route::get('/printNotaKitchen/{id}', [OrderController::class, 'printNotaKitchen'])->name('printNotaKitchen');
+
 Route::post('/logout', [EmployeeController::class, 'logout'])->name('logout');
 Route::get('/get-sales-data', [DashboardController::class, 'getSalesData']);
 Route::get('/get-yearly-sales-data', [DashboardController::class, 'getYearlySalesData']);

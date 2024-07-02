@@ -32,7 +32,7 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 Route::get('/login', [EmployeeController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [EmployeeController::class, 'login'])->name('login');
-Route::get('/check-new-orders', [OrderController::class, 'checkNewOrders']);
+// Route::get('/check-new-orders', [OrderController::class, 'checkNewOrders']);
 
 
 Route::get('/printNota/{id}', [OrderController::class, 'printNota'])->name('printNota');

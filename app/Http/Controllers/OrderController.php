@@ -236,7 +236,7 @@ class OrderController extends Controller
 
         // Set store info
         $printer->setStore($mid, $store_name, $store_address, $store_phone, $store_email, $store_website);
-        // $printer->setNoMeja($meja);
+        $printer->setNoMeja($meja);
 
         // Set currency
         $printer->setCurrency($currency);

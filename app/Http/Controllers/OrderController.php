@@ -137,7 +137,7 @@ class OrderController extends Controller
         // Set params
         $mid = '123123456';
         $meja = $order->no_meja;
-        $store_name = 'Vin Gallery Art and Resto';
+        $store_name = 'Vinautism Art & Resto';
         $store_address = 'Vinautism Galery Gwalk Junction TL6 no 11';
         $store_phone = '08123032006';
         $store_email = 'yourmart@email.com';
@@ -206,7 +206,7 @@ class OrderController extends Controller
         // Set params
         $mid = '123123456';
         $meja = $order->no_meja;
-        $store_name = 'Vin Gallery Art and Resto';
+        $store_name = 'Vinautism Art & Resto';
         $store_address = 'Vinautism Galery Gwalk Junction TL6 no 11';
         $store_phone = '08123032006';
         $store_email = 'yourmart@email.com';

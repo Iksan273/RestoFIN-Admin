@@ -10,7 +10,7 @@ return [
     | Valid values are: cups, network, windows
     |
     */
-    'connector_type' => 'windows',
+    'connector_type' => 'bluetooth',
     /*
     |--------------------------------------------------------------------------
     | Printer connector descriptor
@@ -19,7 +19,7 @@ return [
     | Typically printer name or IP address.
     |
     */
-    'connector_descriptor' => 'POS58',
+    'connector_descriptor' => 'RPP02N',
     /*
     |--------------------------------------------------------------------------
     | Printer port

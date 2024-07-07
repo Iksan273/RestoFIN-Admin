@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Mike42\Escpos\EscposImage;
+use TCPDF;
 
 class OrderController extends Controller
 {
@@ -200,77 +201,181 @@ class OrderController extends Controller
         $printer->printKitchen();
     }
 
+    // public function printNota($id)
+    // {
+    //     $order = Order::findOrFail($id);
+    //     // Set params
+    //     $mid = '123123456';
+    //     $meja = $order->no_meja;
+    //     $store_name = 'Vinautism Art & Resto';
+    //     $store_address = 'Vinautism Galery Gwalk Junction TL6 no 11';
+    //     $store_phone = '08123032006';
+    //     $store_email = 'yourmart@email.com';
+    //     $store_website = 'vinresto.com';
+    //     $tax_percentage = 10;
+    //     $transaction_id = $order->order_number;
+    //     $currency = 'Rp';
+    //     $image_path = url("assets/images/vin/Logo-Putih.png");
+    //     $items = [];
+
+    //     foreach ($order->orderItems as $item) {
+    //         $items[] = [
+    //             'name' => $item->menu->title, // Sesuaikan dengan atribut yang sesuai di objek $orderItem
+    //             'qty' => $item->jumlah,
+    //             'price' => $item->price,
+    //         ];
+    //     }
+
+
+
+    //     // Init printer
+    //     $printer = new ReceiptPrinter;
+    //     $printer->init(
+    //         config('receiptprinter.connector_type'),
+    //         config('receiptprinter.connector_descriptor')
+    //     );
+
+    //     // Set store info
+    //     $printer->setStore($mid, $store_name, $store_address, $store_phone, $store_email, $store_website);
+    //     $printer->setNoMeja($meja);
+
+    //     // Set currency
+    //     $printer->setCurrency($currency);
+
+    //     // Add items
+    //     foreach ($items as $item) {
+    //         $printer->addItem(
+    //             $item['name'],
+    //             $item['qty'],
+    //             $item['price']
+    //         );
+    //     }
+    //     // Set tax
+    //     $printer->setTax($tax_percentage);
+
+    //     // Calculate total
+    //     $printer->calculateSubTotal();
+    //     $printer->calculateGrandTotal();
+
+    //     // Set transaction ID
+    //     $printer->setTransactionID($transaction_id);
+
+    //     // Set logo
+    //     // Uncomment the line below if $image_path is defined
+    //     // $printer->setLogo($image_path);
+
+    //     // // Set QR code
+    //     // $printer->setQRcode([
+    //     //     'tid' => $transaction_id,
+    //     // ]);
+
+    //     // Print receipt
+    //     $printer->printReceipt();
+    // }
+
     public function printNota($id)
     {
         $order = Order::findOrFail($id);
-        // Set params
-        $mid = '123123456';
         $meja = $order->no_meja;
         $store_name = 'Vinautism Art & Resto';
         $store_address = 'Vinautism Galery Gwalk Junction TL6 no 11';
-        $store_phone = '08123032006';
-        $store_email = 'yourmart@email.com';
-        $store_website = 'vinresto.com';
+        $store_website = 'VinResto.com';
         $tax_percentage = 10;
         $transaction_id = $order->order_number;
         $currency = 'Rp';
-        $image_path = url("assets/images/vin/Logo-Putih.png");
         $items = [];
 
         foreach ($order->orderItems as $item) {
             $items[] = [
-                'name' => $item->menu->title, // Sesuaikan dengan atribut yang sesuai di objek $orderItem
+                'name' => $item->menu->title,
                 'qty' => $item->jumlah,
                 'price' => $item->price,
             ];
         }
 
+        $subtotal = array_sum(array_map(function ($item) {
+            return $item['qty'] * $item['price'];
+        }, $items));
+        $tax = ($subtotal * $tax_percentage) / 100;
+        $grand_total = $subtotal + $tax;
 
+        // Create PDF using TCPDF
+        $pdf = new TCPDF('P', 'mm', [48, 297], true, 'UTF-8', false);
+        $pdf->SetCreator(PDF_CREATOR);
+        $pdf->SetAuthor('Vinautism Art & Resto');
+        $pdf->SetTitle('Receipt');
+        $pdf->SetMargins(1, 1, 1);
+        $pdf->SetAutoPageBreak(true, 1);
+        $pdf->AddPage();
+        $pdf->SetFont('helvetica', '', 8); // Reduced font size to 8
 
-        // Init printer
-        $printer = new ReceiptPrinter;
-        $printer->init(
-            config('receiptprinter.connector_type'),
-            config('receiptprinter.connector_descriptor')
-        );
+        $logo_path = public_path('assets/images/vin/Logo-Hitam.png');
+        $pdf->Image($logo_path, 10, 5, 28); // Adjust the path and size as needed
+        $pdf->Ln(20);
 
-        // Set store info
-        $printer->setStore($mid, $store_name, $store_address, $store_phone, $store_email, $store_website);
-        $printer->setNoMeja($meja);
+        // Center-aligned header
+        $pdf->SetFont('', 'B', 8); // Set font to bold
+        $pdf->Cell(0, 0, $store_name, 0, 1, 'C');
+        $pdf->SetFont('', '', 8); // Reset font
+        $pdf->Ln(2);
+        $pdf->SetFont('helvetica', '', 6); // Set font size to 6
+        $pdf->Cell(0, 0, substr($store_address, 0, 31), 0, 1, 'C');
+        $pdf->Cell(0, 0, substr($store_address, 30), 0, 1, 'C');
+        $pdf->Ln(2); // Add a line break
 
-        // Set currency
-        $printer->setCurrency($currency);
+        // Center-aligned transaction details
+        $pdf->Cell(0, 0, "Order: $transaction_id", 0, 1, 'C');
+        $pdf->Cell(0, 0, "No Meja: $meja", 0, 1, 'C');
+        $pdf->Ln(2); // Add a line break
 
-        // Add items
+        // Receipt title and separator
+        $pdf->Cell(0, 0, "RECEIPT", 0, 1, 'C');
+        $pdf->SetFont('courierB', '', 8); // Reduced font size to 8
+
+        $pdf->Cell(0, 0, str_repeat('-', 50), 0, 1, 'C');
+        $pdf->Ln(2); // Add a line break
+        $pdf->SetFont('helvetica', '', 8); // Reduced font size to 8
+
+        // Items and pricing
         foreach ($items as $item) {
-            $printer->addItem(
-                $item['name'],
-                $item['qty'],
-                $item['price']
-            );
+            $pdf->Cell(0, 0, $item['name'], 0, 1, 'L');
+            $pdf->Cell(20, 0, $currency . number_format($item['price'], 0, ',', '.') . " x " . $item['qty'], 0, 0, 'L');
+            $pdf->Cell(0, 0, $currency . number_format($item['price'] * $item['qty'], 0, ',', '.'), 0, 1, 'R');
+            $pdf->Ln(2); // Add a line break
         }
-        // Set tax
-        $printer->setTax($tax_percentage);
 
-        // Calculate total
-        $printer->calculateSubTotal();
-        $printer->calculateGrandTotal();
+        // Subtotal, Tax, Total
 
-        // Set transaction ID
-        $printer->setTransactionID($transaction_id);
+        $pdf->Cell(20, 0, "Subtotal", 0, 0, 'L');
+        $pdf->Cell(0, 0, $currency . number_format($subtotal, 0, ',', '.'), 0, 1, 'R');
+        $pdf->Cell(20, 0, "Tax ($tax_percentage%)", 0, 0, 'L');
+        $pdf->Cell(0, 0, $currency . number_format($tax, 0, ',', '.'), 0, 1, 'R');
+        $pdf->SetFont('courierB', '', 8); // Reduced font size to 8
+        $pdf->Cell(0, 0, str_repeat('-', 50), 0, 1, 'C');
+        $pdf->SetFont('helvetica', '', 8); // Reduced font size to 8
+        $pdf->SetFont('', 'B', 8); // Set font to bold
+        $pdf->Cell(20, 0, "TOTAL", 0, 0, 'L');
+        $pdf->Cell(0, 0, $currency . number_format($grand_total, 0, ',', '.'), 0, 1, 'R');
+        $pdf->SetFont('', '', 8); // Reset font
+        $pdf->Ln(2); // Add a line break
 
-        // Set logo
-        // Uncomment the line below if $image_path is defined
-        // $printer->setLogo($image_path);
+        // Footer
+        $pdf->SetFont('', '', 6); // Set font size to 6
+        $pdf->Cell(0, 0, "Thank you and Have a Nice Day!", 0, 1, 'C');
 
-        // // Set QR code
-        // $printer->setQRcode([
-        //     'tid' => $transaction_id,
-        // ]);
 
-        // Print receipt
-        $printer->printReceipt();
+        $pdf->Ln(1);
+        $pdf->Cell(0, 0, "Website", 0, 1, 'C');
+        $pdf->Cell(0, 0, $store_website, 0, 1, 'C');
+        $pdf->Ln(2); // Add a line break
+        $pdf->Cell(0, 0, date('j F Y H:i:s'), 0, 1, 'C');
+
+        $pdf->Output('receipt.pdf', 'I'); // Output to browser
     }
+
+
+
+
     public function store(Request $request)
     {
         try {

@@ -120,7 +120,9 @@
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-secondary"
                                                                         data-bs-dismiss="modal">Tutup</button>
-                                                                    <a href="{{ route('printNotaKitchen', ['id' => $data->id]) }}" class="btn btn-primary">Cetak Nota Dapur</a>
+                                                                    <button type="button" class="btn btn-primary"
+                                                                        onclick="printNotaKitchen({{ $data->id }})">Cetak
+                                                                        Nota Dapur</button>
                                                                     <a href="{{ route('printNota', ['id' => $data->id]) }}" class="btn btn-primary">Cetak Invoice</a>
                                                                 </div>
                                                             </div>

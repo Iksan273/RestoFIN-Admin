@@ -1,15 +1,15 @@
 @extends('Layouts.user')
 @section('content')
-@if (session('success'))
-<div class="alert alert-success">
-    {{ session('success') }}
-</div>
-@endif
-@if (session('error'))
-<div class="alert alert-danger">
-    {{ session('error') }}
-</div>
-@endif
+    @if (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+    @if (session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
     <div class="pcoded-content">
         <div class="pcoded-inner-content">
             <div class="main-body">
@@ -60,44 +60,60 @@
                                             </thead>
                                             <tbody>
                                                 @foreach ($order as $data)
-                                                <tr>
-                                                    <td>{{ $data->id }}</td>
-                                                    <td>{{ $data->user ? $data->user->firstname . ' ' . $data->user->lastname : $data->guest . '(Guest)' }}
-                                                    <td>{{ $data->no_meja }}</td>
-                                                    <td>{{ $data->order_number }}</td>
-                                                    <td> <button class="btn btn-gradient-info text-center" data-bs-toggle="modal"
-                                                            data-bs-target="#viewDetailOrderModal{{ $data->id }}"><i></i>View</button></td>
-                                                    <td>{{ $data->order_date }}</td>
-                                                    <td>Rp{{ number_format($data->total_price, 0, ',', '.') }}</td>
-                                                    <td>{{ $data->payment_method }}</td>
-                                                    <td>{{ $data->status_pembayaran }}</td>
-                                                    <td>{{ $data->status_makanan }}</td>
-                                                </tr>
-                                                <div class="modal fade" id="viewDetailOrderModal{{ $data->id }}" tabindex="-1" role="dialog" aria-labelledby="viewDetailOrderLabel" aria-hidden="true">
-                                                    <div class="modal-dialog" role="document">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h5 class="modal-title" id="viewDetailOrderLabel">Detail Pesanan</h5>
-                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                <div class="order-details">
-                                                                    <p><strong>Nomor Pesanan:{{ $data->order_number }}</strong> <span id="orderNumber"></span></p>
-                                                                    <p><strong>Nomor Meja:{{ $data->no_meja }}</strong> <span id="tableNumber"></span></p>
-                                                                    <ul>
-                                                                        @foreach ($data->orderItems as $item)
-                                                                            <li><strong>Nama Menu:</strong> {{ $item->menu->title }} - <strong>Jumlah:</strong> {{ $item->jumlah }}</li>
-                                                                        @endforeach
-                                                                    </ul>
+                                                    <tr>
+                                                        <td>{{ $data->id }}</td>
+                                                        <td>{{ $data->user ? $data->user->firstname . ' ' . $data->user->lastname : $data->guest . '(Guest)' }}
+                                                        <td>{{ $data->no_meja }}</td>
+                                                        <td>{{ $data->order_number }}</td>
+                                                        <td> <button class="btn btn-gradient-info text-center"
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target="#viewDetailOrderModal{{ $data->id }}"><i></i>View</button>
+                                                        </td>
+                                                        <td>{{ $data->order_date }}</td>
+                                                        <td>Rp{{ number_format($data->total_price, 0, ',', '.') }}</td>
+                                                        <td>{{ $data->payment_method }}</td>
+                                                        <td>{{ $data->status_pembayaran }}</td>
+                                                        <td>{{ $data->status_makanan }}</td>
+                                                    </tr>
+                                                    <div class="modal fade" id="viewDetailOrderModal{{ $data->id }}"
+                                                        tabindex="-1" role="dialog" aria-labelledby="viewDetailOrderLabel"
+                                                        aria-hidden="true">
+                                                        <div class="modal-dialog" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="viewDetailOrderLabel">Detail
+                                                                        Pesanan</h5>
+                                                                    <button type="button" class="btn-close"
+                                                                        data-bs-dismiss="modal" aria-label="Close"></button>
                                                                 </div>
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                                                                <button type="button" class="btn btn-primary" onclick="printOrderDetails()">Cetak PDF</button>
+                                                                <div class="modal-body">
+                                                                    <div class="order-details">
+                                                                        <p><strong>Nomor
+                                                                                Pesanan:{{ $data->order_number }}</strong>
+                                                                            <span id="orderNumber"></span></p>
+                                                                        <p><strong>Nomor Meja:{{ $data->no_meja }}</strong>
+                                                                            <span id="tableNumber"></span></p>
+                                                                        <ul>
+                                                                            @foreach ($data->orderItems as $item)
+                                                                                <li><strong>Nama Menu:</strong>
+                                                                                    {{ $item->menu->title }} -
+                                                                                    <strong>Jumlah:</strong>
+                                                                                    {{ $item->jumlah }}</li>
+                                                                            @endforeach
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary"
+                                                                        data-bs-dismiss="modal">Tutup</button>
+                                                                    <a href="{{ route('printNota', ['id' => $data->id]) }}"
+                                                                        class="btn btn-primary">Cetak Nota Kitchen</a>
+                                                                    <a href="{{ route('printNota', ['id' => $data->id]) }}"
+                                                                        class="btn btn-primary">Cetak Invoice</a>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
                                                 @endforeach
                                                 <div class="modal fade md-effect-1" id="updateModalMakanan" tabindex="-1"
                                                     role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
@@ -208,4 +224,4 @@
         // Contoh sederhana menggunakan window.print(), bisa disesuaikan dengan kebutuhan
         window.print();
     }
-    </script>
+</script>

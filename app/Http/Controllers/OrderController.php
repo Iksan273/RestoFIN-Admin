@@ -370,7 +370,7 @@ class OrderController extends Controller
         $pdf->Ln(2); // Add a line break
         $pdf->Cell(0, 0, date('j F Y H:i:s'), 0, 1, 'C');
 
-        $pdf->Output('receipt.pdf', 'I'); // Output to browser
+        $pdf->Output('receipt_' . $order->order_number . '.pdf', 'I'); // Output to browser with order number
     }
 
 

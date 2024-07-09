@@ -123,8 +123,10 @@
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-secondary"
                                                                         data-bs-dismiss="modal">Tutup</button>
-                                                                    <a href="{{ route('download-nota', $data->id) }}"
-                                                                        class="btn btn-primary">Cetak PDF</a>
+                                                                    <a href="{{ route('printNota', ['id' => $data->id]) }}"
+                                                                        class="btn btn-primary">Cetak Nota Kitchen</a>
+                                                                    <a href="{{ route('printNota', ['id' => $data->id]) }}"
+                                                                        class="btn btn-primary">Cetak Invoice</a>
                                                                 </div>
                                                             </div>
                                                         </div>

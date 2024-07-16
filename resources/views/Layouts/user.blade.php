@@ -80,16 +80,19 @@
 
                     <li data-username="vertical horizontal box layout RTL fixed static collapse menu color icon dark background image"
                         class="nav-item pcoded-hasmenu">
-                        <a href="#!" class="nav-link"><span class="pcoded-micon"><i
-                                    class="fas fa-clipboard-list"></i></span><span
-                                class="pcoded-mtext">Pesanan</span></a>
+                        <a href="#!" class="nav-link">
+                            <span class="pcoded-micon"><i class="fas fa-clipboard-list"></i></span>
+                            <span class="pcoded-mtext">Pesanan</span>
+                        </a>
                         <ul class="pcoded-submenu">
 
 
                             <li class=""><a href="{{ route('employee.daftarPesanan') }}" class="">List
-                                    Pesanan</a></li>
+                                    Pesanan<span id="status-makanan" class="order-notification"></span></a></li>
                             <li class=""><a href="{{ route('employee.daftarPesananPending') }}"
-                                    class="">List Pesanan Pending</a></li>
+                                    class="">List Pesanan Pending<span id="pesanan-pending"
+                                        class="order-notification"></span></a>
+                            </li>
                             <li class=""><a href="{{ route('employee.daftarPesananSelesai') }}"
                                     class="">List Pesanan Selesai </a></li>
                             <li class=""><a href="{{ route('employee.Addorder') }}" class="">Add Order </a>
@@ -107,7 +110,8 @@
                         <ul class="pcoded-submenu">
 
 
-                            <li class=""><a href="{{ route('employee.daftarTransaksi') }}" class="">Daftar
+                            <li class=""><a href="{{ route('employee.daftarTransaksi') }}"
+                                    class="">Daftar
                                     Transaksi</a>
 
                             </li>
@@ -166,7 +170,7 @@
                                 class="pcoded-mtext">Reservasi</span></a>
                         <ul class="pcoded-submenu">
                             <li class=""><a href="{{ route('employee.reservasi') }}" class="">List
-                                    Reservasi</a></li>
+                                    Reservasi<span id="status-reserve" class="order-notification"></span></a></li>
                             <li class=""><a href="{{ route('employee.addReservasi') }}" class="">Add
                                     Reservasi</a></li>
 
@@ -179,7 +183,7 @@
                                 Online</span></a>
                         <ul class="pcoded-submenu">
                             <li class=""><a href="{{ route('employee.struk') }}" class="">List
-                                    Pembelian</a></li>
+                                    Pembelian<span id="status-struk" class="order-notification"></span></a></li>
                             <li class=""><a href="{{ route('employee.addStruk') }}" class="">Add</a>
                             </li>
 
@@ -396,7 +400,122 @@
                 });
             });
         });
+
+        // Pending Order & Status Makanan
+        $(document).ready(function() {
+            // Fungsi untuk memeriksa jumlah pesanan pending
+            function checkPendingOrders() {
+                $.ajax({
+                    url: '{{ route('pesanan-pending') }}',
+                    method: 'GET',
+                    success: function(response) {
+                        if (response.pendingOrders > 0) {
+                            $('#pesanan-pending').css('display', 'inline-block').text(response
+                                .pendingOrders);
+                        } else {
+                            $('#pesanan-pending').css('display', 'none');
+                        }
+                    },
+                    error: function(error) {
+                        console.log('Error:', error);
+                    }
+                });
+            }
+
+            // Fungsi untuk memeriksa status makanan
+            function checkFoodStatus() {
+                $.ajax({
+                    url: '{{ route('status-makanan') }}',
+                    method: 'GET',
+                    success: function(response) {
+                        if (response.foodStatus > 0) {
+                            $('#status-makanan').css('display', 'inline-block').text(response
+                                .foodStatus);
+                        } else {
+                            $('#status-makanan').css('display', 'none');
+                        }
+                    },
+                    error: function(error) {
+                        console.log('Error:', error);
+                    }
+                });
+            }
+
+            // Fungsi untuk memeriksa status reservasi
+            function checkReserveStatus() {
+                $.ajax({
+                    url: '{{ route('status-reserve') }}',
+                    method: 'GET',
+                    success: function(response) {
+                        if (response.reserveStatus > 0) {
+                            $('#status-reserve').css('display', 'inline-block').text(response
+                                .reserveStatus);
+                        } else {
+                            $('#status-reserve').css('display', 'none');
+                        }
+                    },
+                    error: function(error) {
+                        console.log('Error:', error);
+                    }
+                });
+            }
+
+            // Fungsi untuk memeriksa status reservasi
+            function checkStrukStatus() {
+                $.ajax({
+                    url: '{{ route('status-struk') }}',
+                    method: 'GET',
+                    success: function(response) {
+                        if (response.strukStatus > 0) {
+                            $('#status-struk').css('display', 'inline-block').text(response
+                                .strukStatus);
+                        } else {
+                            $('#status-struk').css('display', 'none');
+                        }
+                    },
+                    error: function(error) {
+                        console.log('Error:', error);
+                    }
+                });
+            }
+
+            // Panggil fungsi saat halaman dimuat
+            checkPendingOrders();
+            checkFoodStatus();
+            checkReserveStatus();
+            checkStrukStatus();
+
+            // Panggil fungsi setiap 5 detik
+            setInterval(checkPendingOrders, 5000);
+            setInterval(checkFoodStatus, 5000);
+            setInterval(checkReserveStatus, 5000);
+            setInterval(checkStrukStatus, 5000);
+        });
     </script>
+
+    <style>
+        .nav-link {
+            position: relative;
+            display: inline-block;
+        }
+
+        .order-notification {
+            display: none;
+            min-width: 20px;
+            height: 20px;
+            background-color: red;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            font-size: 13px;
+            line-height: 20px;
+            position: absolute;
+            top: 50%;
+            margin-left: 20px;
+            /* Adjust this value as needed */
+            transform: translateY(-50%);
+        }
+    </style>
 
 
 

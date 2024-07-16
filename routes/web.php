@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CheckController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\MemberPointController;
@@ -118,6 +119,9 @@ Route::middleware(['role:Master'])->group(function () {
     Route::get('/order', [OrderController::class, 'orderForm'])->name('employee.Addorder');
     Route::post('/order/store', [OrderController::class, 'store'])->name('employee.StoreOrder');
 
+    Route::get('/pesanan-pending', [CheckController::class, 'getPendingOrders'])->name('pesanan-pending');
+    Route::get('/status-makanan', [CheckController::class, 'getFoodStatus'])->name('status-makanan');
+
     // route untuk reservasi
     Route::get('/reservasi-Employee', [ReservationController::class, 'index'])->name('employee.reservasi');
     Route::get('/reservasi/tambahReservasi', [ReservationController::class, 'create'])->name('employee.addReservasi');
@@ -127,12 +131,16 @@ Route::middleware(['role:Master'])->group(function () {
     Route::put('/reservasi/accept/{id}', [ReservationController::class, 'acceptReservation'])->name('reservasi.accept');
     Route::delete('/reservasi/delete/{id}', [ReservationController::class, 'destroy'])->name('reservasi.delete');
 
+    Route::get('/status-reserve', [CheckController::class, 'getReserveStatus'])->name('status-reserve');
+
     // Route untuk Struk Online
     Route::get('/struk-online', [StrukOnlineController::class, 'index'])->name('employee.struk');
     Route::view('/StrukPembelian-Add', 'Employee.add_strukPembelian')->name('employee.addStruk');
     Route::post('/struk-online/store', [StrukOnlineController::class, 'store'])->name('struk.store');
     Route::put('/struk-online/update/{id}', [StrukOnlineController::class, 'updatePointdanStatus'])->name('struk.update');
     Route::delete('/struk-online/delete/{id}', [StrukOnlineController::class, 'destroy'])->name('struk.delete');
+
+    Route::get('/status-struk', [CheckController::class, 'getStrukStatus'])->name('status-struk');
 });
 
 Route::middleware(['role:Employee'])->group(function () {

@@ -24,6 +24,14 @@ class CheckController extends Controller
         return response()->json(['foodStatus' => $foodStatus]);
     }
 
+    public function getAllOrderStatus() {
+        $pendingOrders = Order::where('status_pembayaran', 'Belum Bayar')->count();
+        $foodStatus = Order::where('status_makanan', 'proses')->where('status_pembayaran', 'lunas')->count();
+        $allOrders = $pendingOrders + $foodStatus;
+
+        return response()->json(['allOrders' => $allOrders]);
+    }
+
     public function getReserveStatus()
     {
         // Logika untuk mendapatkan status reservasi

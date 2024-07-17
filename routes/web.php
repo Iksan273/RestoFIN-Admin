@@ -121,6 +121,7 @@ Route::middleware(['role:Master'])->group(function () {
 
     Route::get('/pesanan-pending', [CheckController::class, 'getPendingOrders'])->name('pesanan-pending');
     Route::get('/status-makanan', [CheckController::class, 'getFoodStatus'])->name('status-makanan');
+    Route::get('/status-pesanan-all', [CheckController::class, 'getAllOrderStatus'])->name('status-pesanan-all');
 
     // route untuk reservasi
     Route::get('/reservasi-Employee', [ReservationController::class, 'index'])->name('employee.reservasi');

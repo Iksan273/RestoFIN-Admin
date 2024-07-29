@@ -49,9 +49,9 @@
             <div class="navbar-brand header-logo">
                 <a href="" class="b-brand">
 
-                    <img src="{{ asset('assets/images/vin/Logo-Putih.png') }}" alt="logo" class="logo images"
+                    <img src="{{ asset('assets/images/vin/Logo.png') }}" alt="logo" class="logo images"
                         style="width: 150px; height: auto;">
-                    <img src="{{ asset('assets/images/vin/Logo-Putih.png') }}" alt="logo" class="logo-thumb images">
+                    <img src="{{ asset('assets/images/vin/Logo.png') }}" alt="logo" class="logo-thumb images">
                 </a>
                 <a class="mobile-menu" id="mobile-collapse" href="#!"><span></span></a>
             </div>

@@ -80,16 +80,19 @@
 
                     <li data-username="vertical horizontal box layout RTL fixed static collapse menu color icon dark background image"
                         class="nav-item pcoded-hasmenu">
-                        <a href="#!" class="nav-link"><span class="pcoded-micon"><i
-                                    class="fas fa-clipboard-list"></i></span><span
-                                class="pcoded-mtext">Pesanan</span></a>
+                        <a href="#!" class="nav-link">
+                            <span class="pcoded-micon"><i class="fas fa-clipboard-list"></i></span>
+                            <span class="pcoded-mtext">Pesanan<span id="pesanan-notif" class="order-notification"></span>
+                        </a>
                         <ul class="pcoded-submenu">
 
 
                             <li class=""><a href="{{ route('employee.daftarPesanan') }}" class="">List
-                                    Pesanan</a></li>
+                                    Pesanan<span id="status-makanan" class="order-notification"></span></a></li>
                             <li class=""><a href="{{ route('employee.daftarPesananPending') }}"
-                                    class="">List Pesanan Pending</a></li>
+                                    class="">List Pesanan Pending<span id="pesanan-pending"
+                                        class="order-notification"></span></a>
+                            </li>
                             <li class=""><a href="{{ route('employee.daftarPesananSelesai') }}"
                                     class="">List Pesanan Selesai </a></li>
                             <li class=""><a href="{{ route('employee.Addorder') }}" class="">Add Order </a>
@@ -107,7 +110,8 @@
                         <ul class="pcoded-submenu">
 
 
-                            <li class=""><a href="{{ route('employee.daftarTransaksi') }}" class="">Daftar
+                            <li class=""><a href="{{ route('employee.daftarTransaksi') }}"
+                                    class="">Daftar
                                     Transaksi</a>
 
                             </li>
@@ -163,10 +167,10 @@
                         class="nav-item pcoded-hasmenu">
                         <a href="#!" class="nav-link"><span class="pcoded-micon"><i
                                     class="fas fa-calendar-alt"></i></span><span
-                                class="pcoded-mtext">Reservasi</span></a>
+                                class="pcoded-mtext">Reservasi<span id="status-reserve" class="order-notification"></span></a>
                         <ul class="pcoded-submenu">
                             <li class=""><a href="{{ route('employee.reservasi') }}" class="">List
-                                    Reservasi</a></li>
+                                    Reservasi<span id="status-reserve" class="order-notification"></span></a></li>
                             <li class=""><a href="{{ route('employee.addReservasi') }}" class="">Add
                                     Reservasi</a></li>
 
@@ -176,10 +180,10 @@
                         class="nav-item pcoded-hasmenu">
                         <a href="#!" class="nav-link"><span class="pcoded-micon"><i
                                     class="fas fa-shopping-cart"></i></span><span class="pcoded-mtext">Pembelian
-                                Online</span></a>
+                                Online<span id="status-struk" class="order-notification"></span></a>
                         <ul class="pcoded-submenu">
                             <li class=""><a href="{{ route('employee.struk') }}" class="">List
-                                    Pembelian</a></li>
+                                    Pembelian<span id="status-struk" class="order-notification"></span></a></li>
                             <li class=""><a href="{{ route('employee.addStruk') }}" class="">Add</a>
                             </li>
 
@@ -339,64 +343,200 @@
     <script src="assets/plugins/chart-echarts/js/echarts-en.min.js"></script>
     <script src="assets/js/pages/chart-echart-custom.js"></script>
     <script>
+        // $(document).ready(function() {
+        //     let lastOrderCount = 0; // Menyimpan jumlah orderan terakhir yang diperiksa
+
+        //     $.ajaxSetup({
+        //         headers: {
+        //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        //         }
+        //     });
+
+        //     function checkNewOrders() {
+        //         $.ajax({
+        //             url: '/check-new-orders',
+        //             method: 'GET',
+        //             success: function(response) {
+        //                 const todayOrderCount = response.count;
+
+        //                 // Membandingkan jumlah orderan hari ini dengan yang sebelumnya
+        //                 if (todayOrderCount > lastOrderCount) {
+        //                     lastOrderCount = todayOrderCount; // Update nilai terakhir
+        //                     playNotificationSound();
+        //                     alert('New order received!'); // Atau tampilkan notifikasi lainnya
+        //                 }
+        //             },
+        //             error: function(xhr, status, error) {
+        //                 console.error('Error fetching new orders:', error);
+        //             }
+        //         });
+        //     }
+
+        //     function playNotificationSound() {
+        //         const audio = new Audio('{{ asset('assets/music/bell.mp3') }}');
+        //         audio.play();
+        //     }
+
+        //     // Memanggil fungsi checkNewOrders() pertama kali saat halaman dimuat
+        //     checkNewOrders();
+
+        //     // Set interval untuk memanggil checkNewOrders() setiap 5 detik
+        //     setInterval(checkNewOrders, 5000);
+
+        //     // Reset jumlah orderan hari ini saat halaman dimuat ulang
+        //     $(window).on('beforeunload', function() {
+        //         $.ajax({
+        //             url: '/reset-orders-count',
+        //             method: 'POST',
+        //             headers: {
+        //                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        //             },
+        //             success: function(response) {
+        //                 console.log('Orders count reset successfully.');
+        //             },
+        //             error: function(xhr, status, error) {
+        //                 console.error('Error resetting orders count:', error);
+        //             }
+        //         });
+        //     });
+        // });
+
+        // Pending Order & Status Makanan & Reservasi
         $(document).ready(function() {
-            let lastOrderCount = 0; // Menyimpan jumlah orderan terakhir yang diperiksa
-
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-
-            function checkNewOrders() {
+            // Fungsi untuk memeriksa jumlah pesanan pending
+            function checkPendingOrders() {
                 $.ajax({
-                    url: '/check-new-orders',
+                    url: '{{ route('pesanan-pending') }}',
                     method: 'GET',
                     success: function(response) {
-                        const todayOrderCount = response.count;
-
-                        // Membandingkan jumlah orderan hari ini dengan yang sebelumnya
-                        if (todayOrderCount > lastOrderCount) {
-                            lastOrderCount = todayOrderCount; // Update nilai terakhir
-                            playNotificationSound();
-                            alert('New order received!'); // Atau tampilkan notifikasi lainnya
+                        if (response.pendingOrders > 0) {
+                            $('#pesanan-pending').css('display', 'inline-block').text(response
+                                .pendingOrders);
+                        } else {
+                            $('#pesanan-pending').css('display', 'none');
                         }
                     },
-                    error: function(xhr, status, error) {
-                        console.error('Error fetching new orders:', error);
+                    error: function(error) {
+                        console.log('Error:', error);
                     }
                 });
             }
 
-            function playNotificationSound() {
-                const audio = new Audio('{{ asset('assets/music/bell.mp3') }}');
-                audio.play();
-            }
-
-            // Memanggil fungsi checkNewOrders() pertama kali saat halaman dimuat
-            checkNewOrders();
-
-            // Set interval untuk memanggil checkNewOrders() setiap 5 detik
-            setInterval(checkNewOrders, 5000);
-
-            // Reset jumlah orderan hari ini saat halaman dimuat ulang
-            $(window).on('beforeunload', function() {
+            // Fungsi untuk memeriksa status makanan
+            function checkFoodStatus() {
                 $.ajax({
-                    url: '/reset-orders-count',
-                    method: 'POST',
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
+                    url: '{{ route('status-makanan') }}',
+                    method: 'GET',
                     success: function(response) {
-                        console.log('Orders count reset successfully.');
+                        if (response.foodStatus > 0) {
+                            $('#status-makanan').css('display', 'inline-block').text(response
+                                .foodStatus);
+                        } else {
+                            $('#status-makanan').css('display', 'none');
+                        }
                     },
-                    error: function(xhr, status, error) {
-                        console.error('Error resetting orders count:', error);
+                    error: function(error) {
+                        console.log('Error:', error);
                     }
                 });
-            });
+            }
+
+            // Fungsi untuk memeriksa status makanan semua
+            function checkPesanan() {
+                $.ajax({
+                    url: '{{ route('status-pesanan-all') }}',
+                    method: 'GET',
+                    success: function(response) {
+                        if (response.allOrders > 0) {
+                            $('#pesanan-notif').css('display', 'inline-block').text(response
+                                .allOrders);
+                        } else {
+                            $('#pesanan-notif').css('display', 'none');
+                        }
+                    },
+                    error: function(error) {
+                        console.log('Error:', error);
+                    }
+                });
+            }
+
+            // Fungsi untuk memeriksa status reservasi
+            function checkReserveStatus() {
+                $.ajax({
+                    url: '{{ route('status-reserve') }}',
+                    method: 'GET',
+                    success: function(response) {
+                        if (response.reserveStatus > 0) {
+                            $('#status-reserve').css('display', 'inline-block').text(response
+                                .reserveStatus);
+                        } else {
+                            $('#status-reserve').css('display', 'none');
+                        }
+                    },
+                    error: function(error) {
+                        console.log('Error:', error);
+                    }
+                });
+            }
+
+            // Fungsi untuk memeriksa status reservasi
+            function checkStrukStatus() {
+                $.ajax({
+                    url: '{{ route('status-struk') }}',
+                    method: 'GET',
+                    success: function(response) {
+                        if (response.strukStatus > 0) {
+                            $('#status-struk').css('display', 'inline-block').text(response
+                                .strukStatus);
+                        } else {
+                            $('#status-struk').css('display', 'none');
+                        }
+                    },
+                    error: function(error) {
+                        console.log('Error:', error);
+                    }
+                });
+            }
+
+            // Panggil fungsi saat halaman dimuat
+            checkPendingOrders();
+            checkFoodStatus();
+            checkReserveStatus();
+            checkStrukStatus();
+            checkPesanan();
+
+            // Panggil fungsi setiap 5 detik
+            setInterval(checkPesanan, 5000);
+            setInterval(checkPendingOrders, 5000);
+            setInterval(checkFoodStatus, 5000);
+            setInterval(checkReserveStatus, 5000);
+            setInterval(checkStrukStatus, 5000);
         });
     </script>
+
+    <style>
+        .nav-link {
+            position: relative;
+            display: inline-block;
+        }
+
+        .order-notification {
+            display: none;
+            min-width: 20px;
+            height: 20px;
+            background-color: red;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            font-size: 13px;
+            line-height: 20px;
+            position: absolute;
+            top: 50%;
+            margin-left: 20px;
+            /* Adjust this value as needed */
+            transform: translateY(-50%);
+        }
+    </style>
 
 
 

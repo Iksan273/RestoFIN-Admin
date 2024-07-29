@@ -370,7 +370,13 @@ class OrderController extends Controller
         $pdf->Ln(2); // Add a line break
         $pdf->Cell(0, 0, date('j F Y H:i:s'), 0, 1, 'C');
 
-        $pdf->Output('receipt_' . $order->order_number . '.pdf', 'D');
+        // Set headers to force download
+        header('Content-Type: application/pdf');
+        header('Content-Disposition: attachment; filename="receipt_' . $order->order_number . '.pdf"');
+        header('Cache-Control: max-age=0');
+
+        // Output PDF
+        $pdf->Output('receipt_' . $order->order_number . '.pdf', 'I');
     }
 
 

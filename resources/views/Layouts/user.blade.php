@@ -237,8 +237,8 @@
         <div class="m-header">
             <a class="mobile-menu" id="mobile-collapse1" href="#!"><span></span></a>
             <a href="#" class="b-brand">
-                <img src="{{ asset('assets/images/vin/Logo.png') }}" alt="" class="logo images" style="width: 100px; height: auto;">
-                <img src="{{ asset('assets/images/vin/Logo.png') }}" alt="" class="logo-thumb images" style="width: 100px; height: auto;">
+                {{-- <img src="{{ asset('assets/images/vin/Logo.png') }}" alt="" class="logo images" style="width: 100px; height: auto;">
+                <img src="{{ asset('assets/images/vin/Logo.png') }}" alt="" class="logo-thumb images" style="width: 100px; height: auto;"> --}}
             </a>
         </div>
         <a class="mobile-menu" id="mobile-header" href="#!">

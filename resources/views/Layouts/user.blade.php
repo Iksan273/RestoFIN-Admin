@@ -236,7 +236,7 @@
     <header class="navbar pcoded-header navbar-expand-lg navbar-light headerpos-fixed">
         <div class="m-header">
             <a class="mobile-menu" id="mobile-collapse1" href="#!"><span></span></a>
-            <a href="index.html" class="b-brand">
+            <a href="#" class="b-brand">
 
                 <img src="{{ asset('assets/images/vin/Logo.png') }}" alt="" class="logo images" style="width: 150px; height: auto;">
                 <img src="{{ asset('assets/images/vin/Logo.png') }}" alt="" class="logo-thumb images" style="width: 150px; height: auto;">

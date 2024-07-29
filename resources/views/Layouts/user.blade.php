@@ -238,8 +238,8 @@
             <a class="mobile-menu" id="mobile-collapse1" href="#!"><span></span></a>
             <a href="index.html" class="b-brand">
 
-                <img src="{{ asset('assets/images/vin/Logo-Putih.png') }}" alt="" class="logo images">
-                <img src="{{ asset('assets/images/vin/Logo-Putih.png') }}" alt="" class="logo-thumb images">
+                <img src="{{ asset('assets/images/vin/Logo-Putih.png') }}" alt="" class="logo images" style="width: 50px; height: 50px;">
+                <img src="{{ asset('assets/images/vin/Logo-Putih.png') }}" alt="" class="logo-thumb images" style="width: 50px; height: 50px;">
             </a>
         </div>
         <a class="mobile-menu" id="mobile-header" href="#!">

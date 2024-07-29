@@ -19,7 +19,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Favicon icon -->
-    <link rel="icon" href="{{ asset('assets/images/vin/Logo-Putih.png') }}" type="image/x-icon">
+    <link rel="icon" href="{{ asset('assets/images/vin/Logo.png') }}" type="image/x-icon">
     <!-- fontawesome icon -->
     <link rel="stylesheet" href="{{ asset('assets/fonts/fontawesome/css/fontawesome-all.min.css') }}">
     <!-- animation css -->
@@ -238,8 +238,8 @@
             <a class="mobile-menu" id="mobile-collapse1" href="#!"><span></span></a>
             <a href="index.html" class="b-brand">
 
-                <img src="{{ asset('assets/images/vin/Logo-Putih.png') }}" alt="" class="logo images" style="width: 50px; height: 50px;">
-                <img src="{{ asset('assets/images/vin/Logo-Putih.png') }}" alt="" class="logo-thumb images" style="width: 50px; height: 50px;">
+                <img src="{{ asset('assets/images/vin/Logo.png') }}" alt="" class="logo images" >
+                <img src="{{ asset('assets/images/vin/Logo.png') }}" alt="" class="logo-thumb images" >
             </a>
         </div>
         <a class="mobile-menu" id="mobile-header" href="#!">

@@ -373,10 +373,13 @@ class OrderController extends Controller
         // Set headers to force download
         header('Content-Type: application/pdf');
         header('Content-Disposition: attachment; filename="receipt_' . $order->order_number . '.pdf"');
-        header('Cache-Control: max-age=0');
+        header('Content-Transfer-Encoding: binary');
+        header('Accept-Ranges: bytes');
+        header('Cache-Control: private, max-age=0, must-revalidate');
+        header('Pragma: public');
 
         // Output PDF
-        $pdf->Output('receipt_' . $order->order_number . '.pdf', 'S');
+        $pdf->Output('receipt_' . $order->order_number . '.pdf', 'D');
     }
 
 

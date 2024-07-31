@@ -370,16 +370,21 @@ class OrderController extends Controller
         $pdf->Ln(2); // Add a line break
         $pdf->Cell(0, 0, date('j F Y H:i:s'), 0, 1, 'C');
 
+        // Output PDF as a string
+        $pdfContent = $pdf->Output('receipt_' . $order->order_number . '.pdf', 'S'); // Output as a string
+
         // Set headers to force download
+        header('Content-Description: File Transfer');
         header('Content-Type: application/pdf');
         header('Content-Disposition: attachment; filename="receipt_' . $order->order_number . '.pdf"');
         header('Content-Transfer-Encoding: binary');
-        header('Accept-Ranges: bytes');
-        header('Cache-Control: private, max-age=0, must-revalidate');
+        header('Expires: 0');
+        header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
         header('Pragma: public');
+        header('Content-Length: ' . strlen($pdfContent));
 
-        // Output PDF
-        $pdf->Output('receipt_' . $order->order_number . '.pdf', 'I');
+        // Output PDF content
+        echo $pdfContent;
     }
 
 

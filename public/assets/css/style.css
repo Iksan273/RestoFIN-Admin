@@ -557,7 +557,13 @@ p.text-muted {
 .modal .tooltip {
     z-index: 1073;
 }
+@supports (-webkit-overflow-scrolling: touch) {
+    .modal-backdrop {
+        pointer-events: none; /* Nonaktifkan interaksi dengan backdrop */
+    }
+}
 .modal-dialog {
+    z-index: 1040;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -569,8 +575,8 @@ p.text-muted {
     left: 0;
     width: 100%;
     height: 100%;
-    /* background-color: rgba(0, 0, 0, 0.5); */
-    z-index: 1040; /* Bootstrap default z-index for backdrop */
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1030; /* Bootstrap default z-index for backdrop */
 }
 
 .bd-example-modal {

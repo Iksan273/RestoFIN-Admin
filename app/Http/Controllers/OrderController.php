@@ -376,7 +376,7 @@ class OrderController extends Controller
         header('Cache-Control: max-age=0');
 
         // Output PDF
-        $pdf->Output('receipt_' . $order->order_number . '.pdf', 'D');
+        $pdf->Output('receipt_' . $order->order_number . '.pdf', 'S');
     }
 
 

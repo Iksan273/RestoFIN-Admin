@@ -379,7 +379,7 @@ class OrderController extends Controller
         header('Pragma: public');
 
         // Output PDF
-        $pdf->Output('receipt_' . $order->order_number . '.pdf', 'D');
+        $pdf->Output('receipt_' . $order->order_number . '.pdf', 'I');
     }
 
 

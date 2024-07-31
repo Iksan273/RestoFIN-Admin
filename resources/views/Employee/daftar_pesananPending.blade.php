@@ -86,7 +86,7 @@
                                                         </td> <!-- Action Pembayaran -->
 
                                                     </tr>
-                                                    <div href="#" class="modal fade" id="viewDetailOrderModal{{ $data->id }}"
+                                                    <div href="#" class="modal" id="viewDetailOrderModal{{ $data->id }}"
                                                         tabindex="-1" role="dialog" aria-labelledby="viewDetailOrderLabel"
                                                         aria-hidden="true">
                                                         <div class="modal-dialog" role="document">

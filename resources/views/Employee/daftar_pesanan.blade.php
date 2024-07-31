@@ -89,7 +89,7 @@
                                                                     class="fas fa-edit"></i></button>
                                                         </td> <!-- Action Makanan -->
                                                     </tr>
-                                                    <div class="modal fade" id="viewDetailOrderModal{{ $data->id }}"
+                                                    <div class="modal" id="viewDetailOrderModal{{ $data->id }}"
                                                         tabindex="-1" role="dialog" aria-labelledby="viewDetailOrderLabel"
                                                         aria-hidden="true">
                                                         <div class="modal-dialog" role="document">
@@ -131,7 +131,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="modal fade md-effect-1"
+                                                    <div class="modal md-effect-1"
                                                         id="updateModalMakanan{{ $data->id }}" tabindex="-1"
                                                         role="dialog" aria-labelledby="deleteModalLabel"
                                                         aria-hidden="true">

@@ -370,8 +370,14 @@ class OrderController extends Controller
         $pdf->Ln(2); // Add a line break
         $pdf->Cell(0, 0, date('j F Y H:i:s'), 0, 1, 'C');
 
-        // Output PDF as a string
-        $pdfContent = $pdf->Output('receipt_' . $order->order_number . '.pdf', 'S'); // Output as a string
+        // Start output buffering
+        ob_start();
+
+        // Generate PDF content as a string
+        $pdfContent = $pdf->Output('receipt_' . $order->order_number . '.pdf', 'S');
+
+        // Clear previous output (if any)
+        ob_end_clean();
 
         // Set headers to force download
         header('Content-Description: File Transfer');
@@ -385,6 +391,7 @@ class OrderController extends Controller
 
         // Output PDF content
         echo $pdfContent;
+        exit;
     }
 
 

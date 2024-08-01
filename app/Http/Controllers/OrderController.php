@@ -307,90 +307,61 @@ class OrderController extends Controller
         $pdf->SetMargins(1, 1, 1);
         $pdf->SetAutoPageBreak(true, 1);
         $pdf->AddPage();
-        $pdf->SetFont('helvetica', '', 8); // Reduced font size to 8
+        $pdf->SetFont('helvetica', '', 8);
 
         $logo_path = public_path('assets/images/vin/Logo-Hitam.png');
-        $pdf->Image($logo_path, 10, 5, 28); // Adjust the path and size as needed
+        $pdf->Image($logo_path, 10, 5, 28);
         $pdf->Ln(20);
 
-        // Center-aligned header
-        $pdf->SetFont('', 'B', 8); // Set font to bold
+        $pdf->SetFont('', 'B', 8);
         $pdf->Cell(0, 0, $store_name, 0, 1, 'C');
-        $pdf->SetFont('', '', 8); // Reset font
+        $pdf->SetFont('', '', 8);
         $pdf->Ln(2);
-        $pdf->SetFont('helvetica', '', 6); // Set font size to 6
+        $pdf->SetFont('helvetica', '', 6);
         $pdf->Cell(0, 0, substr($store_address, 0, 31), 0, 1, 'C');
         $pdf->Cell(0, 0, substr($store_address, 30), 0, 1, 'C');
-        $pdf->Ln(2); // Add a line break
+        $pdf->Ln(2);
 
-        // Center-aligned transaction details
         $pdf->Cell(0, 0, "Order: $transaction_id", 0, 1, 'C');
         $pdf->Cell(0, 0, "No Meja: $meja", 0, 1, 'C');
-        $pdf->Ln(2); // Add a line break
+        $pdf->Ln(2);
 
-        // Receipt title and separator
         $pdf->Cell(0, 0, "RECEIPT", 0, 1, 'C');
-        $pdf->SetFont('courierB', '', 8); // Reduced font size to 8
-
+        $pdf->SetFont('courierB', '', 8);
         $pdf->Cell(0, 0, str_repeat('-', 50), 0, 1, 'C');
-        $pdf->Ln(2); // Add a line break
-        $pdf->SetFont('helvetica', '', 8); // Reduced font size to 8
+        $pdf->Ln(2);
+        $pdf->SetFont('helvetica', '', 8);
 
-        // Items and pricing
         foreach ($items as $item) {
             $pdf->Cell(0, 0, $item['name'], 0, 1, 'L');
             $pdf->Cell(20, 0, $currency . number_format($item['price'], 0, ',', '.') . " x " . $item['qty'], 0, 0, 'L');
             $pdf->Cell(0, 0, $currency . number_format($item['price'] * $item['qty'], 0, ',', '.'), 0, 1, 'R');
-            $pdf->Ln(2); // Add a line break
+            $pdf->Ln(2);
         }
-
-        // Subtotal, Tax, Total
 
         $pdf->Cell(20, 0, "Subtotal", 0, 0, 'L');
         $pdf->Cell(0, 0, $currency . number_format($subtotal, 0, ',', '.'), 0, 1, 'R');
         $pdf->Cell(20, 0, "Tax ($tax_percentage%)", 0, 0, 'L');
         $pdf->Cell(0, 0, $currency . number_format($tax, 0, ',', '.'), 0, 1, 'R');
-        $pdf->SetFont('courierB', '', 8); // Reduced font size to 8
+        $pdf->SetFont('courierB', '', 8);
         $pdf->Cell(0, 0, str_repeat('-', 50), 0, 1, 'C');
-        $pdf->SetFont('helvetica', '', 8); // Reduced font size to 8
-        $pdf->SetFont('', 'B', 8); // Set font to bold
+        $pdf->SetFont('helvetica', '', 8);
+        $pdf->SetFont('', 'B', 8);
         $pdf->Cell(20, 0, "TOTAL", 0, 0, 'L');
         $pdf->Cell(0, 0, $currency . number_format($grand_total, 0, ',', '.'), 0, 1, 'R');
-        $pdf->SetFont('', '', 8); // Reset font
-        $pdf->Ln(2); // Add a line break
+        $pdf->SetFont('', '', 8);
+        $pdf->Ln(2);
 
-        // Footer
-        $pdf->SetFont('', '', 6); // Set font size to 6
+        $pdf->SetFont('', '', 6);
         $pdf->Cell(0, 0, "Thank you and Have a Nice Day!", 0, 1, 'C');
-
-
         $pdf->Ln(1);
         $pdf->Cell(0, 0, "Website", 0, 1, 'C');
         $pdf->Cell(0, 0, $store_website, 0, 1, 'C');
-        $pdf->Ln(2); // Add a line break
+        $pdf->Ln(2);
         $pdf->Cell(0, 0, date('j F Y H:i:s'), 0, 1, 'C');
 
-        // Start output buffering
-        ob_start();
-
-        // Generate PDF content as a string
-        $pdfContent = $pdf->Output('receipt_' . $order->order_number . '.pdf', 'D');
-
-        // Clear previous output (if any)
-        ob_end_clean();
-
-        // Set headers to force download
-        header('Content-Description: File Transfer');
-        header('Content-Type: application/pdf');
-        header('Content-Disposition: attachment; filename="receipt_' . $order->order_number . '.pdf"');
-        header('Content-Transfer-Encoding: binary');
-        header('Expires: 0');
-        header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-        header('Pragma: public');
-        header('Content-Length: ' . strlen($pdfContent));
-
-        // Output PDF content
-        echo $pdfContent;
+        // Output PDF content for download
+        $pdf->Output('receipt_' . $order->order_number . '.pdf', 'D');
         exit;
     }
 

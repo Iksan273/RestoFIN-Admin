@@ -374,7 +374,7 @@ class OrderController extends Controller
         ob_start();
 
         // Generate PDF content as a string
-        $pdfContent = $pdf->Output('receipt_' . $order->order_number . '.pdf', 'S');
+        $pdfContent = $pdf->Output('receipt_' . $order->order_number . '.pdf', 'D');
 
         // Clear previous output (if any)
         ob_end_clean();
